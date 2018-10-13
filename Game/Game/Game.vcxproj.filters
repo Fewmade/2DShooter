@@ -13,13 +13,5 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Файлы заголовков\Math">
-      <UniqueIdentifier>{07cd5918-7140-44fb-bf6c-7300570a738a}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Vector2D.h">
-      <Filter>Файлы заголовков\Math</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>
