@@ -27,7 +27,9 @@
     <ClInclude Include="DynamicObject.h" />
     <ClInclude Include="EnemyNPC.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Map.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Room.h" />
     <ClInclude Include="StaticObject.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
