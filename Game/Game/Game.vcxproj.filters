@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Файлы заголовков\AI">
+      <UniqueIdentifier>{838cd911-e38e-4278-b624-6326ec62100e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="game.cpp">
@@ -35,12 +38,6 @@
     <ClInclude Include="Creature.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyNPC.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="AllyNPC.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="Room.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
@@ -49,6 +46,18 @@
     </ClInclude>
     <ClInclude Include="HealthComponent.h">
       <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="AllyNPC.h">
+      <Filter>Файлы заголовков\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyNPC.h">
+      <Filter>Файлы заголовков\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>Файлы заголовков\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="PatrolState.h">
+      <Filter>Файлы заголовков\AI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
