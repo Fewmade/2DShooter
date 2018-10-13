@@ -11,6 +11,20 @@ public:
 	{}
 	GameObject(Vector2i _pos) : pos(_pos)
 	{}
+	GameObject(Image _image) : image(_image)
+	{
+		//image.createMaskFromColor();
+		texture.loadFromImage(image);
+		sprite.setTexture(texture);
+		//sprite.setScale();
+	}
+	GameObject(Vector2i _pos, Image _image) : pos(_pos), image(_image)
+	{
+		//image.createMaskFromColor();
+		texture.loadFromImage(image);
+		sprite.setTexture(texture);
+		//sprite.setScale();
+	}
 
 	virtual ~GameObject()
 	{}
@@ -24,7 +38,20 @@ public:
 	{
 		pos = vec;
 	}
+	
+	void setImage(Image _image)
+	{
+		image = _image;
+		//image.createMaskFromColor();
+		texture.loadFromImage(image);
+		sprite.setTexture(texture);
+		//sprite.setScale();
+	}
 
 protected:
+	Image image;
+	Texture texture;
+	Sprite sprite;
+
 	Vector2i pos;			//Позиция объекта в пространстве
 };

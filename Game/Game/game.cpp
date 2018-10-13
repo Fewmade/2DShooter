@@ -1,10 +1,18 @@
 #include <SFML/Graphics.hpp>
+#include "AllyNPC.h"
+#include "Creature.h"
+#include "DynamicObject.h"
+#include "EnemyNPC.h"
+#include "GameObject.h"
+#include "HealthComponent.h"
+#include "Map.h"
+#include "Player.h"
+#include "Room.h"
+#include "StaticObject.h"
 
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-	sf::CircleShape shape(100.f);
-	shape.setFillColor(sf::Color::Green);
 
 	while (window.isOpen())
 	{
@@ -16,7 +24,6 @@ int main()
 		}
 
 		window.clear();
-		window.draw(shape);
 		window.display();
 	} 
 

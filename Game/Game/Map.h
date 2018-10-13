@@ -2,8 +2,6 @@
 
 #include <vector>
 #include <queue>
-#include <stdlib.h>
-#include <time.h>
 #include "Room.h"
 
 const unsigned int MAP_WIDTH  = 11;
@@ -20,7 +18,7 @@ const unsigned int roomCreatingChance = 50;
 Но не сегодня)
 */
 
-void createRandomMap()
+void generateRandomMap()
 {
 	std::queue<Vector2i> roomCreatingQueue;
 	roomCreatingQueue.push(Vector2i(MAP_WIDTH / 2, MAP_HEIGHT / 2));
@@ -49,7 +47,7 @@ void createRandomMap()
 					{
 						checked[newCord.y][newCord.x] = true;
 
-						srand(time(NULL) + rand());
+						srand(int(time(NULL)) + rand());
 						unsigned int chance = rand() % 100;
 
 						if (chance > roomCreatingChance)
