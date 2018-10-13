@@ -16,12 +16,14 @@ public:
 
 		if (curVal > maxHp)					//Если заданное значение некорректно
 		{
-			currentHp = maxHp;
+			curVal = maxHp;
 		}
-		else
+		else if (curVal < 0)
 		{
-			currentHp = curVal;
+			curVal = 0;
 		}
+
+		currentHp = curVal;
 	}
 
 	~HealthComponent()

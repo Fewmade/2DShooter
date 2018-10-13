@@ -16,11 +16,11 @@ public:
 	{}
 
 
-	Vector2i GetPos() const
+	Vector2i getPos() const
 	{
 		return pos;
 	}
-	void SetPos(Vector2i vec)
+	void setPos(Vector2i vec)
 	{
 		pos = vec;
 	}

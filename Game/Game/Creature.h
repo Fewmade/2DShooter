@@ -24,5 +24,5 @@ public:
 	}
 
 protected:
-	HealthComponent * healthComp;
+	HealthComponent* healthComp;
 };

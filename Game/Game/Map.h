@@ -16,8 +16,8 @@ std::vector<Room> rooms;
 const unsigned int roomCreatingChance = 50;
 
 /*
-
-
+Когда-нибудь я напишу комментарии
+Но не сегодня)
 */
 
 void createRandomMap()
