@@ -8,7 +8,7 @@ class StaticObject : public GameObject
 public:
 	StaticObject()
 	{}
-	StaticObject(Image _image)
+	StaticObject(Image _image, IntRect rect = IntRect(0, 0, 32, 32))
 	{
 		image = _image;
 
@@ -20,11 +20,6 @@ public:
 
 	virtual ~StaticObject()
 	{}
-
-
-
 protected:
 
 };
-
-std::vector<StaticObject> objects(1, StaticObject(getImage("images/stone.png")));

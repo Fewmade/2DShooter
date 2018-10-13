@@ -7,9 +7,9 @@
 const unsigned int ROOM_WIDTH  = 16;
 const unsigned int ROOM_HEIGHT = 16;
 
-std::vector<std::vector<unsigned int> > generateRanomRoom()
+std::vector<std::vector<int> > generateRanomRoom()
 {
-	std::vector<std::vector<unsigned int> > map(ROOM_HEIGHT, std::vector<unsigned int>(ROOM_WIDTH));
+	std::vector<std::vector<int> > map(ROOM_HEIGHT, std::vector<int>(ROOM_WIDTH, -1));
 
 	for (unsigned int i = 0; i < ROOM_HEIGHT; i++) 
 	{
@@ -31,7 +31,7 @@ std::vector<std::vector<unsigned int> > generateRanomRoom()
 class Room
 {
 private:
-	std::vector<std::vector<unsigned int> > map;
+	std::vector<std::vector<int> > map;
 
 	// Соединено ли с правой, левой, верхней и нижней комнатой
 	bool connectingToRightRoom;
@@ -40,7 +40,7 @@ private:
 	bool connectingToDownRoom;
 
 public:
-	Room(std::vector<std::vector<unsigned int> > _map = generateRanomRoom()) : map(_map)
+	Room(std::vector<std::vector<int> > _map = generateRanomRoom()) : map(_map)
 	{
 		connectingToRightRoom = false;
 		connectingToLeftRoom  = false;
@@ -48,20 +48,20 @@ public:
 		connectingToDownRoom  = false;
 	}
 
-	std::vector<std::vector<unsigned int> > getMap()
+	std::vector<std::vector<int> > getMap()
 	{
 		return map;
 	}
-	void setMap(std::vector<std::vector<unsigned int> > _map)
+	void setMap(std::vector<std::vector<int> > _map)
 	{
 		map = _map;
 	}
 
-	void setCell(Vector2i pos, unsigned int obj)
+	void setCell(Vector2i pos, int obj)
 	{
 		map[pos.y][pos.x] = obj;
 	}
-	void setCell(unsigned int x, unsigned int y, unsigned int obj)
+	void setCell(unsigned int x, unsigned int y, int obj)
 	{
 		map[x][y] = obj;
 	}

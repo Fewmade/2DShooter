@@ -1,12 +1,4 @@
 #include <SFML/Graphics.hpp>
-
-sf::Image getImage(sf::String pathToImage)
-{
-	sf::Image im;
-	im.loadFromFile(pathToImage);
-	return im;
-}
-
 #include "AllyNPC.h"
 #include "Creature.h"
 #include "DynamicObject.h"
@@ -24,6 +16,21 @@ using namespace sf;
 const unsigned int CELL_WIDTH  = 32;
 const unsigned int CELL_HEIGHT = 32;
 
+
+const unsigned int numOfImages = 2;
+std::vector<StaticObject> objects(numOfImages);
+
+void loadImages()
+{
+	Image image;
+
+	image.loadFromFile("images/Delete.png");
+	objects[0] = StaticObject(image);
+
+	image.loadFromFile("images/empty.png");
+	objects[1] = StaticObject(image);
+}
+
 int main()
 {
 	RenderWindow window(VideoMode(ROOM_WIDTH * CELL_WIDTH, ROOM_HEIGHT * CELL_HEIGHT), "SFML works!");
@@ -40,24 +47,29 @@ int main()
 				window.close();
 		}
 		
-		std::vector<std::vector<unsigned int> > map = currectRoom.getMap();
+		window.clear();
 
+		//Прорисовка карты
+		/*std::vector<std::vector<int> > map = currectRoom.getMap();
 		for (unsigned int i = 0; i < ROOM_HEIGHT; i++)
 		{
 			for (unsigned int j = 0; j < ROOM_WIDTH; j++)
 			{
-				Sprite object = objects[currectRoom.getCell(j, i)].getSprite();
-
-				if (object.getTexture()->getSize().x > 0 &&
-					object.getTexture()->getSize().y > 0)
+				if (map[i][j] >= -1)
 				{
+					Sprite object = objects[map[j][i]].getSprite();
+
 					object.setPosition(float(j * CELL_WIDTH), float(i * CELL_HEIGHT));
 					window.draw(object);
 				}
 			}
-		}
+		}*/
 
-		window.clear();
+		Sprite sp = objects[0].getSprite();
+		std::cerr << sp.getColor().a;
+		sp.setPosition(15, 15);
+		window.draw(sp);
+
 		window.display();
 	} 
 

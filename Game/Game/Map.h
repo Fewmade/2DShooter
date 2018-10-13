@@ -7,7 +7,7 @@
 const unsigned int MAP_WIDTH  = 11;
 const unsigned int MAP_HEIGHT = 11;
 
-std::vector<std::vector<int> > globalMap(MAP_HEIGHT, std::vector<int>(MAP_WIDTH, -1));
+std::vector<std::vector<int> > globalMap(MAP_HEIGHT, std::vector<int>(MAP_WIDTH, 1));
 
 std::vector<Room> rooms;
 
