@@ -21,6 +21,15 @@
   <ItemGroup>
     <ClCompile Include="game.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AllyNPC.h" />
+    <ClInclude Include="Creature.h" />
+    <ClInclude Include="DynamicObject.h" />
+    <ClInclude Include="EnemyNPC.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="StaticObject.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{CBA2E9E3-3C61-4FBA-8D9E-AED2AD90DD9B}</ProjectGuid>
