@@ -7,19 +7,19 @@
 const unsigned int MAP_WIDTH  = 11;
 const unsigned int MAP_HEIGHT = 11;
 
-std::vector<std::vector<int> > map(MAP_HEIGHT, std::vector<int>(MAP_WIDTH, -1));
+std::vector<std::vector<int> > globalMap(MAP_HEIGHT, std::vector<int>(MAP_WIDTH, -1));
 
 std::vector<Room> rooms;
 
-const unsigned int roomCreatingChance = 50;
-
 /*
 Когда-нибудь я напишу комментарии
-Но не сегодня)
+Но не сегодня :)
 */
 
-void generateRandomMap()
+std::vector<std::vector<int> > generateRandomMap(unsigned int roomCreatingChance = 50)
 {
+	std::vector<std::vector<int> > map(MAP_HEIGHT, std::vector<int>(MAP_WIDTH, -1));
+
 	std::queue<Vector2i> roomCreatingQueue;
 	roomCreatingQueue.push(Vector2i(MAP_WIDTH / 2, MAP_HEIGHT / 2));
 
@@ -50,7 +50,7 @@ void generateRandomMap()
 						srand(int(time(NULL)) + rand());
 						unsigned int chance = rand() % 100;
 
-						if (chance > roomCreatingChance)
+						if (chance <= roomCreatingChance)
 						{
 							rooms.push_back(Room());
 							map[newCord.y][newCord.x] = rooms.size() - 1;
@@ -62,4 +62,6 @@ void generateRandomMap()
 			}
 		}
 	}
+
+	return map;
 }

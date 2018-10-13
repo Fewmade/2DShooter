@@ -7,28 +7,31 @@
 const unsigned int ROOM_WIDTH  = 16;
 const unsigned int ROOM_HEIGHT = 16;
 
-//Всё в говне
 std::vector<std::vector<StaticObject> > generateRanomRoom()
 {
 	std::vector<std::vector<StaticObject> > map(ROOM_HEIGHT, std::vector<StaticObject>(ROOM_WIDTH));
 
+	/*
 	for (unsigned int i = 0; i < ROOM_HEIGHT; i++) 
 	{
 		for (unsigned int j = 0; j < ROOM_WIDTH; j++)
 		{
 			srand(int(time(NULL)) + rand());
-			int chance = rand();
+			int chance = rand() % 100;
 
-			if (chance > 10)
+			if (chance <= 10)
 			{
-				map[i][j] = StaticObject(Vector2i(i, j));
+				map[i][j] = StaticObject(stone);
+			}
+			else
+			{
+				map[i][j] = StaticObject(empty);
 			}
 		}
-	}
+	}*/
 
 	return map;
 }
-//Дальше нормас
 
 class Room
 {
