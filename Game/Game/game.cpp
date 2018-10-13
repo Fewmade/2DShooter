@@ -1,4 +1,12 @@
 #include <SFML/Graphics.hpp>
+
+sf::Image getImage(sf::String pathToImage)
+{
+	sf::Image im;
+	im.loadFromFile(pathToImage);
+	return im;
+}
+
 #include "AllyNPC.h"
 #include "Creature.h"
 #include "DynamicObject.h"
@@ -20,8 +28,8 @@ int main()
 {
 	RenderWindow window(VideoMode(ROOM_WIDTH * CELL_WIDTH, ROOM_HEIGHT * CELL_HEIGHT), "SFML works!");
 
-	//globalMap = generateRandomMap();
-	//Room currectRoom = rooms[0];
+	globalMap = generateRandomMap();
+	Room currectRoom = rooms[0];
 
 	while (window.isOpen())
 	{
@@ -31,23 +39,23 @@ int main()
 			if (event.type == Event::Closed)
 				window.close();
 		}
-		/*
-		std::vector<std::vector<StaticObject> > map = currectRoom.getMap();
+		
+		std::vector<std::vector<unsigned int> > map = currectRoom.getMap();
 
 		for (unsigned int i = 0; i < ROOM_HEIGHT; i++)
 		{
 			for (unsigned int j = 0; j < ROOM_WIDTH; j++)
 			{
-				Sprite object = currectRoom.getMap()[j][i].getSprite();
+				Sprite object = objects[currectRoom.getCell(j, i)].getSprite();
 
 				if (object.getTexture()->getSize().x > 0 &&
-					currectRoom.getMap()[j][i].getSprite().getTexture()->getSize().y > 0)
+					object.getTexture()->getSize().y > 0)
 				{
 					object.setPosition(float(j * CELL_WIDTH), float(i * CELL_HEIGHT));
 					window.draw(object);
 				}
 			}
-		}*/
+		}
 
 		window.clear();
 		window.display();

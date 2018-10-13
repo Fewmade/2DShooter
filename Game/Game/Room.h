@@ -7,11 +7,10 @@
 const unsigned int ROOM_WIDTH  = 16;
 const unsigned int ROOM_HEIGHT = 16;
 
-std::vector<std::vector<StaticObject> > generateRanomRoom()
+std::vector<std::vector<unsigned int> > generateRanomRoom()
 {
-	std::vector<std::vector<StaticObject> > map(ROOM_HEIGHT, std::vector<StaticObject>(ROOM_WIDTH));
+	std::vector<std::vector<unsigned int> > map(ROOM_HEIGHT, std::vector<unsigned int>(ROOM_WIDTH));
 
-	/*
 	for (unsigned int i = 0; i < ROOM_HEIGHT; i++) 
 	{
 		for (unsigned int j = 0; j < ROOM_WIDTH; j++)
@@ -21,14 +20,10 @@ std::vector<std::vector<StaticObject> > generateRanomRoom()
 
 			if (chance <= 10)
 			{
-				map[i][j] = StaticObject(stone);
-			}
-			else
-			{
-				map[i][j] = StaticObject(empty);
+				map[i][j] = 0;
 			}
 		}
-	}*/
+	}
 
 	return map;
 }
@@ -36,16 +31,16 @@ std::vector<std::vector<StaticObject> > generateRanomRoom()
 class Room
 {
 private:
-	std::vector<std::vector<StaticObject> > map;
+	std::vector<std::vector<unsigned int> > map;
 
-	// —оединено ли с правой, левойЅ верхней и нижней комнатой
+	// —оединено ли с правой, левой, верхней и нижней комнатой
 	bool connectingToRightRoom;
 	bool connectingToLeftRoom;
 	bool connectingToUpRoom;
 	bool connectingToDownRoom;
 
 public:
-	Room(std::vector<std::vector<StaticObject> > _map = generateRanomRoom()) : map(_map)
+	Room(std::vector<std::vector<unsigned int> > _map = generateRanomRoom()) : map(_map)
 	{
 		connectingToRightRoom = false;
 		connectingToLeftRoom  = false;
@@ -53,22 +48,30 @@ public:
 		connectingToDownRoom  = false;
 	}
 
-	std::vector<std::vector<StaticObject> > getMap()
+	std::vector<std::vector<unsigned int> > getMap()
 	{
 		return map;
 	}
-	void setMap(std::vector<std::vector<StaticObject> > _map)
+	void setMap(std::vector<std::vector<unsigned int> > _map)
 	{
 		map = _map;
 	}
 
-	void setCell(Vector2i pos, StaticObject obj)
+	void setCell(Vector2i pos, unsigned int obj)
 	{
 		map[pos.y][pos.x] = obj;
 	}
-	StaticObject getCell(Vector2i pos)
+	void setCell(unsigned int x, unsigned int y, unsigned int obj)
+	{
+		map[x][y] = obj;
+	}
+	unsigned int getCell(Vector2i pos)
 	{
 		return map[pos.y][pos.x];
+	}
+	unsigned int getCell(unsigned int x, unsigned int y)
+	{
+		return map[y][x];
 	}
 
 	void setConnectingToRightRoom(bool value)

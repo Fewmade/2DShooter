@@ -1,5 +1,6 @@
 #pragma once
 
+#include <vector>
 #include "GameObject.h"
 
 class StaticObject : public GameObject
@@ -26,3 +27,4 @@ protected:
 
 };
 
+std::vector<StaticObject> objects(1, StaticObject(getImage("images/stone.png")));
