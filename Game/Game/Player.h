@@ -1,8 +1,8 @@
 #pragma once
-#include "GameObject.h"
+#include "Creature.h"
 
 
-class Player : public GameObject
+class Player : public Creature
 {
 public:
 	
