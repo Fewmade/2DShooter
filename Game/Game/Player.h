@@ -86,36 +86,6 @@ public:
 		return sprite;
 	}
 
-	void move(int status, float distance = 0)
-	{
-		Vector2f dPos;
-
-		switch (status)
-		{
-		case STAY: dPos.x = 0; dPos.y = 0;
-			break;
-
-		case         GO_UP: dPos.y = -distance;     dPos.x = 0;
-			break;
-		case   GO_UP_RIGHT: dPos.y = -distance / 2; dPos.x = distance / 2;
-			break;
-		case      GO_RIGHT: dPos.y = 0;             dPos.x = distance;
-			break;
-		case GO_RIGHT_DOWN: dPos.y = distance / 2;  dPos.x = distance / 2;
-			break;
-		case       GO_DOWN: dPos.y = distance;      dPos.x = 0;
-			break;
-		case  GO_DOWN_LEFT: dPos.y = distance / 2;  dPos.x = -distance / 2;
-			break;
-		case       GO_LEFT: dPos.y = 0;             dPos.x = -distance;
-			break;
-		case    GO_LEFT_UP: dPos.y = -distance / 2; dPos.x = -distance / 2;
-			break;
-		}
-
-		pos += dPos;
-	}
-
 	~Player()
 	{}
 private:
