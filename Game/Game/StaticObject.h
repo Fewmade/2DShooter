@@ -14,8 +14,19 @@ public:
 
 		//image.createMaskFromColor();
 		texture.loadFromImage(image);
+	}
+
+	void setImage(Image _image)
+	{
+		image = _image;
+		//image.createMaskFromColor();
+		texture.loadFromImage(image);
+	}
+	Sprite getSprite()
+	{
+		Sprite sprite;
 		sprite.setTexture(texture);
-		//sprite.setScale();
+		return sprite;
 	}
 
 	virtual ~StaticObject()

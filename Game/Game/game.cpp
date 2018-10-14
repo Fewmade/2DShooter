@@ -9,6 +9,8 @@
 #include "Player.h"
 #include "Room.h"
 #include "StaticObject.h"
+#include "PatrolState.h"
+#include "State.h"
 
 using namespace sf;
 
@@ -17,7 +19,7 @@ const unsigned int CELL_WIDTH  = 32;
 const unsigned int CELL_HEIGHT = 32;
 
 
-const unsigned int numOfObjects = 2;
+const unsigned int numOfObjects = 1;
 std::vector<StaticObject> objects(numOfObjects);
 
 void loadImages()
@@ -26,9 +28,6 @@ void loadImages()
 
 	image.loadFromFile("../images/stone.png");
 	objects[0] = StaticObject(image);
-
-	image.loadFromFile("../images/empty.png");
-	objects[1] = StaticObject(image);
 }
 
 int main()
@@ -39,7 +38,7 @@ int main()
 	Room currectRoom = rooms[0];
 
 	loadImages();
-
+	
 	while (window.isOpen())
 	{
 		Event event;
@@ -66,14 +65,9 @@ int main()
 				}
 			}
 		}
-		/*
-		Sprite sp = objects[0].sprite;
-		sp.setPosition(15, 15);
-		sp.setTextureRect(IntRect(0, 0, 32, 32));
-		window.draw(sp);*/
 
 		window.display();
-	} 
+	}
 
 	return 0;
 }
