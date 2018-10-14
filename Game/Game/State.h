@@ -1,7 +1,5 @@
 #pragma once
 
-#include "PatrolState.h"
-
 class State
 {
 public:
