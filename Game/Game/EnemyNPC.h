@@ -11,6 +11,7 @@ public:
 	EnemyNPC(Vector2f _pos)
 	{
 		pos = _pos;
+		id = ENEMY_BASE_NPC;
 
 		//ÍÏÑ âõîäèò â ñîñòîÿíèå ïàòğóëëèğîâàíèÿ
 		currentState = new PatrolState();
@@ -21,6 +22,7 @@ public:
 		image = _image;
 		pos = _pos;
 		pos = Vector2f(0, 0);
+		id = ENEMY_BASE_NPC;
 
 		//ÍÏÑ âõîäèò â ñîñòîÿíèå ïàòğóëëèğîâàíèÿ
 		currentState = new PatrolState(_patrolPoints, this , 0);
@@ -33,6 +35,7 @@ public:
 	{
 		pos = _pos;
 		image = _image;
+		id = ENEMY_BASE_NPC;
 
 		currentState = state;
 		currentState->enter();

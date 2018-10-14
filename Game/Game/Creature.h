@@ -4,6 +4,7 @@
 #include "DynamicObject.h"
 #include "HealthComponent.h"
 #include "Room.h"
+#include "CreaturesID.h"
 
 const int STAY = 0;
 
@@ -23,14 +24,22 @@ public:
 	{
 		healthComp = new HealthComponent(0);
 		pos = Vector2f(0, 0);
+
+		id = DEFAULT_ID;
 	}
 	Creature(Vector2f _pos, int maxHp, int currHp)
 	{
 		healthComp = new HealthComponent(maxHp, currHp);
 		pos = _pos;
+
+		id = DEFAULT_ID;
 	}
 	Creature(Image _image)
 	{
+		healthComp = new HealthComponent(0);
+		pos = Vector2f(0, 0);
+		id = DEFAULT_ID;
+
 		image = _image;
 
 		//image.createMaskFromColor();
@@ -41,6 +50,9 @@ public:
 		pos = _pos;
 		image = _image;
 
+		healthComp = new HealthComponent(0);
+		id = DEFAULT_ID;
+
 		//image.createMaskFromColor();
 		texture.loadFromImage(image);
 	}
@@ -49,9 +61,13 @@ public:
 	{
 		speed = _speed;
 	}
-	float getSpeed()
+	float getSpeed() const
 	{
 		return speed;
+	}
+	int getID() const
+	{
+		return id;
 	}
 
 	virtual ~Creature()
@@ -138,9 +154,10 @@ public:
 	}
 
 protected:
-	HealthComponent* healthComp;
+	HealthComponent*	healthComp;
 
-	float speed;
+	float				speed;
+	unsigned int		id;
 
 	
 };
