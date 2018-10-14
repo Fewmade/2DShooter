@@ -9,7 +9,7 @@ public:
 
 	DynamicObject()
 	{}
-	DynamicObject(Vector2i _pos)
+	DynamicObject(Vector2f _pos)
 	{
 		pos = _pos;
 	}
@@ -20,7 +20,7 @@ public:
 		//image.createMaskFromColor();
 		texture.loadFromImage(image);
 	}
-	DynamicObject(Vector2i _pos, Image _image)
+	DynamicObject(Vector2f _pos, Image _image)
 	{
 		pos = _pos;
 		image = _image;
@@ -45,11 +45,11 @@ public:
 	virtual ~DynamicObject()
 	{}
 
-	Vector2i GetPos() const
+	Vector2f GetPos() const
 	{
 		return pos;
 	}
-	void SetPos(Vector2i _pos)
+	void SetPos(Vector2f _pos)
 	{
 		pos = _pos;
 	}
@@ -57,5 +57,5 @@ public:
 
 
 protected:
-	Vector2i pos;			//Позиция объекта в пространстве
+	Vector2f pos;			//Позиция объекта в пространстве
 };

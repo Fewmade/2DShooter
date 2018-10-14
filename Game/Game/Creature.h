@@ -9,9 +9,9 @@ public:
 	Creature()
 	{
 		healthComp = new HealthComponent(0);
-		pos = Vector2i(0, 0);
+		pos = Vector2f(0, 0);
 	}
-	Creature(Vector2i _pos, int maxHp, int currHp)
+	Creature(Vector2f _pos, int maxHp, int currHp)
 	{
 		healthComp = new HealthComponent(maxHp, currHp);
 		pos = _pos;
@@ -23,7 +23,7 @@ public:
 		//image.createMaskFromColor();
 		texture.loadFromImage(image);
 	}
-	Creature(Vector2i _pos, Image _image)
+	Creature(Vector2f _pos, Image _image)
 	{
 		pos = _pos;
 		image = _image;

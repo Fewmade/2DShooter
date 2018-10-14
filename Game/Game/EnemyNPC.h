@@ -8,7 +8,7 @@ class EnemyNPC : public Creature
 public:
 	EnemyNPC()
 	{}
-	EnemyNPC(Vector2i _pos)
+	EnemyNPC(Vector2f _pos)
 	{
 		pos = _pos;
 
@@ -19,7 +19,7 @@ public:
 	EnemyNPC(Image _image)
 	{
 		image = _image;
-		pos = Vector2i(0, 0);
+		pos = Vector2f(0, 0);
 
 		//НПС входит в состояние патруллирования
 		currentState = new PatrolState();
@@ -28,7 +28,7 @@ public:
 		//image.createMaskFromColor();
 		texture.loadFromImage(image);
 	}
-	EnemyNPC(Vector2i _pos, Image _image, State *state)
+	EnemyNPC(Vector2f _pos, Image _image, State *state)
 	{
 		pos = _pos;
 		image = _image;
