@@ -2,6 +2,7 @@
 
 #include "State.h"
 #include <vector>
+#include <iostream>
 
 using namespace sf;
 
@@ -11,14 +12,14 @@ public:
 
 	PatrolState() : currentPoint(0)
 	{}
-	PatrolState(std::vector<Vector2i> points, DynamicObject *_owner, int currPoint)
+	PatrolState(std::vector<Vector2f> points, DynamicObject *_owner, int currPoint)
 	{
 		patrolPoints	= points;
 		owner			= _owner;
 		currentPoint	= currPoint;
-		pathOffset		= 0;
+		pathOffset		= 0.1f;
 	}
-	PatrolState(std::vector<Vector2i> points, DynamicObject *_owner, int currPoint, int _pathOffset)
+	PatrolState(std::vector<Vector2f> points, DynamicObject *_owner, int currPoint, float _pathOffset)
 	{
 		patrolPoints	= points;
 		owner			= _owner;
@@ -28,17 +29,22 @@ public:
 	~PatrolState()
 	{}
 
-	void Enter() override
+	void enter() override
 	{
-
+		std::cerr << "Enter in patrol state" << std::endl;
+		std::cerr << "Patrol points length: " << patrolPoints.size() << std::endl;
+		std::cerr << "Offset: " << pathOffset << std::endl;
+		std::cerr << "Owner: " << owner << std::endl;
 	}
 
-	void Execute() override
+	void execute() override
 	{
+		std::cerr << owner->getPos().x << "/" << owner->getPos().y << std::endl;
+
 		//Patrolling
 		if (currentPoint < patrolPoints.size() - 1)
 		{
-			Vector2i point = patrolPoints[currentPoint] - owner->GetPos();				//Находим направление в котором надо идти
+			Vector2f point = patrolPoints[currentPoint] - owner->getPos();				//Находим направление в котором надо идти
 			double vecLength = sqrt(point.x * point.x + point.y * point.y);
 			if (vecLength <= pathOffset)												//Если мы уже достигли точки
 			{
@@ -47,9 +53,9 @@ public:
 			}
 			else
 			{
-				Vector2i normalizedDir = Vector2i(point.x / vecLength, point.y / vecLength);		//Нормализованное направление
-				owner->SetPos(Vector2i(owner->GetPos().x + normalizedDir.x,							//Устанавливаем новую позицию нпс
-										owner->GetPos().y + normalizedDir.y));
+				Vector2f normalizedDir = Vector2f(point.x / vecLength, point.y / vecLength);		//Нормализованное направление
+				owner->setPos(Vector2f(owner->getPos().x + normalizedDir.x,							//Устанавливаем новую позицию нпс
+										owner->getPos().y + normalizedDir.y));
 			}
 		}
 		else
@@ -58,15 +64,15 @@ public:
 		}
 	}
 
-	void Exit() override
+	void exit() override
 	{
 
 	}
 
 private:
-	std::vector<Vector2i>	patrolPoints;
+	std::vector<Vector2f>	patrolPoints;
 	DynamicObject			*owner;
-	int						pathOffset;
+	float					pathOffset;
 	int						currentPoint;
 	
 };

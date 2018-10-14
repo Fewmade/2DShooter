@@ -10,10 +10,10 @@ public:
 	~State()
 	{}
 
-	virtual void Enter()					//Enter state
+	virtual void enter()					//Enter state
 	{}
-	virtual void Execute()					//Execute state
+	virtual void execute()					//Execute state
 	{}
-	virtual void Exit()						//Exit from state
+	virtual void exit()						//Exit from state
 	{}
 };

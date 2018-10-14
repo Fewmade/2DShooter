@@ -8,33 +8,33 @@ class EnemyNPC : public Creature
 public:
 	EnemyNPC()
 	{}
-	EnemyNPC(Vector2i _pos)
+	EnemyNPC(Vector2f _pos)
 	{
 		pos = _pos;
 
 		//НПС входит в состояние патруллирования
 		currentState = new PatrolState();
-		currentState->Enter();
+		currentState->enter();
 	}
-	EnemyNPC(Image _image)
+	EnemyNPC(Vector2f _pos, Image _image, std::vector<Vector2f> _patrolPoints)
 	{
 		image = _image;
-		pos = Vector2i(0, 0);
+		pos = _pos;
 
 		//НПС входит в состояние патруллирования
-		currentState = new PatrolState();
-		currentState->Enter();
+		currentState = new PatrolState(_patrolPoints, this , 0);
+		currentState->enter();
 
 		//image.createMaskFromColor();
 		texture.loadFromImage(image);
 	}
-	EnemyNPC(Vector2i _pos, Image _image, State *state)
+	EnemyNPC(Vector2f _pos, Image _image, State *state)
 	{
 		pos = _pos;
 		image = _image;
 
 		currentState = state;
-		currentState->Enter();
+		currentState->enter();
 
 		//image.createMaskFromColor();
 		texture.loadFromImage(image);
@@ -44,7 +44,7 @@ public:
 	{}
 
 
-	virtual void ExecuteState() const
+	virtual void executeState() const
 	{
 		//If player in seek radius and player not in seek state
 			//Change to seek state
@@ -53,7 +53,7 @@ public:
 		//Else if player too far and player not in patrol state
 			//Change to patrol state
 
-		currentState->Execute();
+		currentState->execute();
 	}
 
 protected:

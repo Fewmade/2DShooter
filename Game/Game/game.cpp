@@ -11,6 +11,7 @@
 #include "StaticObject.h"
 #include "PatrolState.h"
 #include "State.h"
+#include <iostream>
 
 using namespace sf;
 
@@ -54,6 +55,20 @@ void loadImages()
 	backgrounds[0] = texture;
 }
 
+void createTestNPC()
+{
+	Image npcImage;
+	npcImage.loadFromFile("../images/characters/soldier.png");
+
+	std::vector<Vector2f> patrolPoints;
+	patrolPoints.push_back(Vector2f(2,3));
+	patrolPoints.push_back(Vector2f(2,4));
+	patrolPoints.push_back(Vector2f(3,4));
+
+	EnemyNPC npc1(Vector2f(2, 2), npcImage , patrolPoints);
+	enemies.push_back(npc1);
+}
+
 int main()
 {
 	RenderWindow window(VideoMode(ROOM_WIDTH * CELL_WIDTH, ROOM_HEIGHT * CELL_HEIGHT), "SFML works!");
@@ -64,6 +79,10 @@ int main()
 	loadImages();
 	
 	correntbackground = 0;
+
+	//Создание тестовых нпс
+	createTestNPC();
+
 	while (window.isOpen())
 	{
 		Event event;
@@ -102,6 +121,13 @@ int main()
 				}
 			}
 		}
+
+		//Тест НПС
+		for (int i = 0; i < enemies.size(); i++)
+		{
+			//enemies[i].executeState();
+		}
+		///////////////////////////////////////
 
 		window.display();
 	}

@@ -6,7 +6,7 @@ class Player : public Creature
 {
 public:
 	
-	Player(Vector2i _pos)
+	Player(Vector2f _pos)
 	{
 		pos = _pos;
 	}
@@ -17,7 +17,7 @@ public:
 		//image.createMaskFromColor();
 		texture.loadFromImage(image);
 	}
-	Player(Vector2i _pos, Image _image)
+	Player(Vector2f _pos, Image _image)
 	{
 		pos = _pos;
 		image = _image;
