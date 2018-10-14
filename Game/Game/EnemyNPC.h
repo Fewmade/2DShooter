@@ -27,8 +27,6 @@ public:
 
 		//image.createMaskFromColor();
 		texture.loadFromImage(image);
-		sprite.setTexture(texture);
-		//sprite.setScale();
 	}
 	EnemyNPC(Vector2i _pos, Image _image, State *state)
 	{
@@ -40,8 +38,6 @@ public:
 
 		//image.createMaskFromColor();
 		texture.loadFromImage(image);
-		sprite.setTexture(texture);
-		//sprite.setScale();
 	}
 
 	virtual ~EnemyNPC()

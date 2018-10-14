@@ -9,6 +9,8 @@
 #include "Player.h"
 #include "Room.h"
 #include "StaticObject.h"
+#include "PatrolState.h"
+#include "State.h"
 
 using namespace sf;
 
@@ -28,15 +30,28 @@ std::vector<StaticObject> objects(numOfObjects);
 //***********************************************
 std::vector<EnemyNPC> enemies;
 
+const unsigned int numOfBackgrounds = 1;
+std::vector<Texture> backgrounds(numOfBackgrounds);
+unsigned int correntbackground;
+
+
 void loadImages()
 {
 	Image image;
+	Texture texture;
+	Sprite sprite;
 
-	image.loadFromFile("../images/stone.png");
+	//StaticObject
+	image.loadFromFile("../images/objects/wall.png");
 	objects[0] = StaticObject(image);
 
-	image.loadFromFile("../images/empty.png");
+	image.loadFromFile("../images/objects/stone.png");
 	objects[1] = StaticObject(image);
+
+	//Backgrounds
+	image.loadFromFile("../images/backgrounds/background1.png");
+	texture.loadFromImage(image);
+	backgrounds[0] = texture;
 }
 
 int main()
@@ -47,7 +62,8 @@ int main()
 	Room currectRoom = rooms[0];
 
 	loadImages();
-
+	
+	correntbackground = 0;
 	while (window.isOpen())
 	{
 		Event event;
@@ -56,11 +72,23 @@ int main()
 			if (event.type == Event::Closed)
 				window.close();
 		}
+
+		std::vector<std::vector<int> > map = currectRoom.getMap();
 		
 		window.clear();
 
+		//Прорисовка заднего фона
+		for (unsigned int i = 0; i < ROOM_HEIGHT; i++)
+		{
+			for (unsigned int j = 0; j < ROOM_WIDTH; j++)
+			{
+				Sprite background(backgrounds[correntbackground]);
+				background.setPosition(float(j * CELL_WIDTH), float(i * CELL_HEIGHT));
+				window.draw(background);
+			}
+		}
+
 		//Прорисовка карты
-		std::vector<std::vector<int> > map = currectRoom.getMap();
 		for (unsigned int i = 0; i < ROOM_HEIGHT; i++)
 		{
 			for (unsigned int j = 0; j < ROOM_WIDTH; j++)
@@ -74,14 +102,9 @@ int main()
 				}
 			}
 		}
-		/*
-		Sprite sp = objects[0].sprite;
-		sp.setPosition(15, 15);
-		sp.setTextureRect(IntRect(0, 0, 32, 32));
-		window.draw(sp);*/
 
 		window.display();
-	} 
+	}
 
 	return 0;
 }

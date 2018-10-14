@@ -13,8 +13,6 @@ public:
 	{
 		//image.createMaskFromColor();
 		texture.loadFromImage(image);
-		sprite.setTexture(texture);
-		//sprite.setScale();
 	}
 
 	virtual ~GameObject()
@@ -25,15 +23,14 @@ public:
 		image = _image;
 		//image.createMaskFromColor();
 		texture.loadFromImage(image);
-		sprite.setTexture(texture);
-		//sprite.setScale();
 	}
 	Sprite getSprite()
 	{
+		Sprite sprite;
+		sprite.setTexture(texture);
 		return sprite;
 	}
 protected:
 	Image image;
 	Texture texture;
-	Sprite sprite;
 };
