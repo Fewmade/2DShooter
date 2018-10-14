@@ -20,6 +20,14 @@ const unsigned int CELL_HEIGHT = 32;
 const unsigned int numOfObjects = 2;
 std::vector<StaticObject> objects(numOfObjects);
 
+//Коллекция нпс в игре
+//Необходимо пробегать по массиву нпс каждый кадр
+//И вызывать функцию ExecuteState()
+//***********************************************
+//Всех нпс подгружать до начала игры
+//***********************************************
+std::vector<EnemyNPC> enemies;
+
 void loadImages()
 {
 	Image image;

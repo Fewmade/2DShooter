@@ -36,6 +36,16 @@ public:
 	virtual ~DynamicObject()
 	{}
 
+	Vector2i GetPos() const
+	{
+		return pos;
+	}
+	void SetPos(Vector2i _pos)
+	{
+		pos = _pos;
+	}
+
+
 
 protected:
 	Vector2i pos;			//Позиция объекта в пространстве
