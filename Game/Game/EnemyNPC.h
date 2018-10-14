@@ -1,6 +1,7 @@
 #pragma once
 #include "Creature.h"
 #include "State.h"
+#include "PatrolState.h"
 
 class EnemyNPC : public Creature
 {
@@ -11,16 +12,18 @@ public:
 	{
 		pos = _pos;
 
-		//currentState = new PatrolState();
-		//currentState->Enter();
+		//НПС входит в состояние патруллирования
+		currentState = new PatrolState();
+		currentState->Enter();
 	}
 	EnemyNPC(Image _image)
 	{
 		image = _image;
 		pos = Vector2i(0, 0);
 
-		//currentState = new PatrolState();
-		//currentState->Enter();
+		//НПС входит в состояние патруллирования
+		currentState = new PatrolState();
+		currentState->Enter();
 
 		//image.createMaskFromColor();
 		texture.loadFromImage(image);
@@ -33,7 +36,7 @@ public:
 		image = _image;
 
 		currentState = state;
-		currentState->Execute();
+		currentState->Enter();
 
 		//image.createMaskFromColor();
 		texture.loadFromImage(image);
@@ -44,6 +47,19 @@ public:
 	virtual ~EnemyNPC()
 	{}
 
+
+	virtual void ExecuteState() const
+	{
+		//If player in seek radius and player not in seek state
+			//Change to seek state
+		//If player in attack radius and player not in attack state
+			//Change to attack state
+		//Else if player too far and player not in patrol state
+			//Change to patrol state
+
+		currentState->Execute();
+	}
+
 protected:
-	State * currentState;								//Current npc state
+	State * currentState;								//Текущее состояние НПС
 };

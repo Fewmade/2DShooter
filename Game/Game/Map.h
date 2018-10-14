@@ -16,6 +16,10 @@ std::vector<Room> rooms;
 Но не сегодня :)
 */
 
+/*
+Будь любезен, пожалуйста :)
+*/
+
 std::vector<std::vector<int> > generateRandomMap(unsigned int roomCreatingChance = 50)
 {
 	std::vector<std::vector<int> > map(MAP_HEIGHT, std::vector<int>(MAP_WIDTH, -1));

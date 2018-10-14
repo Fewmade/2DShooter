@@ -1,10 +1,16 @@
 #pragma once
 
-#include "PatrolState.h"
+#include <SFML/Graphics.hpp>
+
 
 class State
 {
 public:
+	State()
+	{}
+	~State()
+	{}
+
 	virtual void Enter()					//Enter state
 	{}
 	virtual void Execute()					//Execute state
