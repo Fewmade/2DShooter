@@ -20,6 +20,7 @@ public:
 	{
 		image = _image;
 		pos = _pos;
+		pos = Vector2f(0, 0);
 
 		//НПС входит в состояние патруллирования
 		currentState = new PatrolState(_patrolPoints, this , 0);

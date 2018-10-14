@@ -19,6 +19,7 @@ public:
 		currentPoint	= currPoint;
 		pathOffset		= 0.1f;
 	}
+
 	PatrolState(std::vector<Vector2f> points, DynamicObject *_owner, int currPoint, float _pathOffset)
 	{
 		patrolPoints	= points;

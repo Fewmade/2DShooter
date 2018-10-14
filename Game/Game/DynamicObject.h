@@ -45,10 +45,12 @@ public:
 	virtual ~DynamicObject()
 	{}
 
+
 	Vector2f getPos() const
 	{
 		return pos;
 	}
+
 	void setPos(Vector2f _pos)
 	{
 		pos = _pos;
