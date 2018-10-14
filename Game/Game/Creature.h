@@ -3,6 +3,17 @@
 #include "DynamicObject.h"
 #include "HealthComponent.h"
 
+const int STAY = 0;
+
+const int GO_UP = 1;
+const int GO_UP_RIGHT = 2;
+const int GO_RIGHT = 3;
+const int GO_RIGHT_DOWN = 4;
+const int GO_DOWN = 5;
+const int GO_DOWN_LEFT = 6;
+const int GO_LEFT = 7;
+const int GO_LEFT_UP = 8;
+
 class Creature : public DynamicObject
 {
 public:
@@ -45,6 +56,15 @@ public:
 		return sprite;
 	}
 
+	void setSpeed(float _speed)
+	{
+		speed = _speed;
+	}
+	float getSpeed()
+	{
+		return speed;
+	}
+
 	virtual ~Creature()
 	{
 		delete healthComp;
@@ -53,4 +73,6 @@ public:
 
 protected:
 	HealthComponent* healthComp;
+
+	float speed;
 };

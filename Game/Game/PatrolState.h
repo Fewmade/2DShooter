@@ -46,7 +46,7 @@ public:
 		if (currentPoint < patrolPoints.size() - 1)
 		{
 			Vector2f point = patrolPoints[currentPoint] - owner->getPos();				//Находим направление в котором надо идти
-			double vecLength = sqrt(point.x * point.x + point.y * point.y);
+			float vecLength = sqrt(point.x * point.x + point.y * point.y);
 			if (vecLength <= pathOffset)												//Если мы уже достигли точки
 			{
 				//Идем к следующей
@@ -74,6 +74,5 @@ private:
 	std::vector<Vector2f>	patrolPoints;
 	DynamicObject			*owner;
 	float					pathOffset;
-	int						currentPoint;
-	
+	unsigned int			currentPoint;
 };

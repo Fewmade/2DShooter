@@ -42,21 +42,17 @@ public:
 		return sprite;
 	}
 
-	virtual ~DynamicObject()
-	{}
-
-
-	Vector2f getPos() const
+	Vector2f getPos()
 	{
 		return pos;
 	}
-
 	void setPos(Vector2f _pos)
 	{
 		pos = _pos;
 	}
 
-
+	virtual ~DynamicObject()
+	{}
 
 protected:
 	Vector2f pos;			//Позиция объекта в пространстве

@@ -20,9 +20,6 @@ const unsigned int CELL_WIDTH  = 32;
 const unsigned int CELL_HEIGHT = 32;
 
 
-const unsigned int numOfObjects = 2;
-std::vector<StaticObject> objects(numOfObjects);
-
 //Коллекция нпс в игре
 //Необходимо пробегать по массиву нпс каждый кадр
 //И вызывать функцию ExecuteState()
@@ -31,9 +28,15 @@ std::vector<StaticObject> objects(numOfObjects);
 //***********************************************
 std::vector<EnemyNPC> enemies;
 
+
+const unsigned int numOfObjects = 2;
+std::vector<StaticObject> objects(numOfObjects);
+
 const unsigned int numOfBackgrounds = 1;
 std::vector<Texture> backgrounds(numOfBackgrounds);
 unsigned int correntbackground;
+
+Image playerImage;
 
 
 void loadImages()
@@ -53,8 +56,13 @@ void loadImages()
 	image.loadFromFile("../images/backgrounds/background1.png");
 	texture.loadFromImage(image);
 	backgrounds[0] = texture;
+
+	//Player
+	image.loadFromFile("../images/characters/player.png");
+	playerImage = image;
 }
 
+/*
 void createTestNPC()
 {
 	Image npcImage;
@@ -67,7 +75,7 @@ void createTestNPC()
 
 	EnemyNPC npc1(Vector2f(2, 2), npcImage , patrolPoints);
 	enemies.push_back(npc1);
-}
+}*/
 
 int main()
 {
@@ -81,10 +89,29 @@ int main()
 	correntbackground = 0;
 
 	//Создание тестовых нпс
-	createTestNPC();
+	//createTestNPC();
+
+	//Игрок
+	Player player(Vector2f(ROOM_WIDTH / 2, ROOM_HEIGHT / 2), playerImage);
+
+	// Время
+	Clock clock; // Считает время между кадрами
 
 	while (window.isOpen())
 	{
+		// Время
+		float time; //Хранит время между кадрами
+		time = float(clock.getElapsedTime().asMicroseconds());
+		clock.restart();
+
+		// Обработка движений
+		int playerStatus = getplayerStatus();
+		float distance = time * player.getSpeed();
+
+		player.move(playerStatus, distance);
+
+		std::cerr << int(player.getPos().x) << " " << int(player.getPos().y) << std::endl;
+
 		Event event;
 		while (window.pollEvent(event))
 		{
@@ -122,8 +149,14 @@ int main()
 			}
 		}
 
+		//Прорисовка игрока
+		Sprite pl = player.getSprite();
+		Vector2f pos = player.getPos();
+		pl.setPosition(float(pos.x * CELL_WIDTH), float(pos.y * CELL_HEIGHT));
+		window.draw(pl);
+
 		//Тест НПС
-		for (int i = 0; i < enemies.size(); i++)
+		for (unsigned int i = 0; i < enemies.size(); i++)
 		{
 			//enemies[i].executeState();
 		}
