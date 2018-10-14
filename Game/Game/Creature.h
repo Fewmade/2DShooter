@@ -96,7 +96,7 @@ public:
 		{
 			for (unsigned int j = unsigned(nx); j < unsigned(ceil(nx + spriteSize.x / 32)); j++)
 			{
-				if (room.getCell(j, i) >= 0 && objects[room.getCell(j, i)].getSolid())
+				if (solid && room.getCell(j, i) >= 0 && objects[room.getCell(j, i)].getSolid())
 				{
 					if (j < mx)
 					{
@@ -119,7 +119,7 @@ public:
 		{
 			for (unsigned int j = unsigned(nx); j < unsigned(ceil(nx + spriteSize.x / 32)); j++)
 			{
-				if (room.getCell(j, i) >= 0 && objects[room.getCell(j, i)].getSolid())
+				if (solid && room.getCell(j, i) >= 0 && objects[room.getCell(j, i)].getSolid())
 				{
 					if (i < my)
 					{

@@ -52,6 +52,8 @@ public:
 		pos = _pos;
 
 		speed = 0.000005f;
+
+		solid = true;
 	}
 	Player(Image _image)
 	{
@@ -61,6 +63,8 @@ public:
 		texture.loadFromImage(image);
 
 		speed = 0.000005f;
+
+		solid = true;
 	}
 	Player(Vector2f _pos, Image _image)
 	{
@@ -69,8 +73,9 @@ public:
 
 		//image.createMaskFromColor();
 		texture.loadFromImage(image);
-
 		speed = 0.000005f;
+
+		solid = true;
 	}
 
 	~Player()
