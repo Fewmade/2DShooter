@@ -19,15 +19,30 @@ const unsigned int CELL_WIDTH  = 32;
 const unsigned int CELL_HEIGHT = 32;
 
 
-const unsigned int numOfObjects = 1;
+const unsigned int numOfObjects = 2;
 std::vector<StaticObject> objects(numOfObjects);
+
+const unsigned int numOfBackgrounds = 1;
+std::vector<Texture> backgrounds(numOfBackgrounds);
+unsigned int currectbackground;
 
 void loadImages()
 {
 	Image image;
+	Texture texture;
+	Sprite sprite;
 
-	image.loadFromFile("../images/stone.png");
+	//StaticObject
+	image.loadFromFile("../images/objects/wall.png");
 	objects[0] = StaticObject(image);
+
+	image.loadFromFile("../images/objects/stone.png");
+	objects[1] = StaticObject(image);
+
+	//Backgrounds
+	image.loadFromFile("../images/backgrounds/background1.png");
+	texture.loadFromImage(image);
+	backgrounds[0] = texture;
 }
 
 int main()
@@ -39,6 +54,7 @@ int main()
 
 	loadImages();
 	
+	currectbackground = 0;
 	while (window.isOpen())
 	{
 		Event event;
@@ -47,11 +63,23 @@ int main()
 			if (event.type == Event::Closed)
 				window.close();
 		}
+
+		std::vector<std::vector<int> > map = currectRoom.getMap();
 		
 		window.clear();
 
+		//Прорисовка заднего фона
+		for (unsigned int i = 0; i < ROOM_HEIGHT; i++)
+		{
+			for (unsigned int j = 0; j < ROOM_WIDTH; j++)
+			{
+				Sprite background(backgrounds[currectbackground]);
+				background.setPosition(float(j * CELL_WIDTH), float(i * CELL_HEIGHT));
+				window.draw(background);
+			}
+		}
+
 		//Прорисовка карты
-		std::vector<std::vector<int> > map = currectRoom.getMap();
 		for (unsigned int i = 0; i < ROOM_HEIGHT; i++)
 		{
 			for (unsigned int j = 0; j < ROOM_WIDTH; j++)

@@ -7,20 +7,40 @@
 const unsigned int ROOM_WIDTH  = 16;
 const unsigned int ROOM_HEIGHT = 16;
 
+const unsigned int WALL = 0;
+const unsigned int STONE = 1;
+
 std::vector<std::vector<int> > generateRanomRoom()
 {
 	std::vector<std::vector<int> > map(ROOM_HEIGHT, std::vector<int>(ROOM_WIDTH, -1));
 
-	for (unsigned int i = 0; i < ROOM_HEIGHT; i++) 
+	//Стены по бокам
+	for (unsigned int i = 0; i < ROOM_HEIGHT; i++)
 	{
-		for (unsigned int j = 0; j < ROOM_WIDTH; j++)
-		{
-			srand(int(time(NULL)) + rand());
-			int chance = rand() % 100;
+		map[i][0] = WALL;
+		map[i][ROOM_WIDTH - 1] = WALL;
+	}
 
-			if (chance <= 10)
+	for (unsigned int j = 0; j < ROOM_WIDTH; j++)
+	{
+		map[0][j] = WALL;
+		map[ROOM_HEIGHT - 1][j] = WALL;
+	}
+
+	//Рандомно расположенные камни
+	for (unsigned int i = 1; i < ROOM_HEIGHT - 1; i++) 
+	{
+		for (unsigned int j = 0; j < ROOM_WIDTH - 1; j++)
+		{
+			if (map[i][j] == -1)
 			{
-				map[i][j] = 0;
+				srand(int(time(NULL)) + rand());
+				int chance = rand() % 100;
+
+				if (chance <= 5)
+				{
+					map[i][j] = STONE;
+				}
 			}
 		}
 	}
