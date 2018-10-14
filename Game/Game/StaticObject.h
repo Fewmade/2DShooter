@@ -16,19 +16,6 @@ public:
 		texture.loadFromImage(image);
 	}
 
-	void setImage(Image _image)
-	{
-		image = _image;
-		//image.createMaskFromColor();
-		texture.loadFromImage(image);
-	}
-	Sprite getSprite()
-	{
-		Sprite sprite;
-		sprite.setTexture(texture);
-		return sprite;
-	}
-
 	virtual ~StaticObject()
 	{}
 protected:

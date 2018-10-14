@@ -28,16 +28,13 @@ const unsigned int CELL_HEIGHT = 32;
 //***********************************************
 std::vector<EnemyNPC> enemies;
 
-
-const unsigned int numOfObjects = 2;
-std::vector<StaticObject> objects(numOfObjects);
-
 const unsigned int numOfBackgrounds = 1;
 std::vector<Texture> backgrounds(numOfBackgrounds);
 unsigned int correntbackground;
 
 Image playerImage;
 
+unsigned int currentRoom;
 
 void loadImages()
 {
@@ -48,9 +45,11 @@ void loadImages()
 	//StaticObject
 	image.loadFromFile("../images/objects/wall.png");
 	objects[0] = StaticObject(image);
+	objects[0].setSolid(true);
 
 	image.loadFromFile("../images/objects/stone.png");
 	objects[1] = StaticObject(image);
+	objects[1].setSolid(false);
 
 	//Backgrounds
 	image.loadFromFile("../images/backgrounds/background1.png");
@@ -82,7 +81,7 @@ int main()
 	RenderWindow window(VideoMode(ROOM_WIDTH * CELL_WIDTH, ROOM_HEIGHT * CELL_HEIGHT), "SFML works!");
 
 	globalMap = generateRandomMap();
-	Room currectRoom = rooms[0];
+	currentRoom = 0;
 
 	loadImages();
 	
@@ -107,10 +106,10 @@ int main()
 		// Обработка движений
 		int playerStatus = getplayerStatus();
 		float distance = time * player.getSpeed();
+		
+		player.move(rooms[currentRoom], playerStatus, distance);
 
-		player.move(playerStatus, distance);
-
-		std::cerr << int(player.getPos().x) << " " << int(player.getPos().y) << std::endl;
+		//std::cerr << int(player.getPos().x) << " " << int(player.getPos().y) << std::endl;
 
 		Event event;
 		while (window.pollEvent(event))
@@ -119,7 +118,7 @@ int main()
 				window.close();
 		}
 
-		std::vector<std::vector<int> > map = currectRoom.getMap();
+		std::vector<std::vector<int> > map = rooms[currentRoom].getMap();
 		
 		window.clear();
 

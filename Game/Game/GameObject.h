@@ -14,9 +14,6 @@ public:
 		//image.createMaskFromColor();
 		texture.loadFromImage(image);
 	}
-
-	virtual ~GameObject()
-	{}
 	
 	void setImage(Image _image)
 	{
@@ -30,7 +27,33 @@ public:
 		sprite.setTexture(texture);
 		return sprite;
 	}
+
+	void setSolid(bool _solid)
+	{
+		solid = _solid;
+	}
+	bool getSolid()
+	{
+		return solid;
+	}
+
+	/*void setSpriteSize(Vector2i size)
+	{
+		spriteSize = size;
+	}
+	Vector2i getSpriteSize()
+	{
+		return spriteSize;
+	}*/
+
+	virtual ~GameObject()
+	{}
+
 protected:
 	Image image;
 	Texture texture;
+
+	bool solid;
+
+	Vector2i spriteSize = Vector2i(32, 32);
 };

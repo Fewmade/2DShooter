@@ -1,7 +1,9 @@
 #pragma once
 
+#include <cmath>
 #include "DynamicObject.h"
 #include "HealthComponent.h"
+#include "Room.h"
 
 const int STAY = 0;
 
@@ -43,19 +45,6 @@ public:
 		texture.loadFromImage(image);
 	}
 
-	void setImage(Image _image)
-	{
-		image = _image;
-		//image.createMaskFromColor();
-		texture.loadFromImage(image);
-	}
-	Sprite getSprite()
-	{
-		Sprite sprite;
-		sprite.setTexture(texture);
-		return sprite;
-	}
-
 	void setSpeed(float _speed)
 	{
 		speed = _speed;
@@ -71,9 +60,9 @@ public:
 		healthComp = nullptr;
 	}
 
-
-	void move(int status, float distance = 0)
+	void move(Room & room, int status, float distance = 0)
 	{
+		Vector2f newPos;
 		Vector2f dPos;
 
 		switch (status)
@@ -99,11 +88,59 @@ public:
 			break;
 		}
 
-		pos += dPos;
+		float nx = pos.x + dPos.x;
+		float ny = pos.y;
+
+		unsigned int mx = unsigned(nx + ceil(nx + spriteSize.x / 32)) / 2;
+		for (unsigned int i = unsigned(ny); i < unsigned(ceil(ny + spriteSize.y / 32)); i++)
+		{
+			for (unsigned int j = unsigned(nx); j < unsigned(ceil(nx + spriteSize.x / 32)); j++)
+			{
+				if (room.getCell(j, i) >= 0 && objects[room.getCell(j, i)].getSolid())
+				{
+					if (j < mx)
+					{
+						nx = float(j + 1);
+					}
+					else
+					{
+						nx = float(j - spriteSize.x / 32);
+					}
+				}
+			}
+		}
+		newPos.x = nx;
+		
+		nx = pos.x;
+		ny = pos.y + dPos.y;
+
+		unsigned int my = unsigned(ny + ceil(ny + spriteSize.y / 32)) / 2;
+		for (unsigned int i = unsigned(ny); i < unsigned(ceil(ny + spriteSize.y / 32)); i++)
+		{
+			for (unsigned int j = unsigned(nx); j < unsigned(ceil(nx + spriteSize.x / 32)); j++)
+			{
+				if (room.getCell(j, i) >= 0 && objects[room.getCell(j, i)].getSolid())
+				{
+					if (i < my)
+					{
+						ny = float(i + 1);
+					}
+					else
+					{
+						ny = float(i - spriteSize.y / 32);
+					}
+				}
+			}
+		}
+		newPos.y = ny;
+
+		pos = newPos;
 	}
 
 protected:
 	HealthComponent* healthComp;
 
 	float speed;
+
+	
 };

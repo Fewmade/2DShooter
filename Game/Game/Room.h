@@ -10,6 +10,10 @@ const unsigned int ROOM_HEIGHT = 16;
 const unsigned int WALL = 0;
 const unsigned int STONE = 1;
 
+const unsigned int numOfObjects = 2;
+std::vector<StaticObject> objects(numOfObjects);
+
+
 std::vector<std::vector<int> > generateRanomRoom()
 {
 	std::vector<std::vector<int> > map(ROOM_HEIGHT, std::vector<int>(ROOM_WIDTH, -1));
@@ -83,13 +87,13 @@ public:
 	}
 	void setCell(unsigned int x, unsigned int y, int obj)
 	{
-		map[x][y] = obj;
+		map[y][x] = obj;
 	}
-	unsigned int getCell(Vector2i pos)
+	int getCell(Vector2i pos)
 	{
 		return map[pos.y][pos.x];
 	}
-	unsigned int getCell(unsigned int x, unsigned int y)
+	int getCell(unsigned int x, unsigned int y)
 	{
 		return map[y][x];
 	}
