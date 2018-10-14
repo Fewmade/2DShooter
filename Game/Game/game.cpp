@@ -17,17 +17,17 @@ const unsigned int CELL_WIDTH  = 32;
 const unsigned int CELL_HEIGHT = 32;
 
 
-const unsigned int numOfImages = 2;
-std::vector<StaticObject> objects(numOfImages);
+const unsigned int numOfObjects = 2;
+std::vector<StaticObject> objects(numOfObjects);
 
 void loadImages()
 {
 	Image image;
 
-	image.loadFromFile("images/Delete.png");
+	image.loadFromFile("../images/stone.png");
 	objects[0] = StaticObject(image);
 
-	image.loadFromFile("images/empty.png");
+	image.loadFromFile("../images/empty.png");
 	objects[1] = StaticObject(image);
 }
 
@@ -37,6 +37,8 @@ int main()
 
 	globalMap = generateRandomMap();
 	Room currectRoom = rooms[0];
+
+	loadImages();
 
 	while (window.isOpen())
 	{
@@ -50,7 +52,7 @@ int main()
 		window.clear();
 
 		//Прорисовка карты
-		/*std::vector<std::vector<int> > map = currectRoom.getMap();
+		std::vector<std::vector<int> > map = currectRoom.getMap();
 		for (unsigned int i = 0; i < ROOM_HEIGHT; i++)
 		{
 			for (unsigned int j = 0; j < ROOM_WIDTH; j++)
@@ -63,12 +65,12 @@ int main()
 					window.draw(object);
 				}
 			}
-		}*/
-
-		Sprite sp = objects[0].getSprite();
-		std::cerr << sp.getColor().a;
+		}
+		/*
+		Sprite sp = objects[0].sprite;
 		sp.setPosition(15, 15);
-		window.draw(sp);
+		sp.setTextureRect(IntRect(0, 0, 32, 32));
+		window.draw(sp);*/
 
 		window.display();
 	} 
