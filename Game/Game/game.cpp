@@ -24,7 +24,7 @@ std::vector<StaticObject> objects(numOfObjects);
 
 const unsigned int numOfBackgrounds = 1;
 std::vector<Texture> backgrounds(numOfBackgrounds);
-unsigned int currectbackground;
+unsigned int correntbackground;
 
 void loadImages()
 {
@@ -54,7 +54,7 @@ int main()
 
 	loadImages();
 	
-	currectbackground = 0;
+	correntbackground = 0;
 	while (window.isOpen())
 	{
 		Event event;
@@ -73,7 +73,7 @@ int main()
 		{
 			for (unsigned int j = 0; j < ROOM_WIDTH; j++)
 			{
-				Sprite background(backgrounds[currectbackground]);
+				Sprite background(backgrounds[correntbackground]);
 				background.setPosition(float(j * CELL_WIDTH), float(i * CELL_HEIGHT));
 				window.draw(background);
 			}
