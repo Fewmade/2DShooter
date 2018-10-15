@@ -7,7 +7,6 @@
 #include "Room.h"
 #include "Consts.h"
 
-
 class Creature : public DynamicObject
 {
 public:
@@ -59,12 +58,13 @@ public:
 		healthComp = nullptr;
 	}
 
-	void move(Room & room, int dir, float distance)
+
+	void move(Room & room, int directory, float distance)
 	{
 		Vector2f newPos; // Новая позиция
 		Vector2f dPos;   // Изменение координат
 
-		switch (dir)
+		switch (directory)
 		{
 		case         UP: dPos.y = -distance;                   dPos.x = 0;
 			break;
