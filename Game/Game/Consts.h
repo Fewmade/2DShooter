@@ -4,7 +4,7 @@
 const unsigned int CELL_WIDTH = 32;
 const unsigned int CELL_HEIGHT = 32;
 
-// Направления движения Creature
+// Направления
 const int UP         = 1;
 const int UP_RIGHT   = 2;
 const int RIGHT      = 3;
@@ -14,22 +14,14 @@ const int DOWN_LEFT  = 6;
 const int LEFT       = 7;
 const int LEFT_UP    = 8;
 
-// Размер глобальной карты
-const unsigned int MAP_WIDTH  = 11;
-const unsigned int MAP_HEIGHT = 11;
-
 // Размер комнаты
-const unsigned int ROOM_WIDTH  = 16;
-const unsigned int ROOM_HEIGHT = 16;
+const unsigned int ROOM_WIDTH  = 15;
+const unsigned int ROOM_HEIGHT = 15;
 
 // Состояния Player
 const int STAY = 0;
 const int GO   = 1;
 const int RUN  = 2;
-
-//id Creatures
-const unsigned int DEFAULT_ID = 0;
-const unsigned int ENEMY_BASE_NPC = 1;
 
 // Количество  обьектов
 const unsigned int numOfObjects = 3;
@@ -41,4 +33,12 @@ const unsigned int DOOR  = 2;
 
 // Количество задних фонов
 const unsigned int numOfBackgrounds = 1;
+
+
+// ID существ
+const unsigned int DEFAULT_ID     = 0;
+const unsigned int ENEMY_BASE_NPC = 1;
+
+// Максимальное количество комнат
+const unsigned int maxNumberOfRooms = 10;
 

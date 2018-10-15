@@ -6,7 +6,7 @@
 
 std::vector<StaticObject> objects(numOfObjects);
 
-std::vector<std::vector<int> > generateRanomRoom()
+std::vector<std::vector<int> > generateRandomRoom(bool upRoom, bool rightRoom, bool downRoom, bool leftRoom)
 {
 	std::vector<std::vector<int> > map(ROOM_HEIGHT, std::vector<int>(ROOM_WIDTH, -1));
 
@@ -41,6 +41,24 @@ std::vector<std::vector<int> > generateRanomRoom()
 		}
 	}
 
+	// Двери
+	if (upRoom)
+	{
+		map[0][ROOM_WIDTH / 2]           = DOOR;
+	}
+	if (rightRoom)
+	{
+		map[ROOM_HEIGHT / 2][ROOM_WIDTH - 1] = DOOR;
+	}
+	if (downRoom)
+	{
+		map[ROOM_HEIGHT - 1][ROOM_WIDTH / 2] = DOOR;
+	}
+	if (leftRoom)
+	{
+		map[ROOM_HEIGHT / 2][0]          = DOOR;
+	}
+
 	return map;
 }
 
@@ -49,20 +67,11 @@ class Room
 private:
 	std::vector<std::vector<int> > map;
 
-	// Соединено ли с правой, левой, верхней и нижней комнатой
-	bool connectingToRightRoom;
-	bool connectingToLeftRoom;
-	bool connectingToUpRoom;
-	bool connectingToDownRoom;
-
+	// Матрица смежности
+	std::vector<std::vector<int> > adjacencyMatrix;
 public:
-	Room(std::vector<std::vector<int> > _map = generateRanomRoom()) : map(_map)
-	{
-		connectingToRightRoom = false;
-		connectingToLeftRoom  = false;
-		connectingToUpRoom    = false;
-		connectingToDownRoom  = false;
-	}
+	Room(std::vector<std::vector<int> > _map) : map(_map)
+	{ }
 
 	std::vector<std::vector<int> > getMap()
 	{
@@ -81,6 +90,7 @@ public:
 	{
 		map[y][x] = obj;
 	}
+
 	int getCell(Vector2i pos)
 	{
 		return map[pos.y][pos.x];
@@ -88,40 +98,6 @@ public:
 	int getCell(unsigned int x, unsigned int y)
 	{
 		return map[y][x];
-	}
-
-	void setConnectingToRightRoom(bool value)
-	{
-		connectingToRightRoom = value;
-	}
-	void setConnectingToLeftRoom(bool value)
-	{
-		connectingToLeftRoom = value;
-	}
-	void setConnectingToUpRoom(bool value)
-	{
-		connectingToUpRoom = value;
-	}
-	void setConnectingToDownRoom(bool value)
-	{
-		connectingToDownRoom = value;
-	}
-
-	bool getConnectingToRightRoom()
-	{
-		return connectingToRightRoom;
-	}
-	bool getConnectingToLeftRoom()
-	{
-		return connectingToLeftRoom;
-	}
-	bool getConnectingToUpRoom()
-	{
-		return connectingToUpRoom;
-	}
-	bool getConnectingToDownRoom()
-	{
-		return connectingToDownRoom;
 	}
 };
 
