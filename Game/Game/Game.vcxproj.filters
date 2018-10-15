@@ -59,5 +59,8 @@
     <ClInclude Include="PatrolState.h">
       <Filter>Файлы заголовков\AI</Filter>
     </ClInclude>
+    <ClInclude Include="Consts.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

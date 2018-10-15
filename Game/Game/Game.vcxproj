@@ -23,6 +23,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllyNPC.h" />
+    <ClInclude Include="Consts.h" />
     <ClInclude Include="Creature.h" />
     <ClInclude Include="DynamicObject.h" />
     <ClInclude Include="EnemyNPC.h" />
