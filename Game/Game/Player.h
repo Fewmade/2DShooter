@@ -1,46 +1,73 @@
 #pragma once
 #include "Creature.h"
 
-int getplayerStatus()
+// Conditions
+const int STAY = 0;
+const int GO   = 1;
+const int RUN  = 2;
+
+struct PlayerStatus
 {
+	int condition;
+	int dir;
+};
+
+PlayerStatus getPlayerStatus()
+{
+	PlayerStatus status;
+	status.condition = STAY;
+
 	// Движение по диагоналям
 	if (Keyboard::isKeyPressed(Keyboard::W) && Keyboard::isKeyPressed(Keyboard::D))
 	{
-		return GO_UP_RIGHT;
+		status.condition = GO;
+		status.dir = UP_RIGHT;
 	}
-	if (Keyboard::isKeyPressed(Keyboard::D) && Keyboard::isKeyPressed(Keyboard::S))
+	else if (Keyboard::isKeyPressed(Keyboard::D) && Keyboard::isKeyPressed(Keyboard::S))
 	{
-		return GO_RIGHT_DOWN;
+		status.condition = GO;
+		status.dir = RIGHT_DOWN;
 	}
-	if (Keyboard::isKeyPressed(Keyboard::S) && Keyboard::isKeyPressed(Keyboard::A))
+	else if (Keyboard::isKeyPressed(Keyboard::S) && Keyboard::isKeyPressed(Keyboard::A))
 	{
-		return GO_DOWN_LEFT;
+		status.condition = GO;
+		status.dir = DOWN_LEFT;
 	}
-	if (Keyboard::isKeyPressed(Keyboard::A) && Keyboard::isKeyPressed(Keyboard::W))
+	else if (Keyboard::isKeyPressed(Keyboard::A) && Keyboard::isKeyPressed(Keyboard::W))
 	{
-		return GO_LEFT_UP;
+		status.condition = GO;
+		status.dir = LEFT_UP;
 	}
 
 	// Движение по прямым
-	if (Keyboard::isKeyPressed(Keyboard::W))
+	else if (Keyboard::isKeyPressed(Keyboard::W))
 	{
-		return GO_UP;
+		status.condition = GO;
+		status.dir = UP;
 	}
-	if (Keyboard::isKeyPressed(Keyboard::D))
+	else if (Keyboard::isKeyPressed(Keyboard::D))
 	{
-		return GO_RIGHT;
+		status.condition = GO;
+		status.dir = RIGHT;
 	}
-	if (Keyboard::isKeyPressed(Keyboard::S))
+	else if (Keyboard::isKeyPressed(Keyboard::S))
 	{
-		return GO_DOWN;
+		status.condition = GO;
+		status.dir = DOWN;
 	}
-	if (Keyboard::isKeyPressed(Keyboard::A))
+	else if (Keyboard::isKeyPressed(Keyboard::A))
 	{
-		return GO_LEFT;
+		status.condition = GO;
+		status.dir = LEFT;
 	}
 
-	// Если ничего из этого
-	return STAY;
+	// Бег
+	if (Keyboard::isKeyPressed(Keyboard::LShift) && status.condition != STAY)
+	{
+		status.condition = RUN;
+	}
+
+	return status;
 }
 
 class Player : public Creature

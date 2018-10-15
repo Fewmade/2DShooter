@@ -91,7 +91,7 @@ int main()
 
 	//Игрок
 	Player player(playerImage, Vector2f(ROOM_WIDTH / 2, ROOM_HEIGHT / 2), 100, 100, true, Vector2i(32, 64));
-	player.setSpeed(0.000005f);
+	player.setSpeed(0.000003f);
 
 	// Время
 	Clock clock; // Считает время между кадрами
@@ -104,12 +104,22 @@ int main()
 		clock.restart();
 
 		// Обработка движений
-		int playerStatus = getplayerStatus();
+		PlayerStatus playerStatus = getPlayerStatus();
 		float distance = time * player.getSpeed();
-		
-		std::cerr << playerStatus << " " << distance << "\n";
 
-		player.move(rooms[currentRoom], playerStatus, distance);
+		if (playerStatus.condition != STAY)
+		{
+			if (playerStatus.condition == GO)
+			{
+				player.setSpeed(0.000003f);
+			}
+			else if (playerStatus.condition == RUN)
+			{
+				player.setSpeed(0.000007f);
+			}
+
+			player.move(rooms[currentRoom], playerStatus.dir, distance);
+		}
 
 		//std::cerr << int(player.getPos().x) << " " << int(player.getPos().y) << std::endl;
 

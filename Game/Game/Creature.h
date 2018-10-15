@@ -6,16 +6,16 @@
 #include "Room.h"
 #include "CreaturesID.h"
 
-const int STAY = 0;
 
-const int GO_UP = 1;
-const int GO_UP_RIGHT = 2;
-const int GO_RIGHT = 3;
-const int GO_RIGHT_DOWN = 4;
-const int GO_DOWN = 5;
-const int GO_DOWN_LEFT = 6;
-const int GO_LEFT = 7;
-const int GO_LEFT_UP = 8;
+// Directions
+const int UP = 1;
+const int UP_RIGHT = 2;
+const int RIGHT = 3;
+const int RIGHT_DOWN = 4;
+const int DOWN = 5;
+const int DOWN_LEFT = 6;
+const int LEFT = 7;
+const int LEFT_UP = 8;
 
 class Creature : public DynamicObject
 {
@@ -69,24 +69,21 @@ public:
 
 		switch (status)
 		{
-		case STAY: dPos.x = 0; dPos.y = 0;
+		case         UP: dPos.y = -distance;                   dPos.x = 0;
 			break;
-
-		case         GO_UP: dPos.y = -distance;                   dPos.x = 0;
+		case   UP_RIGHT: dPos.y = -sqrt(pow(distance, 2) / 2); dPos.x = sqrt(pow(distance, 2) / 2);
 			break;
-		case   GO_UP_RIGHT: dPos.y = -sqrt(pow(distance, 2) / 2); dPos.x = sqrt(pow(distance, 2) / 2);
+		case      RIGHT: dPos.y = 0;                           dPos.x = distance;
 			break;
-		case      GO_RIGHT: dPos.y = 0;                           dPos.x = distance;
+		case RIGHT_DOWN: dPos.y = sqrt(pow(distance, 2) / 2);  dPos.x = sqrt(pow(distance, 2) / 2);
 			break;
-		case GO_RIGHT_DOWN: dPos.y = sqrt(pow(distance, 2) / 2);  dPos.x = sqrt(pow(distance, 2) / 2);
+		case       DOWN: dPos.y = distance;                    dPos.x = 0;
 			break;
-		case       GO_DOWN: dPos.y = distance;                    dPos.x = 0;
+		case  DOWN_LEFT: dPos.y = sqrt(pow(distance, 2) / 2);  dPos.x = -sqrt(pow(distance, 2) / 2);
 			break;
-		case  GO_DOWN_LEFT: dPos.y = sqrt(pow(distance, 2) / 2);  dPos.x = -sqrt(pow(distance, 2) / 2);
+		case       LEFT: dPos.y = 0;                           dPos.x = -distance;
 			break;
-		case       GO_LEFT: dPos.y = 0;                           dPos.x = -distance;
-			break;
-		case    GO_LEFT_UP: dPos.y = -sqrt(pow(distance, 2) / 2); dPos.x = -sqrt(pow(distance, 2) / 2);
+		case    LEFT_UP: dPos.y = -sqrt(pow(distance, 2) / 2); dPos.x = -sqrt(pow(distance, 2) / 2);
 			break;
 		}
 
