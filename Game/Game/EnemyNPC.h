@@ -8,7 +8,7 @@ class EnemyNPC : public Creature
 public:
 	EnemyNPC()
 	{}
-	EnemyNPC(Vector2f _pos)
+	EnemyNPC(Image _image, Vector2f _pos, bool _solid = false, Vector2i _spriteSize = Vector2i(32, 32))
 	{
 		pos = _pos;
 		id = ENEMY_BASE_NPC;
@@ -16,32 +16,44 @@ public:
 		//НПС входит в состояние патруллирования
 		currentState = new PatrolState();
 		currentState->enter();
-	}
-	EnemyNPC(Vector2f _pos, Image _image, std::vector<Vector2f> _patrolPoints)
-	{
+
 		image = _image;
+		//image.createMaskFromColor();
+		texture.loadFromImage(image);
+
+		solid = _solid;
+		spriteSize = _spriteSize;
+	}
+	EnemyNPC(Image _image, Vector2f _pos, std::vector<Vector2f> _patrolPoints, bool _solid = false, Vector2i _spriteSize = Vector2i(32, 32))
+	{
 		pos = _pos;
-		pos = Vector2f(0, 0);
 		id = ENEMY_BASE_NPC;
 
 		//НПС входит в состояние патруллирования
-		currentState = new PatrolState(_patrolPoints, this , 0);
+		currentState = new PatrolState(_patrolPoints, this, 0);
 		currentState->enter();
 
+		image = _image;
 		//image.createMaskFromColor();
 		texture.loadFromImage(image);
+
+		solid = _solid;
+		spriteSize = _spriteSize;
 	}
-	EnemyNPC(Vector2f _pos, Image _image, State *state)
+	EnemyNPC(Image _image, Vector2f _pos, State *state, bool _solid = false, Vector2i _spriteSize = Vector2i(32, 32))
 	{
 		pos = _pos;
-		image = _image;
 		id = ENEMY_BASE_NPC;
 
 		currentState = state;
 		currentState->enter();
 
+		image = _image;
 		//image.createMaskFromColor();
 		texture.loadFromImage(image);
+
+		solid = _solid;
+		spriteSize = _spriteSize;
 	}
 
 	virtual ~EnemyNPC()

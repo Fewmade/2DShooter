@@ -6,28 +6,21 @@ using namespace sf;
 class GameObject
 {
 public:
-
 	GameObject()
 	{}
-	GameObject(Image _image) : image(_image)
+	GameObject(Image _image, bool _solid = false, Vector2i _spriteSize = Vector2i(32, 32)) : image(_image), spriteSize(_spriteSize), solid(_solid)
 	{
 		//image.createMaskFromColor();
 		texture.loadFromImage(image);
 	}
 	
-	void setImage(Image _image)
-	{
-		image = _image;
-		//image.createMaskFromColor();
-		texture.loadFromImage(image);
-	}
 	Sprite getSprite()
 	{
 		Sprite sprite;
 		sprite.setTexture(texture);
 		return sprite;
 	}
-
+	
 	void setSolid(bool _solid)
 	{
 		solid = _solid;
@@ -37,14 +30,14 @@ public:
 		return solid;
 	}
 
-	/*void setSpriteSize(Vector2i size)
+	void setSpriteSize(Vector2i size)
 	{
 		spriteSize = size;
 	}
 	Vector2i getSpriteSize()
 	{
 		return spriteSize;
-	}*/
+	}
 
 	virtual ~GameObject()
 	{}

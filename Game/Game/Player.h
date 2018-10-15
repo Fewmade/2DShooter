@@ -46,36 +46,27 @@ int getplayerStatus()
 class Player : public Creature
 {
 public:
-	
-	Player(Vector2f _pos)
+	Player()
 	{
-		pos = _pos;
+		healthComp = new HealthComponent(0);
+		pos = Vector2f(0, 0);
 
-		speed = 0.000005f;
-
-		solid = true;
+		id = DEFAULT_ID;
 	}
-	Player(Image _image)
+	Player(Image _image, Vector2f _pos, int maxHp, int currHp, bool _solid = false, Vector2i _spriteSize = Vector2i(32, 32))
 	{
 		image = _image;
 
 		//image.createMaskFromColor();
 		texture.loadFromImage(image);
 
-		speed = 0.000005f;
-
-		solid = true;
-	}
-	Player(Vector2f _pos, Image _image)
-	{
+		healthComp = new HealthComponent(maxHp, currHp);
 		pos = _pos;
-		image = _image;
 
-		//image.createMaskFromColor();
-		texture.loadFromImage(image);
-		speed = 0.000005f;
+		id = DEFAULT_ID;
 
-		solid = true;
+		solid = _solid;
+		spriteSize = _spriteSize;
 	}
 
 	~Player()

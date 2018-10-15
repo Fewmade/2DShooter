@@ -9,25 +9,17 @@ public:
 
 	DynamicObject()
 	{}
-	DynamicObject(Vector2f _pos)
-	{
-		pos = _pos;
-	}
-	DynamicObject(Image _image)
+	DynamicObject(Image _image, Vector2f _pos, bool _solid = false, Vector2i _spriteSize = Vector2i(32, 32)) : pos(_pos)
 	{
 		image = _image;
 
 		//image.createMaskFromColor();
 		texture.loadFromImage(image);
-	}
-	DynamicObject(Vector2f _pos, Image _image)
-	{
-		pos = _pos;
-		image = _image;
 
-		//image.createMaskFromColor();
-		texture.loadFromImage(image);
+		solid = _solid;
+		spriteSize = _spriteSize;
 	}
+	
 
 	Vector2f getPos()
 	{

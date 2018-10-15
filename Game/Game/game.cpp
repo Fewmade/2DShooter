@@ -44,12 +44,10 @@ void loadImages()
 
 	//StaticObject
 	image.loadFromFile("../images/objects/wall.png");
-	objects[0] = StaticObject(image);
-	objects[0].setSolid(true);
+	objects[0] = StaticObject(image, true);
 
 	image.loadFromFile("../images/objects/stone.png");
 	objects[1] = StaticObject(image);
-	objects[1].setSolid(false);
 
 	//Backgrounds
 	image.loadFromFile("../images/backgrounds/background1.png");
@@ -78,7 +76,8 @@ void createTestNPC()
 
 int main()
 {
-	RenderWindow window(VideoMode(ROOM_WIDTH * CELL_WIDTH, ROOM_HEIGHT * CELL_HEIGHT), "SFML works!");
+	RenderWindow window(VideoMode(ROOM_WIDTH * CELL_WIDTH, ROOM_HEIGHT * CELL_HEIGHT), "2D Shooter");
+	window.setFramerateLimit(120);
 
 	globalMap = generateRandomMap();
 	currentRoom = 0;
@@ -91,7 +90,8 @@ int main()
 	//createTestNPC();
 
 	//Игрок
-	Player player(Vector2f(ROOM_WIDTH / 2, ROOM_HEIGHT / 2), playerImage);
+	Player player(playerImage, Vector2f(ROOM_WIDTH / 2, ROOM_HEIGHT / 2), 100, 100, true, Vector2i(32, 64));
+	player.setSpeed(0.000005f);
 
 	// Время
 	Clock clock; // Считает время между кадрами
@@ -107,6 +107,8 @@ int main()
 		int playerStatus = getplayerStatus();
 		float distance = time * player.getSpeed();
 		
+		std::cerr << playerStatus << " " << distance << "\n";
+
 		player.move(rooms[currentRoom], playerStatus, distance);
 
 		//std::cerr << int(player.getPos().x) << " " << int(player.getPos().y) << std::endl;

@@ -27,34 +27,20 @@ public:
 
 		id = DEFAULT_ID;
 	}
-	Creature(Vector2f _pos, int maxHp, int currHp)
+	Creature(Image _image, Vector2f _pos, int maxHp, int currHp, bool _solid = false, Vector2i _spriteSize = Vector2i(32, 32))
 	{
+		image = _image;
+
+		//image.createMaskFromColor();
+		texture.loadFromImage(image);
+
 		healthComp = new HealthComponent(maxHp, currHp);
 		pos = _pos;
 
 		id = DEFAULT_ID;
-	}
-	Creature(Image _image)
-	{
-		healthComp = new HealthComponent(0);
-		pos = Vector2f(0, 0);
-		id = DEFAULT_ID;
 
-		image = _image;
-
-		//image.createMaskFromColor();
-		texture.loadFromImage(image);
-	}
-	Creature(Vector2f _pos, Image _image)
-	{
-		pos = _pos;
-		image = _image;
-
-		healthComp = new HealthComponent(0);
-		id = DEFAULT_ID;
-
-		//image.createMaskFromColor();
-		texture.loadFromImage(image);
+		solid = _solid;
+		spriteSize = _spriteSize;
 	}
 
 	void setSpeed(float _speed)
@@ -158,6 +144,4 @@ protected:
 
 	float				speed;
 	unsigned int		id;
-
-	
 };
