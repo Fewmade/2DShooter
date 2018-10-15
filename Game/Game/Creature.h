@@ -5,8 +5,6 @@
 #include "DynamicObject.h"
 #include "HealthComponent.h"
 #include "Room.h"
-#include "CreaturesID.h"
-
 
 class Creature : public DynamicObject
 {
@@ -53,12 +51,12 @@ public:
 		healthComp = nullptr;
 	}
 
-	void move(Room & room, int status, float distance = 0)
+	void move(Room & room, int directory, float distance = 0)
 	{
 		Vector2f newPos; // Новая позиция
 		Vector2f dPos;   // Изменение координат
 
-		switch (status)
+		switch (directory)
 		{
 		case         UP: dPos.y = -distance;                   dPos.x = 0;
 			break;
