@@ -4,14 +4,6 @@
 #include <iostream>
 #include "StaticObject.h"
 
-const unsigned int ROOM_WIDTH  = 16;
-const unsigned int ROOM_HEIGHT = 16;
-
-
-const unsigned int WALL = 0;
-const unsigned int STONE = 1;
-
-const unsigned int numOfObjects = 2;
 std::vector<StaticObject> objects(numOfObjects);
 
 std::vector<std::vector<int> > generateRanomRoom()

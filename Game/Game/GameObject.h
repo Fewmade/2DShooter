@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-using namespace sf;
 
+using namespace sf;
 
 class GameObject
 {
@@ -46,7 +46,7 @@ protected:
 	Image image;
 	Texture texture;
 
-	bool solid;
+	bool solid;  // Твёрдый ли обьект
 
-	Vector2i spriteSize = Vector2i(32, 32);
+	Vector2i spriteSize = Vector2i(32, 32); // Размер спрайта
 };

@@ -1,11 +1,6 @@
 #pragma once
 #include "Creature.h"
 
-// Conditions
-const int STAY = 0;
-const int GO   = 1;
-const int RUN  = 2;
-
 struct PlayerStatus
 {
 	int condition;

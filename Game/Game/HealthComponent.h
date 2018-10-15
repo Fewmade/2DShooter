@@ -1,6 +1,5 @@
 #pragma once
 
-
 class HealthComponent
 {
 public:

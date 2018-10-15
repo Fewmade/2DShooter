@@ -1,21 +1,12 @@
 #pragma once
 
 #include <cmath>
+
 #include "DynamicObject.h"
 #include "HealthComponent.h"
 #include "Room.h"
 #include "CreaturesID.h"
 
-
-// Directions
-const int UP = 1;
-const int UP_RIGHT = 2;
-const int RIGHT = 3;
-const int RIGHT_DOWN = 4;
-const int DOWN = 5;
-const int DOWN_LEFT = 6;
-const int LEFT = 7;
-const int LEFT_UP = 8;
 
 class Creature : public DynamicObject
 {
@@ -64,8 +55,8 @@ public:
 
 	void move(Room & room, int status, float distance = 0)
 	{
-		Vector2f newPos;
-		Vector2f dPos;
+		Vector2f newPos; // Новая позиция
+		Vector2f dPos;   // Изменение координат
 
 		switch (status)
 		{
@@ -87,16 +78,19 @@ public:
 			break;
 		}
 
+		// Обработка столкновний при движении по x
 		float nx = pos.x + dPos.x;
 		float ny = pos.y;
 
-		unsigned int mx = unsigned(nx + ceil(nx + spriteSize.x / 32)) / 2;
-		for (unsigned int i = unsigned(ny); i < unsigned(ceil(ny + spriteSize.y / 32)); i++)
+		unsigned int mx = unsigned(nx + ceil(nx + spriteSize.x / CELL_WIDTH)) / 2;
+		for (unsigned int i = unsigned(ny); i < unsigned(ceil(ny + spriteSize.y / CELL_HEIGHT)); i++)
 		{
-			for (unsigned int j = unsigned(nx); j < unsigned(ceil(nx + spriteSize.x / 32)); j++)
+			for (unsigned int j = unsigned(nx); j < unsigned(ceil(nx + spriteSize.x / CELL_WIDTH)); j++)
 			{
+				// Если оба обьекта твёрдые
 				if (solid && room.getCell(j, i) >= 0 && objects[room.getCell(j, i)].getSolid())
 				{
+					// С какой стороны столкнулись с обьектом
 					if (j < mx)
 					{
 						nx = float(j + 1);
@@ -110,16 +104,19 @@ public:
 		}
 		newPos.x = nx;
 		
+		// Обработка столкновний при движении по y
 		nx = pos.x;
 		ny = pos.y + dPos.y;
 
-		unsigned int my = unsigned(ny + ceil(ny + spriteSize.y / 32)) / 2;
-		for (unsigned int i = unsigned(ny); i < unsigned(ceil(ny + spriteSize.y / 32)); i++)
+		unsigned int my = unsigned(ny + ceil(ny + spriteSize.y / CELL_HEIGHT)) / 2;
+		for (unsigned int i = unsigned(ny); i < unsigned(ceil(ny + spriteSize.y / CELL_HEIGHT)); i++)
 		{
-			for (unsigned int j = unsigned(nx); j < unsigned(ceil(nx + spriteSize.x / 32)); j++)
+			for (unsigned int j = unsigned(nx); j < unsigned(ceil(nx + spriteSize.x / CELL_WIDTH)); j++)
 			{
+				// Если оба обьекта твёрдые
 				if (solid && room.getCell(j, i) >= 0 && objects[room.getCell(j, i)].getSolid())
 				{
+					// С какой стороны столкнулись с обьектом
 					if (i < my)
 					{
 						ny = float(i + 1);

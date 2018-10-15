@@ -4,9 +4,6 @@
 #include <queue>
 #include "Room.h"
 
-const unsigned int MAP_WIDTH  = 11;
-const unsigned int MAP_HEIGHT = 11;
-
 // Глобальная карта
 std::vector<std::vector<int> > globalMap(MAP_HEIGHT, std::vector<int>(MAP_WIDTH, 1));
 
@@ -50,7 +47,7 @@ std::vector<std::vector<int> > generateRandomMap(unsigned int roomCreatingChance
 						newCord.y >= 0 && newCord.y < MAP_HEIGHT &&
 						!checked[newCord.y][newCord.x])
 					{
-						// Ставим что её проверили
+						// Ставим что комнату проверили
 						checked[newCord.y][newCord.x] = true;
 
 						srand(int(time(NULL)) + rand());

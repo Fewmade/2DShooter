@@ -1,4 +1,6 @@
 #include <SFML/Graphics.hpp>
+
+#include "Consts.h"
 #include "AllyNPC.h"
 #include "Creature.h"
 #include "DynamicObject.h"
@@ -15,11 +17,6 @@
 
 using namespace sf;
 
-// Размер 1 клетки карты в пикселях
-const unsigned int CELL_WIDTH  = 32;
-const unsigned int CELL_HEIGHT = 32;
-
-
 //Коллекция нпс в игре
 //Необходимо пробегать по массиву нпс каждый кадр
 //И вызывать функцию ExecuteState()
@@ -28,7 +25,7 @@ const unsigned int CELL_HEIGHT = 32;
 //***********************************************
 std::vector<EnemyNPC> enemies;
 
-const unsigned int numOfBackgrounds = 1;
+// Задний фон
 std::vector<Texture> backgrounds(numOfBackgrounds);
 unsigned int correntbackground;
 
@@ -120,8 +117,6 @@ int main()
 
 			player.move(rooms[currentRoom], playerStatus.dir, distance);
 		}
-
-		//std::cerr << int(player.getPos().x) << " " << int(player.getPos().y) << std::endl;
 
 		Event event;
 		while (window.pollEvent(event))
