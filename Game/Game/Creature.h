@@ -11,13 +11,7 @@ class Creature : public DynamicObject
 {
 public:
 	Creature()
-	{
-		healthComp = new HealthComponent(0);
-		room = new Room();
-		pos = Vector2f(0, 0);
-
-		id = DEFAULT_ID;
-	}
+	{ }
 	Creature(Image _image, Vector2f _pos, Room *_room, int maxHp, int currHp, bool _solid = false, Vector2i _spriteSize = Vector2i(32, 32))
 	{
 		image = _image;

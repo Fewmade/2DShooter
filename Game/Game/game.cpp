@@ -7,7 +7,6 @@
 #include "EnemyNPC.h"
 #include "GameObject.h"
 #include "HealthComponent.h"
-#include "Map.h"
 #include "Player.h"
 #include "Room.h"
 #include "StaticObject.h"
@@ -31,6 +30,8 @@ unsigned int correntbackground;
 
 Image playerImage;
 
+std::vector<Room> rooms;
+
 unsigned int currentRoom;
 
 void loadImages()
@@ -41,10 +42,13 @@ void loadImages()
 
 	//StaticObject
 	image.loadFromFile("../images/objects/wall.png");
-	objects[0] = StaticObject(image, true);
+	objects[WALL]  = StaticObject(image, true);
 
 	image.loadFromFile("../images/objects/stone.png");
-	objects[1] = StaticObject(image);
+	objects[STONE] = StaticObject(image);
+
+	image.loadFromFile("../images/objects/door.png");
+	objects[DOOR]  = StaticObject(image);
 
 	//Backgrounds
 	image.loadFromFile("../images/backgrounds/background1.png");
@@ -76,9 +80,10 @@ int main()
 	RenderWindow window(VideoMode(ROOM_WIDTH * CELL_WIDTH, ROOM_HEIGHT * CELL_HEIGHT), "2D Shooter");
 	window.setFramerateLimit(120);
 
-	globalMap = generateRandomMap();
-	currentRoom = 0;
+	rooms.push_back(generateRandomRoom(true, true, true, true));
 
+	currentRoom = 0;
+	
 	loadImages();
 	
 	correntbackground = 0;
@@ -87,7 +92,7 @@ int main()
 	//createTestNPC();
 
 	//Игрок
-	Player player(playerImage, Vector2f(ROOM_WIDTH / 2, ROOM_HEIGHT / 2), 100, 100, true, Vector2i(32, 64));
+	Player player(playerImage, Vector2f(ROOM_WIDTH / 2, ROOM_HEIGHT / 2), &rooms[0], 100, 100, true, Vector2i(32, 64));
 	player.setSpeed(0.000003f);
 
 	// Время
@@ -96,7 +101,7 @@ int main()
 	while (window.isOpen())
 	{
 		// Время
-		float time; //Хранит время между кадрами
+		float time; // Хранит время между кадрами
 		time = float(clock.getElapsedTime().asMicroseconds());
 		clock.restart();
 
@@ -129,7 +134,7 @@ int main()
 		
 		window.clear();
 
-		//Прорисовка заднего фона
+		// Прорисовка заднего фона
 		for (unsigned int i = 0; i < ROOM_HEIGHT; i++)
 		{
 			for (unsigned int j = 0; j < ROOM_WIDTH; j++)
@@ -140,7 +145,7 @@ int main()
 			}
 		}
 
-		//Прорисовка карты
+		// Прорисовка карты
 		for (unsigned int i = 0; i < ROOM_HEIGHT; i++)
 		{
 			for (unsigned int j = 0; j < ROOM_WIDTH; j++)
@@ -155,7 +160,7 @@ int main()
 			}
 		}
 
-		//Прорисовка игрока
+		// Прорисовка игрока
 		Sprite pl = player.getSprite();
 		Vector2f pos = player.getPos();
 		pl.setPosition(float(pos.x * CELL_WIDTH), float(pos.y * CELL_HEIGHT));

@@ -69,13 +69,8 @@ class Player : public Creature
 {
 public:
 	Player()
-	{
-		healthComp = new HealthComponent(0);
-		pos = Vector2f(0, 0);
-
-		id = DEFAULT_ID;
-	}
-	Player(Image _image, Vector2f _pos, int maxHp, int currHp, bool _solid = false, Vector2i _spriteSize = Vector2i(32, 32))
+	{ }
+	Player(Image _image, Vector2f _pos, Room *_room, int maxHp, int currHp, bool _solid = false, Vector2i _spriteSize = Vector2i(32, 32))
 	{
 		image = _image;
 
@@ -84,6 +79,7 @@ public:
 
 		healthComp = new HealthComponent(maxHp, currHp);
 		pos = _pos;
+		room = _room;
 
 		id = DEFAULT_ID;
 
