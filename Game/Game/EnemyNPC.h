@@ -15,7 +15,7 @@ public:
 		room = _room;
 
 		//НПС входит в состояние патруллирования
-		currentState = new PatrolState();
+		currentState = new PatrolState(std::vector<Vector2f>() ,this, 0);
 		currentState->enter();
 
 		image = _image;
@@ -63,7 +63,7 @@ public:
 	{}
 
 
-	virtual void executeState() const
+	virtual void executeState(float time) const
 	{
 		//If player in seek radius and player not in seek state
 			//Change to seek state
@@ -72,7 +72,7 @@ public:
 		//Else if player too far and player not in patrol state
 			//Change to patrol state
 
-		currentState->execute();
+		currentState->execute(time);
 	}
 
 protected:

@@ -12,7 +12,7 @@ public:
 
 	virtual void enter()					//Enter state
 	{}
-	virtual void execute()					//Execute state
+	virtual void execute(float time)					//Execute state
 	{}
 	virtual void exit()						//Exit from state
 	{}

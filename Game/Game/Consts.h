@@ -42,6 +42,3 @@ const unsigned int DOOR  = 2;
 // Количество задних фонов
 const unsigned int numOfBackgrounds = 1;
 
-// ID существ
-const unsigned int DEFAULT_ID     = 0;
-const unsigned int ENEMY_BASE_NPC = 1;

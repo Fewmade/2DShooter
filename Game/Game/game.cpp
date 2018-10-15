@@ -23,7 +23,7 @@ using namespace sf;
 //***********************************************
 //Всех нпс подгружать до начала игры
 //***********************************************
-std::vector<EnemyNPC> enemies;
+std::vector<EnemyNPC*> enemies;
 
 // Задний фон
 std::vector<Texture> backgrounds(numOfBackgrounds);
@@ -56,8 +56,8 @@ void loadImages()
 	playerImage = image;
 }
 
-/*
-void createTestNPC()
+
+void createTestNPC(Room &room)
 {
 	Image npcImage;
 	npcImage.loadFromFile("../images/characters/soldier.png");
@@ -67,9 +67,10 @@ void createTestNPC()
 	patrolPoints.push_back(Vector2f(2,4));
 	patrolPoints.push_back(Vector2f(3,4));
 
-	EnemyNPC npc1(Vector2f(2, 2), npcImage , patrolPoints);
+	EnemyNPC* npc1 = new EnemyNPC(npcImage, Vector2f(ROOM_WIDTH / 2, ROOM_HEIGHT / 2), &room, patrolPoints);
+	npc1->setSpeed(0.000003f);
 	enemies.push_back(npc1);
-}*/
+}
 
 int main()
 {
@@ -84,7 +85,7 @@ int main()
 	correntbackground = 0;
 
 	//Создание тестовых нпс
-	//createTestNPC();
+	createTestNPC(rooms[currentRoom]);
 
 	//Игрок
 	Player player(playerImage, Vector2f(ROOM_WIDTH / 2, ROOM_HEIGHT / 2), 100, 100, true, Vector2i(32, 64));
@@ -164,7 +165,12 @@ int main()
 		//Тест НПС
 		for (unsigned int i = 0; i < enemies.size(); i++)
 		{
-			//enemies[i].executeState();
+			enemies[i]->executeState(time);
+
+			Sprite sp = enemies[i]->getSprite();
+			Vector2f pos = enemies[i]->getPos();
+			sp.setPosition(float(pos.x * CELL_WIDTH), float(pos.y * CELL_HEIGHT));
+			window.draw(sp);
 		}
 		///////////////////////////////////////
 
