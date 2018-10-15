@@ -5,7 +5,7 @@
 #include "DynamicObject.h"
 #include "HealthComponent.h"
 #include "Room.h"
-#include "CreaturesID.h"
+#include "Consts.h"
 
 
 class Creature : public DynamicObject
@@ -14,11 +14,12 @@ public:
 	Creature()
 	{
 		healthComp = new HealthComponent(0);
+		room = new Room();
 		pos = Vector2f(0, 0);
 
 		id = DEFAULT_ID;
 	}
-	Creature(Image _image, Vector2f _pos, int maxHp, int currHp, bool _solid = false, Vector2i _spriteSize = Vector2i(32, 32))
+	Creature(Image _image, Vector2f _pos, Room *_room, int maxHp, int currHp, bool _solid = false, Vector2i _spriteSize = Vector2i(32, 32))
 	{
 		image = _image;
 
@@ -27,6 +28,7 @@ public:
 
 		healthComp = new HealthComponent(maxHp, currHp);
 		pos = _pos;
+		room = _room;
 
 		id = DEFAULT_ID;
 
@@ -46,6 +48,10 @@ public:
 	{
 		return id;
 	}
+	Room& getRoom() const
+	{
+		return *room;
+	}
 
 	virtual ~Creature()
 	{
@@ -53,12 +59,12 @@ public:
 		healthComp = nullptr;
 	}
 
-	void move(Room & room, int status, float distance = 0)
+	void move(Room & room, int dir, float distance)
 	{
 		Vector2f newPos; // Новая позиция
 		Vector2f dPos;   // Изменение координат
 
-		switch (status)
+		switch (dir)
 		{
 		case         UP: dPos.y = -distance;                   dPos.x = 0;
 			break;
@@ -135,6 +141,7 @@ public:
 
 protected:
 	HealthComponent*	healthComp;
+	Room*				room;
 
 	float				speed;
 	unsigned int		id;

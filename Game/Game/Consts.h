@@ -31,6 +31,10 @@ const int RUN = 2;
 const unsigned int WALL = 0;
 const unsigned int STONE = 1;
 
+//id Creatures
+const unsigned int DEFAULT_ID = 0;
+const unsigned int ENEMY_BASE_NPC = 1;
+
 // Количество  обьектов
 const unsigned int numOfObjects = 2;
 

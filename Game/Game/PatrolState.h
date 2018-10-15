@@ -1,6 +1,7 @@
 #pragma once
 
 #include "State.h"
+#include "Consts.h"
 #include <vector>
 #include <iostream>
 
@@ -17,15 +18,13 @@ public:
 		patrolPoints	= points;
 		owner			= _owner;
 		currentPoint	= currPoint;
-		pathOffset		= 2;
 	}
 
-	PatrolState(std::vector<Vector2f> points, Creature &_owner, int currPoint, float _pathOffset)
+	PatrolState(std::vector<Vector2f> points, Creature &_owner, int currPoint)
 	{
 		patrolPoints	= points;
 		owner			= &_owner;
 		currentPoint	= currPoint;
-		pathOffset		= _pathOffset;
 	}
 	~PatrolState()
 	{}
@@ -34,40 +33,77 @@ public:
 	{
 		std::cerr << "Enter in patrol state" << std::endl;
 		std::cerr << "Patrol points length: " << patrolPoints.size() << std::endl;
-		std::cerr << "Offset: " << pathOffset << std::endl;
 		std::cerr << "Owner: " << owner << " " << owner->getID()  << std::endl;
 	}
 
 	void execute() override
 	{
-		//std::cerr << owner->getPos().x << "/" << owner->getPos().y << std::endl;
 
-		//Patrolling
-		if (currentPoint < patrolPoints.size() - 1)
+		std::cerr << owner->getPos().x << "/" << owner->getPos().y << std::endl;
+		
+		int dir = 0;
+
+		if (owner->getPos().x == patrolPoints[currentPoint].x &&
+			owner->getPos().y == patrolPoints[currentPoint].y)
 		{
-			Vector2f point = patrolPoints[currentPoint] - owner->getPos();				//Находим направление в котором надо идти
-			float vecLength = sqrt(point.x * point.x + point.y * point.y);
-
-			//std::cerr << point.x << "/" << point.y << std::endl;
-
-			if (vecLength <= pathOffset)												//Если мы уже достигли точки
+			if (currentPoint < patrolPoints.size() - 1)
 			{
-				//Идем к следующей
-				++currentPoint;															
+				++currentPoint;
 			}
 			else
 			{
-				Vector2f normalizedDir = Vector2f(point.x / vecLength, point.y / vecLength);		//Нормализованное направление
-				//Vector2f tempPos = owner->getPos();
-				owner->setPos(Vector2f(owner->getPos().x + normalizedDir.x,							//Устанавливаем новую позицию нпс
-										owner->getPos().y + normalizedDir.y));
-				//std::cerr << (tempPos - owner->getPos()).x << "/" << (tempPos - owner->getPos()).y << std::endl;
+				currentPoint = 0;
 			}
 		}
 		else
 		{
-			currentPoint = 0;
+			//Находим направление
+			if (patrolPoints[currentPoint].x > owner->getPos().x &&
+				patrolPoints[currentPoint].y > owner->getPos().y)
+			{
+				dir = UP_RIGHT;
+			}
+			else if (patrolPoints[currentPoint].x < owner->getPos().x &&
+				patrolPoints[currentPoint].y > owner->getPos().y)
+			{
+				dir = LEFT_UP;
+			}
+			else if (patrolPoints[currentPoint].x > owner->getPos().x &&
+				patrolPoints[currentPoint].y < owner->getPos().y)
+			{
+				dir = RIGHT_DOWN;
+			}
+			else if (patrolPoints[currentPoint].x < owner->getPos().x &&
+				patrolPoints[currentPoint].y < owner->getPos().y)
+			{
+				dir = DOWN_LEFT;
+			}
+			else if (patrolPoints[currentPoint].x < owner->getPos().x)
+			{
+				dir = LEFT;
+			}
+			else if (patrolPoints[currentPoint].x > owner->getPos().x)
+			{
+				dir = RIGHT;
+			}
+			else if (patrolPoints[currentPoint].y > owner->getPos().y)
+			{
+				dir = UP;
+			}
+			else if (patrolPoints[currentPoint].y < owner->getPos().y)
+			{
+				dir = DOWN;
+			}
+			/////////////////////////////////////////////////////////
+
+			Vector2f vecDir = patrolPoints[currentPoint] - owner->getPos();
+			float dist = sqrt(vecDir.x * vecDir.x + vecDir.y * vecDir.y);
+
+			owner->move(owner->getRoom(), dir, 0.0002f);
 		}
+		
+
+		
 	}
 
 	void exit() override
@@ -78,6 +114,5 @@ public:
 private:
 	std::vector<Vector2f>	patrolPoints;
 	Creature				*owner;
-	float					pathOffset;
 	unsigned int			currentPoint;
 };
