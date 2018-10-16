@@ -62,9 +62,11 @@ void createTestNPC(Room &room)
 	npcImage.loadFromFile("../images/characters/soldier.png");
 
 	std::vector<Vector2f> patrolPoints;
-	patrolPoints.push_back(Vector2f(2,3));
-	patrolPoints.push_back(Vector2f(2,4));
-	patrolPoints.push_back(Vector2f(3,4));
+	patrolPoints.push_back(Vector2f(8,3));
+	patrolPoints.push_back(Vector2f(8,4));
+	patrolPoints.push_back(Vector2f(8,5));
+	patrolPoints.push_back(Vector2f(7,5));
+	patrolPoints.push_back(Vector2f(6,2));
 
 	EnemyNPC* npc1 = new EnemyNPC(npcImage, Vector2f(ROOM_WIDTH / 2, ROOM_HEIGHT / 2), &room, patrolPoints, true);
 	npc1->setSpeed(0.000003f);
@@ -86,7 +88,7 @@ int main()
 	player.setSpeed(0.000003f);
 
 	//Создание тестовых нпс
-	//createTestNPC(rooms[STARTING_ROOM]);
+	createTestNPC(rooms[STARTING_ROOM]);
 
 	// Время
 	Clock clock; // Считает время между кадрами

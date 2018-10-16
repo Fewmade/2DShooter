@@ -33,14 +33,15 @@ public:
 	void execute(float time) override
 	{
 		++frameCount;
-		//std::cerr << owner->getPos().x << "/" << owner->getPos().y << " -frame: " << frameCount << std::endl;
+		std::cerr << owner->getPos().x << "/" << owner->getPos().y << " -frame: " << frameCount << std::endl;
+		std::cerr << patrolPoints[currentPoint].x << "/" << patrolPoints[currentPoint].y  << std::endl;
 
 		if (patrolPoints.size() > 0)
 		{
 			int dir = 0;
 
-			if (owner->getPos().x == patrolPoints[currentPoint].x &&
-				owner->getPos().y == patrolPoints[currentPoint].y)
+			if ((abs(owner->getPos().x - patrolPoints[currentPoint].x) <= PATH_OFFSET) &&
+				(abs(owner->getPos().y - patrolPoints[currentPoint].y) <= PATH_OFFSET))
 			{
 				if (currentPoint < patrolPoints.size() - 1)
 				{
@@ -54,44 +55,44 @@ public:
 			else
 			{
 				//Находим направление
-				if (patrolPoints[currentPoint].x > owner->getPos().x &&
-					patrolPoints[currentPoint].y > owner->getPos().y)
-				{
-					dir = UP_RIGHT;
-				}
-				else if (patrolPoints[currentPoint].x < owner->getPos().x &&
-					patrolPoints[currentPoint].y > owner->getPos().y)
-				{
-					dir = LEFT_UP;
-				}
-				else if (patrolPoints[currentPoint].x > owner->getPos().x &&
-					patrolPoints[currentPoint].y < owner->getPos().y)
+				if (patrolPoints[currentPoint].x - owner->getPos().x >= PATH_OFFSET &&
+					patrolPoints[currentPoint].y - owner->getPos().y >= PATH_OFFSET)
 				{
 					dir = RIGHT_DOWN;
 				}
-				else if (patrolPoints[currentPoint].x < owner->getPos().x &&
-					patrolPoints[currentPoint].y < owner->getPos().y)
+				else if (patrolPoints[currentPoint].x - owner->getPos().x <= -PATH_OFFSET &&
+					patrolPoints[currentPoint].y - owner->getPos().y >= PATH_OFFSET)
 				{
 					dir = DOWN_LEFT;
 				}
-				else if (patrolPoints[currentPoint].x < owner->getPos().x)
+				else if (patrolPoints[currentPoint].x - owner->getPos().x >= PATH_OFFSET &&
+					patrolPoints[currentPoint].y - owner->getPos().y <= -PATH_OFFSET)
+				{
+					dir = UP_RIGHT;
+				}
+				else if (patrolPoints[currentPoint].x - owner->getPos().x <= -PATH_OFFSET &&
+					patrolPoints[currentPoint].y - owner->getPos().y <= -PATH_OFFSET)
+				{
+					dir = LEFT_UP;
+				}
+				else if (patrolPoints[currentPoint].x - owner->getPos().x <= -PATH_OFFSET)
 				{
 					dir = LEFT;
 				}
-				else if (patrolPoints[currentPoint].x > owner->getPos().x)
+				else if (patrolPoints[currentPoint].x - owner->getPos().x >= PATH_OFFSET)
 				{
 					dir = RIGHT;
 				}
-				else if (patrolPoints[currentPoint].y > owner->getPos().y)
-				{
-					dir = UP;
-				}
-				else if (patrolPoints[currentPoint].y < owner->getPos().y)
+				else if (patrolPoints[currentPoint].y - owner->getPos().y >= PATH_OFFSET)
 				{
 					dir = DOWN;
 				}
+				else if (patrolPoints[currentPoint].y - owner->getPos().y <= -PATH_OFFSET)
+				{
+					dir = UP;
+				}
 				/////////////////////////////////////////////////////////
-
+				
 				owner->move(owner->getRoom(), dir, time * owner->getSpeed());
 			}
 		}
@@ -108,7 +109,6 @@ public:
 
 private:
 	std::vector<Vector2f>	patrolPoints;
-	Creature				*owner;
 	unsigned int			currentPoint;
 	unsigned int			frameCount;
 };

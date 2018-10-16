@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include "Creature.h"
 
 class State
 {
@@ -16,4 +17,7 @@ public:
 	{}
 	virtual void exit()						//Exit from state
 	{}
+
+protected:
+	Creature * owner;
 };
