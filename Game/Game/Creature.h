@@ -86,48 +86,47 @@ public:
 		float nx = pos.x + dPos.x;
 		float ny = pos.y;
 
-		unsigned int mx = unsigned(nx + ceil(nx + spriteSize.x / CELL_WIDTH)) / 2;
-		for (unsigned int i = unsigned(ny); i < unsigned(ceil(ny + spriteSize.y / CELL_HEIGHT)); i++)
+		for (unsigned int i = unsigned(ny); i < ceil(ny + float(spriteSize.y) / CELL_HEIGHT); i++)
 		{
-			for (unsigned int j = unsigned(nx); j < unsigned(ceil(nx + spriteSize.x / CELL_WIDTH)); j++)
+			for (unsigned int j = unsigned(nx); j < ceil(nx + float(spriteSize.x) / CELL_WIDTH); j++)
 			{
 				// Если оба обьекта твёрдые
 				if (solid && room.getCell(j, i) >= 0 && objects[room.getCell(j, i)].getSolid())
 				{
 					// С какой стороны столкнулись с обьектом
-					if (j < mx)
+					if (nx > j + 0.5f)
 					{
 						nx = float(j + 1);
 					}
-					else
+					else if (nx + float(spriteSize.x) / CELL_WIDTH < j + 0.5f)
 					{
-						nx = float(j - spriteSize.x / 32);
+						nx = float(j - float(spriteSize.x) / CELL_WIDTH);
 					}
 				}
 			}
 		}
 		newPos.x = nx;
+
 		
 		// Обработка столкновний при движении по y
 		nx = pos.x;
 		ny = pos.y + dPos.y;
 
-		unsigned int my = unsigned(ny + ceil(ny + spriteSize.y / CELL_HEIGHT)) / 2;
-		for (unsigned int i = unsigned(ny); i < unsigned(ceil(ny + spriteSize.y / CELL_HEIGHT)); i++)
+		for (unsigned int i = unsigned(ny); i < unsigned(ceil(ny + float(spriteSize.y) / CELL_HEIGHT)); i++)
 		{
-			for (unsigned int j = unsigned(nx); j < unsigned(ceil(nx + spriteSize.x / CELL_WIDTH)); j++)
+			for (unsigned int j = unsigned(nx); j < unsigned(ceil(nx + float(spriteSize.x) / CELL_WIDTH)); j++)
 			{
 				// Если оба обьекта твёрдые
 				if (solid && room.getCell(j, i) >= 0 && objects[room.getCell(j, i)].getSolid())
 				{
 					// С какой стороны столкнулись с обьектом
-					if (i < my)
+					if (ny > i + 0.5f)
 					{
 						ny = float(i + 1);
 					}
-					else
+					else if (ny + float(spriteSize.y) / CELL_HEIGHT < i + 0.5f)
 					{
-						ny = float(i - spriteSize.y / 32);
+						ny = float(i - float(spriteSize.y) / CELL_HEIGHT);
 					}
 				}
 			}
@@ -140,7 +139,7 @@ public:
 		{
 			for (unsigned int j = unsigned(pos.x); j < unsigned(ceil(pos.x + spriteSize.x / CELL_WIDTH)); j++)
 			{
-				individualCollisions(room.getCell(j, i));
+				//individualCollisions(room.getCell(j, i));
 			}
 		}
 	}
