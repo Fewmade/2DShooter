@@ -41,9 +41,6 @@
     <ClInclude Include="Room.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Map.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="HealthComponent.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>

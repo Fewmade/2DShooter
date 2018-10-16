@@ -30,8 +30,6 @@ unsigned int correntbackground;
 
 Image playerImage;
 
-std::vector<Room> rooms;
-
 unsigned int currentRoom;
 
 void loadImages()
@@ -71,7 +69,7 @@ void createTestNPC(Room &room)
 	patrolPoints.push_back(Vector2f(2,4));
 	patrolPoints.push_back(Vector2f(3,4));
 
-	EnemyNPC* npc1 = new EnemyNPC(npcImage, Vector2f(ROOM_WIDTH / 2, ROOM_HEIGHT / 2), &room, patrolPoints);
+	EnemyNPC* npc1 = new EnemyNPC(npcImage, Vector2f(ROOM_WIDTH / 2, ROOM_HEIGHT / 2), &room, patrolPoints, true);
 	npc1->setSpeed(0.000003f);
 	enemies.push_back(npc1);
 }
@@ -82,9 +80,6 @@ int main()
 	window.setFramerateLimit(120);
 
 	rooms.push_back(generateRandomRoom(true, true, true, true));
-
-	currentRoom = 0;
-	
 	loadImages();
 	
 	correntbackground = 0;
@@ -93,7 +88,7 @@ int main()
 	createTestNPC(rooms[currentRoom]);
 
 	//Игрок
-	Player player(playerImage, Vector2f(ROOM_WIDTH / 2, ROOM_HEIGHT / 2), &rooms[0], 100, 100, true, Vector2i(32, 64));
+	Player player(playerImage, Vector2f(ROOM_WIDTH / 2, ROOM_HEIGHT / 2), &rooms[currentRoom], 100, 100, true, Vector2i(32, 64));
 	player.setSpeed(0.000003f);
 
 	// Время
@@ -131,7 +126,7 @@ int main()
 				window.close();
 		}
 
-		std::vector<std::vector<int> > map = rooms[currentRoom].getMap();
+		std::vector<std::vector<int> > map = player.getRoom().getMap();
 		
 		window.clear();
 

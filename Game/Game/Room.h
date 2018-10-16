@@ -101,3 +101,5 @@ public:
 	}
 };
 
+std::vector<Room> rooms;
+

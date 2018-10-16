@@ -87,6 +87,19 @@ public:
 		spriteSize = _spriteSize;
 	}
 
+	void individualCollisions(int objectID)
+	{
+		switch (objectID)
+		{
+		case DOOR:
+			rooms.push_back(generateRandomRoom(true, true, true, true));
+			room = &rooms[rooms.size() - 1];
+			pos.x -= (ROOM_WIDTH - 1)  - pos.x;
+			pos.y -= (ROOM_HEIGHT - 1) - pos.y;
+			break;
+		}
+	}
+
 	~Player()
 	{}
 private:

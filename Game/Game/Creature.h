@@ -46,6 +46,10 @@ public:
 		return *room;
 	}
 
+	// Индивидуальный обработчик столкновений(у каждого производного класса свой)
+	virtual void individualCollisions(int objectID)
+	{ }
+
 	virtual ~Creature()
 	{
 		delete healthComp;
@@ -131,8 +135,15 @@ public:
 		newPos.y = ny;
 
 		pos = newPos;
-	}
 
+		for (unsigned int i = unsigned(pos.y); i < unsigned(ceil(pos.y + spriteSize.y / CELL_HEIGHT)); i++)
+		{
+			for (unsigned int j = unsigned(pos.x); j < unsigned(ceil(pos.x + spriteSize.x / CELL_WIDTH)); j++)
+			{
+				individualCollisions(room.getCell(j, i));
+			}
+		}
+	}
 protected:
 	HealthComponent*	healthComp;
 	Room*				room;
