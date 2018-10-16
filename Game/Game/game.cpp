@@ -38,7 +38,7 @@ void loadImages()
 
 	//StaticObject
 	image.loadFromFile("../images/objects/wall.png");
-	objects[WALL]  = StaticObject(image, true);
+	objects[WALL]  = StaticObject(image, true, IntRect(0, 0, 32, 32));
 
 	image.loadFromFile("../images/objects/stone.png");
 	objects[STONE] = StaticObject(image);
