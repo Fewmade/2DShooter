@@ -8,7 +8,7 @@ public:
 
 	DynamicObject()
 	{}
-	DynamicObject(Image _image, Vector2f _pos, bool _solid = false, Vector2i _spriteSize = Vector2i(32, 32)) : pos(_pos)
+	DynamicObject(Image _image, Vector2f _pos, bool _solid = false, IntRect _collisionRect = IntRect(0, 0, 32, 32)) : pos(_pos)
 	{
 		image = _image;
 
@@ -16,7 +16,7 @@ public:
 		texture.loadFromImage(image);
 
 		solid = _solid;
-		spriteSize = _spriteSize;
+		collisionRect = _collisionRect;
 	}
 	
 

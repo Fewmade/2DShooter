@@ -8,7 +8,7 @@ class GameObject
 public:
 	GameObject()
 	{}
-	GameObject(Image _image, bool _solid = false, Vector2i _spriteSize = Vector2i(32, 32)) : image(_image), spriteSize(_spriteSize), solid(_solid)
+	GameObject(Image _image, bool _solid = false, IntRect _collisionRect = IntRect(0, 0, 32, 32)) : image(_image), collisionRect(_collisionRect), solid(_solid)
 	{
 		//image.createMaskFromColor();
 		texture.loadFromImage(image);
@@ -30,13 +30,13 @@ public:
 		return solid;
 	}
 
-	void setSpriteSize(Vector2i size)
+	void setCollisionRect(IntRect size)
 	{
-		spriteSize = size;
+		collisionRect = size;
 	}
-	Vector2i getSpriteSize()
+	IntRect getCollisionRect()
 	{
-		return spriteSize;
+		return collisionRect;
 	}
 
 	virtual ~GameObject()
@@ -48,5 +48,5 @@ protected:
 
 	bool solid;  // Твёрдый ли обьект
 
-	Vector2i spriteSize = Vector2i(32, 32); // Размер спрайта
+	IntRect collisionRect; // Физическая модель
 };

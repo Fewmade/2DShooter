@@ -70,7 +70,7 @@ class Player : public Creature
 public:
 	Player()
 	{ }
-	Player(Image _image, Vector2f _pos, Room *_room, int maxHp, int currHp, bool _solid = false, Vector2i _spriteSize = Vector2i(32, 32))
+	Player(Image _image, Vector2f _pos, Room *_room, int maxHp, int currHp, bool _solid = false, IntRect _collisionRect = IntRect(0, 0, 32, 32))
 	{
 		image = _image;
 
@@ -84,7 +84,7 @@ public:
 		id = DEFAULT_ID;
 
 		solid = _solid;
-		spriteSize = _spriteSize;
+		collisionRect = _collisionRect;
 	}
 
 	void individualCollisions(int objectID)
