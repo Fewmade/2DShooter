@@ -41,4 +41,7 @@ const unsigned int ENEMY_BASE_NPC = 1;
 // Стартовая комната
 const int STARTING_ROOM = 0;
 
+//Константы для НПС
+const float PATH_OFFSET = 0.1f;
+
 
