@@ -97,25 +97,29 @@ public:
 					IntRect OCR = objects[room.getCell(j, i)].getCollisionRect();
 
 					// Грани игрока
-					float upEdgeOfPlayer = ny + float(collisionRect.top) / CELL_HEIGHT;
-					float rightEdgeOfPlayer = nx + float(collisionRect.left + collisionRect.width) / CELL_WIDTH;
-					float downEdgeOfPlayer = ny + float(collisionRect.top + collisionRect.height) / CELL_HEIGHT;
-					float leftEdgeOfPlayer = nx + float(collisionRect.left) / CELL_WIDTH;
+					float upEdgeOfPlayer    = ny + float(collisionRect.top)                         / CELL_HEIGHT;
+					float downEdgeOfPlayer  = ny + float(collisionRect.top  + collisionRect.height) / CELL_HEIGHT;
+					float rightEdgeOfPlayer = nx + float(collisionRect.left + collisionRect.width)  / CELL_WIDTH;
+					float leftEdgeOfPlayer  = nx + float(collisionRect.left)                        / CELL_WIDTH;
 
 					// Грани обьекта
-					float upEdgeOfObject = i + float(OCR.top) / CELL_HEIGHT;
-					float rightEdgeOfObject = j + float(OCR.left + OCR.width) / CELL_WIDTH;
-					float downEdgeOfObject = i + float(OCR.top + OCR.height) / CELL_HEIGHT;
-					float leftEdgeOfObject = j + float(OCR.left) / CELL_WIDTH;
+					float upEdgeOfObject =    i + float(OCR.top)               / CELL_HEIGHT;
+					float downEdgeOfObject =  i + float(OCR.top  + OCR.height) / CELL_HEIGHT;
+					float rightEdgeOfObject = j + float(OCR.left + OCR.width)  / CELL_WIDTH;
+					float leftEdgeOfObject =  j + float(OCR.left)              / CELL_WIDTH;
 
 					// Столкнулись ли обьекты вообще
 					// По Y
-					if ((upEdgeOfObject < upEdgeOfPlayer   && upEdgeOfPlayer < downEdgeOfObject) ||
-						(upEdgeOfObject < downEdgeOfPlayer && downEdgeOfPlayer < downEdgeOfObject))
+					if ((upEdgeOfObject < upEdgeOfPlayer   && upEdgeOfPlayer   < downEdgeOfObject) ||
+						(upEdgeOfObject < downEdgeOfPlayer && downEdgeOfPlayer < downEdgeOfObject) ||
+						(upEdgeOfPlayer < upEdgeOfObject   && upEdgeOfObject   < downEdgeOfObject) ||
+						(upEdgeOfPlayer < downEdgeOfObject && downEdgeOfObject < downEdgeOfObject))
 					{
 						// По X
-						if ((leftEdgeOfObject < leftEdgeOfPlayer  && leftEdgeOfPlayer < rightEdgeOfObject) ||
-							(leftEdgeOfObject < rightEdgeOfPlayer && rightEdgeOfPlayer < rightEdgeOfObject))
+						if ((leftEdgeOfObject < leftEdgeOfPlayer  && leftEdgeOfPlayer  < rightEdgeOfObject) ||
+							(leftEdgeOfObject < rightEdgeOfPlayer && rightEdgeOfPlayer < rightEdgeOfObject) ||
+							(leftEdgeOfPlayer < leftEdgeOfObject  && leftEdgeOfObject  < rightEdgeOfPlayer) ||
+							(leftEdgeOfPlayer < rightEdgeOfObject && rightEdgeOfObject < rightEdgeOfPlayer))
 						{
 							// Центр обьекта
 							float blockCenter = (leftEdgeOfObject + rightEdgeOfObject) / 2;
@@ -151,25 +155,29 @@ public:
 					IntRect OCR = objects[room.getCell(j, i)].getCollisionRect();
 					
 					// Грани игрока
-					float upEdgeOfPlayer = ny + float(collisionRect.top) / CELL_HEIGHT;
-					float rightEdgeOfPlayer = nx + float(collisionRect.left + collisionRect.width) / CELL_WIDTH;
-					float downEdgeOfPlayer = ny + float(collisionRect.top + collisionRect.height) / CELL_HEIGHT;
-					float leftEdgeOfPlayer = nx + float(collisionRect.left) / CELL_WIDTH;
+					float upEdgeOfPlayer    = ny + float(collisionRect.top)                         / CELL_HEIGHT;
+					float downEdgeOfPlayer  = ny + float(collisionRect.top  + collisionRect.height) / CELL_HEIGHT;
+					float rightEdgeOfPlayer = nx + float(collisionRect.left + collisionRect.width)  / CELL_WIDTH;
+					float leftEdgeOfPlayer  = nx + float(collisionRect.left)                        / CELL_WIDTH;
 					
 					// Грани обьекта
-					float upEdgeOfObject = i + float(OCR.top) / CELL_HEIGHT;
-					float rightEdgeOfObject = j + float(OCR.left + OCR.width) / CELL_WIDTH;
-					float downEdgeOfObject = i + float(OCR.top + OCR.height) / CELL_HEIGHT;
-					float leftEdgeOfObject = j + float(OCR.left) / CELL_WIDTH;
+					float upEdgeOfObject    = i + float(OCR.top)               / CELL_HEIGHT;
+					float downEdgeOfObject  = i + float(OCR.top  + OCR.height) / CELL_HEIGHT;
+					float rightEdgeOfObject = j + float(OCR.left + OCR.width)  / CELL_WIDTH;
+					float leftEdgeOfObject  = j + float(OCR.left)              / CELL_WIDTH;
 					
 					// Столкнулись ли обьекты вообще
 					// По Y
 					if ((upEdgeOfObject < upEdgeOfPlayer   && upEdgeOfPlayer   < downEdgeOfObject) ||
-						(upEdgeOfObject < downEdgeOfPlayer && downEdgeOfPlayer < downEdgeOfObject))
+						(upEdgeOfObject < downEdgeOfPlayer && downEdgeOfPlayer < downEdgeOfObject) ||
+						(upEdgeOfPlayer < upEdgeOfObject   && upEdgeOfObject   < downEdgeOfObject) ||
+						(upEdgeOfPlayer < downEdgeOfObject && downEdgeOfObject < downEdgeOfObject))
 					{
 						// По X
-						if ((leftEdgeOfObject < leftEdgeOfPlayer  && leftEdgeOfPlayer < rightEdgeOfObject) ||
-							(leftEdgeOfObject < rightEdgeOfPlayer && rightEdgeOfPlayer < rightEdgeOfObject))
+						if ((leftEdgeOfObject < leftEdgeOfPlayer  && leftEdgeOfPlayer  < rightEdgeOfObject) ||
+							(leftEdgeOfObject < rightEdgeOfPlayer && rightEdgeOfPlayer < rightEdgeOfObject) ||
+							(leftEdgeOfPlayer < leftEdgeOfObject  && leftEdgeOfObject  < rightEdgeOfPlayer) ||
+							(leftEdgeOfPlayer < rightEdgeOfObject && rightEdgeOfObject < rightEdgeOfPlayer))
 						{
 							// Центр обьекта
 							float blockCenter = (upEdgeOfObject + downEdgeOfObject) / 2;
