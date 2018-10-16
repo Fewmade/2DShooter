@@ -82,7 +82,7 @@ int main()
 	correntbackground = 0;
 
 	//Игрок
-	Player player(playerImage, Vector2f(ROOM_WIDTH / 2, ROOM_HEIGHT / 2), &rooms[STARTING_ROOM], 100, 100, true, Vector2i(32, 32));
+	Player player(playerImage, Vector2f(ROOM_WIDTH / 2, ROOM_HEIGHT / 2), &rooms[STARTING_ROOM], 100, 100, true, IntRect(8, 2, 16, 59));
 	player.setSpeed(0.000003f);
 
 	//Создание тестовых нпс

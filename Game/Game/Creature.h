@@ -12,7 +12,7 @@ class Creature : public DynamicObject
 public:
 	Creature()
 	{ }
-	Creature(Image _image, Vector2f _pos, Room *_room, int maxHp, int currHp, bool _solid = false, Vector2i _spriteSize = Vector2i(32, 32))
+	Creature(Image _image, Vector2f _pos, Room *_room, int maxHp, int currHp, bool _solid = false, IntRect _collisionRect = IntRect(0, 0, 32, 32))
 	{
 		image = _image;
 
@@ -26,7 +26,7 @@ public:
 		id = DEFAULT_ID;
 
 		solid = _solid;
-		spriteSize = _spriteSize;
+		collisionRect = _collisionRect;
 	}
 
 	void setSpeed(float _speed)
@@ -86,21 +86,21 @@ public:
 		float nx = pos.x + dPos.x;
 		float ny = pos.y;
 
-		for (unsigned int i = unsigned(ny); i < ceil(ny + float(spriteSize.y) / CELL_HEIGHT); i++)
+		for (unsigned int i = unsigned(ny + float(collisionRect.top) / CELL_HEIGHT); i < ceil(ny + float(collisionRect.top + collisionRect.height) / CELL_HEIGHT); i++)
 		{
-			for (unsigned int j = unsigned(nx); j < ceil(nx + float(spriteSize.x) / CELL_WIDTH); j++)
+			for (unsigned int j = unsigned(nx + float(collisionRect.left) / CELL_WIDTH); j < ceil(nx + float(collisionRect.left + collisionRect.width) / CELL_WIDTH); j++)
 			{
 				// Если оба обьекта твёрдые
 				if (solid && room.getCell(j, i) >= 0 && objects[room.getCell(j, i)].getSolid())
 				{
 					// С какой стороны столкнулись с обьектом
-					if (nx > j + 0.5f)
+					if (nx + float(collisionRect.left) / CELL_WIDTH > j + 0.5f)
 					{
-						nx = float(j + 1);
+						nx = float(j + 1 - float(collisionRect.left) / CELL_WIDTH);
 					}
-					else if (nx + float(spriteSize.x) / CELL_WIDTH < j + 0.5f)
+					else if (nx + float(collisionRect.left + collisionRect.width) / CELL_WIDTH < j + 0.5f)
 					{
-						nx = float(j - float(spriteSize.x) / CELL_WIDTH);
+						nx = float(j - float(collisionRect.left + collisionRect.width) / CELL_WIDTH);
 					}
 				}
 			}
@@ -111,22 +111,21 @@ public:
 		// Обработка столкновний при движении по y
 		nx = pos.x;
 		ny = pos.y + dPos.y;
-
-		for (unsigned int i = unsigned(ny); i < unsigned(ceil(ny + float(spriteSize.y) / CELL_HEIGHT)); i++)
+		for (unsigned int i = unsigned(ny + float(collisionRect.top) / CELL_HEIGHT); i < ceil(ny + float(collisionRect.top + collisionRect.height) / CELL_HEIGHT); i++)
 		{
-			for (unsigned int j = unsigned(nx); j < unsigned(ceil(nx + float(spriteSize.x) / CELL_WIDTH)); j++)
+			for (unsigned int j = unsigned(nx + float(collisionRect.left) / CELL_WIDTH); j < ceil(nx + float(collisionRect.left + collisionRect.width) / CELL_WIDTH); j++)
 			{
 				// Если оба обьекта твёрдые
 				if (solid && room.getCell(j, i) >= 0 && objects[room.getCell(j, i)].getSolid())
 				{
 					// С какой стороны столкнулись с обьектом
-					if (ny > i + 0.5f)
+					if (ny + float(collisionRect.top) / CELL_HEIGHT > i + 0.5f)
 					{
-						ny = float(i + 1);
+						ny = float(i + 1 - float(collisionRect.top) / CELL_HEIGHT);
 					}
-					else if (ny + float(spriteSize.y) / CELL_HEIGHT < i + 0.5f)
+					else if (ny + float(collisionRect.top + collisionRect.height) / CELL_HEIGHT < i + 0.5f)
 					{
-						ny = float(i - float(spriteSize.y) / CELL_HEIGHT);
+						ny = float(i - float(collisionRect.top + collisionRect.height) / CELL_HEIGHT);
 					}
 				}
 			}
@@ -134,14 +133,14 @@ public:
 		newPos.y = ny;
 
 		pos = newPos;
-
+		/*
 		for (unsigned int i = unsigned(pos.y); i < unsigned(ceil(pos.y + spriteSize.y / CELL_HEIGHT)); i++)
 		{
 			for (unsigned int j = unsigned(pos.x); j < unsigned(ceil(pos.x + spriteSize.x / CELL_WIDTH)); j++)
 			{
-				//individualCollisions(room.getCell(j, i));
+				individualCollisions(room.getCell(j, i));
 			}
-		}
+		}*/
 	}
 protected:
 	HealthComponent*	healthComp;
