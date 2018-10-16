@@ -4,7 +4,7 @@
 #include <iostream>
 #include "StaticObject.h"
 
-std::vector<StaticObject> objects(numOfObjects);
+std::vector<StaticObject> objects(NUMBER_OF_OBJECTS);
 
 std::vector<std::vector<int> > generateRandomRoom(bool upRoom, bool rightRoom, bool downRoom, bool leftRoom)
 {

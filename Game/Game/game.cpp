@@ -25,12 +25,10 @@ using namespace sf;
 std::vector<EnemyNPC*> enemies;
 
 // Задний фон
-std::vector<Texture> backgrounds(numOfBackgrounds);
+std::vector<Texture> backgrounds(NUMBER_OF_BACKGROUNDS);
 unsigned int correntbackground;
 
 Image playerImage;
-
-unsigned int currentRoom;
 
 void loadImages()
 {
@@ -58,7 +56,6 @@ void loadImages()
 	playerImage = image;
 }
 
-
 void createTestNPC(Room &room)
 {
 	Image npcImage;
@@ -84,12 +81,12 @@ int main()
 	
 	correntbackground = 0;
 
-	//Создание тестовых нпс
-	createTestNPC(rooms[currentRoom]);
-
 	//Игрок
-	Player player(playerImage, Vector2f(ROOM_WIDTH / 2, ROOM_HEIGHT / 2), &rooms[currentRoom], 100, 100, true, Vector2i(32, 64));
+	Player player(playerImage, Vector2f(ROOM_WIDTH / 2, ROOM_HEIGHT / 2), &rooms[STARTING_ROOM], 100, 100, true, Vector2i(32, 32));
 	player.setSpeed(0.000003f);
+
+	//Создание тестовых нпс
+	//createTestNPC(rooms[STARTING_ROOM]);
 
 	// Время
 	Clock clock; // Считает время между кадрами
@@ -116,7 +113,7 @@ int main()
 				player.setSpeed(0.000007f);
 			}
 
-			player.move(rooms[currentRoom], playerStatus.dir, distance);
+			player.move(player.getRoom(), playerStatus.dir, distance);
 		}
 
 		Event event;

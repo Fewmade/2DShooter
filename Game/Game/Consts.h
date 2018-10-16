@@ -24,7 +24,7 @@ const int GO   = 1;
 const int RUN  = 2;
 
 // Количество  обьектов
-const unsigned int numOfObjects = 3;
+const unsigned int NUMBER_OF_OBJECTS = 3;
 
 // Номера обьектов
 const unsigned int WALL  = 0;
@@ -32,13 +32,13 @@ const unsigned int STONE = 1;
 const unsigned int DOOR  = 2;
 
 // Количество задних фонов
-const unsigned int numOfBackgrounds = 1;
-
+const unsigned int NUMBER_OF_BACKGROUNDS = 1;
 
 // ID существ
 const unsigned int DEFAULT_ID     = 0;
 const unsigned int ENEMY_BASE_NPC = 1;
 
-// Максимальное количество комнат
-const unsigned int maxNumberOfRooms = 10;
+// Стартовая комната
+const int STARTING_ROOM = 0;
+
 

@@ -1,1 +1,4 @@
-﻿  Game.vcxproj -> C:\Users\user\GitHub\2DShooter\Game\Debug\Game.exe
+﻿  game.cpp
+  LINK : не найден или не выполнена сборка C:\Users\user\GitHub\2DShooter\Game\Debug\Game.exe при последней инкрементной компоновке; выполняется полная компоновка
+game.obj : error LNK2001: неразрешенный внешний символ ""public: static class sf::RenderStates const sf::RenderStates::Default" (?Default@RenderStates@sf@@2V12@B)"
+C:\Users\user\GitHub\2DShooter\Game\Debug\Game.exe : fatal error LNK1120: неразрешенных внешних элементов: 1

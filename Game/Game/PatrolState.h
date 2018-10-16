@@ -33,7 +33,7 @@ public:
 	void execute(float time) override
 	{
 		++frameCount;
-		std::cerr << owner->getPos().x << "/" << owner->getPos().y << " -frame: " << frameCount << std::endl;
+		//std::cerr << owner->getPos().x << "/" << owner->getPos().y << " -frame: " << frameCount << std::endl;
 
 		if (patrolPoints.size() > 0)
 		{
