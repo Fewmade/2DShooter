@@ -93,14 +93,43 @@ public:
 				// Если оба обьекта твёрдые
 				if (solid && room.getCell(j, i) >= 0 && objects[room.getCell(j, i)].getSolid())
 				{
-					// С какой стороны столкнулись с обьектом
-					if (nx + float(collisionRect.left) / CELL_WIDTH > j + 0.5f)
+					// ObjectColissionRect
+					IntRect OCR = objects[room.getCell(j, i)].getCollisionRect();
+
+					// Грани игрока
+					float upEdgeOfPlayer = ny + float(collisionRect.top) / CELL_HEIGHT;
+					float rightEdgeOfPlayer = nx + float(collisionRect.left + collisionRect.width) / CELL_WIDTH;
+					float downEdgeOfPlayer = ny + float(collisionRect.top + collisionRect.height) / CELL_HEIGHT;
+					float leftEdgeOfPlayer = nx + float(collisionRect.left) / CELL_WIDTH;
+
+					// Грани обьекта
+					float upEdgeOfObject = i + float(OCR.top) / CELL_HEIGHT;
+					float rightEdgeOfObject = j + float(OCR.left + OCR.width) / CELL_WIDTH;
+					float downEdgeOfObject = i + float(OCR.top + OCR.height) / CELL_HEIGHT;
+					float leftEdgeOfObject = j + float(OCR.left) / CELL_WIDTH;
+
+					// Столкнулись ли обьекты вообще
+					// По Y
+					if ((upEdgeOfObject < upEdgeOfPlayer   && upEdgeOfPlayer < downEdgeOfObject) ||
+						(upEdgeOfObject < downEdgeOfPlayer && downEdgeOfPlayer < downEdgeOfObject))
 					{
-						nx = float(j + 1 - float(collisionRect.left) / CELL_WIDTH);
-					}
-					else if (nx + float(collisionRect.left + collisionRect.width) / CELL_WIDTH < j + 0.5f)
-					{
-						nx = float(j - float(collisionRect.left + collisionRect.width) / CELL_WIDTH);
+						// По X
+						if ((leftEdgeOfObject < leftEdgeOfPlayer  && leftEdgeOfPlayer < rightEdgeOfObject) ||
+							(leftEdgeOfObject < rightEdgeOfPlayer && rightEdgeOfPlayer < rightEdgeOfObject))
+						{
+							// Центр обьекта
+							float blockCenter = (leftEdgeOfObject + rightEdgeOfObject) / 2;
+
+							// С какой стороны столкнулись с обьектом
+							if (leftEdgeOfPlayer > blockCenter)
+							{
+								nx = rightEdgeOfObject - float(collisionRect.left) / CELL_WIDTH;
+							}
+							else if (rightEdgeOfPlayer < blockCenter)
+							{
+								nx = leftEdgeOfObject - float(collisionRect.width + collisionRect.left) / CELL_WIDTH;
+							}
+						}
 					}
 				}
 			}
@@ -118,14 +147,44 @@ public:
 				// Если оба обьекта твёрдые
 				if (solid && room.getCell(j, i) >= 0 && objects[room.getCell(j, i)].getSolid())
 				{
-					// С какой стороны столкнулись с обьектом
-					if (ny + float(collisionRect.top) / CELL_HEIGHT > i + 0.5f)
+					// ObjectColissionRect
+					IntRect OCR = objects[room.getCell(j, i)].getCollisionRect();
+					
+					// Грани игрока
+					float upEdgeOfPlayer = ny + float(collisionRect.top) / CELL_HEIGHT;
+					float rightEdgeOfPlayer = nx + float(collisionRect.left + collisionRect.width) / CELL_WIDTH;
+					float downEdgeOfPlayer = ny + float(collisionRect.top + collisionRect.height) / CELL_HEIGHT;
+					float leftEdgeOfPlayer = nx + float(collisionRect.left) / CELL_WIDTH;
+					
+					// Грани обьекта
+					float upEdgeOfObject = i + float(OCR.top) / CELL_HEIGHT;
+					float rightEdgeOfObject = j + float(OCR.left + OCR.width) / CELL_WIDTH;
+					float downEdgeOfObject = i + float(OCR.top + OCR.height) / CELL_HEIGHT;
+					float leftEdgeOfObject = j + float(OCR.left) / CELL_WIDTH;
+					
+					// Столкнулись ли обьекты вообще
+					// По Y
+					if ((upEdgeOfObject < upEdgeOfPlayer   && upEdgeOfPlayer   < downEdgeOfObject) ||
+						(upEdgeOfObject < downEdgeOfPlayer && downEdgeOfPlayer < downEdgeOfObject))
 					{
-						ny = float(i + 1 - float(collisionRect.top) / CELL_HEIGHT);
-					}
-					else if (ny + float(collisionRect.top + collisionRect.height) / CELL_HEIGHT < i + 0.5f)
-					{
-						ny = float(i - float(collisionRect.top + collisionRect.height) / CELL_HEIGHT);
+						// По X
+						if ((leftEdgeOfObject < leftEdgeOfPlayer  && leftEdgeOfPlayer < rightEdgeOfObject) ||
+							(leftEdgeOfObject < rightEdgeOfPlayer && rightEdgeOfPlayer < rightEdgeOfObject))
+						{
+							// Центр обьекта
+							float blockCenter = (upEdgeOfObject + downEdgeOfObject) / 2;
+
+							// С какой стороны столкнулись с обьектом
+							if (upEdgeOfPlayer > blockCenter)
+							{
+								ny = downEdgeOfObject - float(collisionRect.top) / CELL_HEIGHT;
+							}
+							else if (downEdgeOfPlayer < blockCenter)
+							{
+								ny = upEdgeOfObject - float(collisionRect.height + collisionRect.top) / CELL_HEIGHT;
+							}
+						}
+						
 					}
 				}
 			}
