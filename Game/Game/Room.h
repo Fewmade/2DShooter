@@ -44,7 +44,7 @@ std::vector<std::vector<int> > generateRandomRoom(bool upRoom, bool rightRoom, b
 	// Двери
 	if (upRoom)
 	{
-		map[0][ROOM_WIDTH / 2]           = DOOR;
+		map[0][ROOM_WIDTH / 2]               = DOOR;
 	}
 	if (rightRoom)
 	{
@@ -56,7 +56,7 @@ std::vector<std::vector<int> > generateRandomRoom(bool upRoom, bool rightRoom, b
 	}
 	if (leftRoom)
 	{
-		map[ROOM_HEIGHT / 2][0]          = DOOR;
+		map[ROOM_HEIGHT / 2][0]              = DOOR;
 	}
 
 	return map;
@@ -101,5 +101,5 @@ public:
 	}
 };
 
-std::vector<Room> rooms;
+std::vector<Room> rooms(maxNumberOfRooms, Room(generateRandomRoom(true, true, true, true)));
 

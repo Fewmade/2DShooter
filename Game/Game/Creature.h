@@ -47,7 +47,7 @@ public:
 	}
 
 	// Индивидуальный обработчик столкновений(у каждого производного класса свой)
-	virtual void individualCollisions(int objectID)
+	virtual void individualCollisions(int objectID, unsigned int x, unsigned int y)
 	{ }
 
 	virtual ~Creature()
@@ -108,7 +108,7 @@ public:
 					float rightEdgeOfObject = j + float(OCR.left + OCR.width)  / CELL_WIDTH;
 					float leftEdgeOfObject =  j + float(OCR.left)              / CELL_WIDTH;
 
-					// Столкнулись ли обьекты вообще
+					// Столкнулись ли обьекты
 					// По Y
 					if ((upEdgeOfObject < upEdgeOfPlayer   && upEdgeOfPlayer   < downEdgeOfObject) ||
 						(upEdgeOfObject < downEdgeOfPlayer && downEdgeOfPlayer < downEdgeOfObject) ||
@@ -165,7 +165,7 @@ public:
 					float rightEdgeOfObject = j + float(OCR.left + OCR.width)  / CELL_WIDTH;
 					float leftEdgeOfObject =  j + float(OCR.left)              / CELL_WIDTH;
 
-					// Столкнулись ли обьекты вообще
+					// Столкнулись ли обьекты
 					// По Y
 					if ((upEdgeOfObject < upEdgeOfPlayer   && upEdgeOfPlayer   < downEdgeOfObject) ||
 						(upEdgeOfObject < downEdgeOfPlayer && downEdgeOfPlayer < downEdgeOfObject) ||
@@ -199,14 +199,44 @@ public:
 		newPos.y = ny;
 
 		pos = newPos;
-		/*
-		for (unsigned int i = unsigned(pos.y); i < unsigned(ceil(pos.y + spriteSize.y / CELL_HEIGHT)); i++)
+
+		// Грани игрока
+		float upEdgeOfPlayer    = ny + float(collisionRect.top)                         / CELL_HEIGHT;
+		float downEdgeOfPlayer  = ny + float(collisionRect.top  + collisionRect.height) / CELL_HEIGHT;
+		float rightEdgeOfPlayer = nx + float(collisionRect.left + collisionRect.width)  / CELL_WIDTH;
+		float leftEdgeOfPlayer  = nx + float(collisionRect.left)                        / CELL_WIDTH;
+		
+		for (unsigned int i = unsigned(ny + float(collisionRect.top) / CELL_HEIGHT); i < ceil(ny + float(collisionRect.top + collisionRect.height) / CELL_HEIGHT); i++)
 		{
-			for (unsigned int j = unsigned(pos.x); j < unsigned(ceil(pos.x + spriteSize.x / CELL_WIDTH)); j++)
+			for (unsigned int j = unsigned(nx + float(collisionRect.left) / CELL_WIDTH); j < ceil(nx + float(collisionRect.left + collisionRect.width) / CELL_WIDTH); j++)
 			{
-				individualCollisions(room.getCell(j, i));
+				// ObjectColissionRect
+				IntRect OCR = objects[room.getCell(j, i)].getCollisionRect();
+
+				// Грани обьекта
+				float upEdgeOfObject    = i + float(OCR.top)               / CELL_HEIGHT;
+				float downEdgeOfObject  = i + float(OCR.top  + OCR.height) / CELL_HEIGHT;
+				float rightEdgeOfObject = j + float(OCR.left + OCR.width)  / CELL_WIDTH;
+				float leftEdgeOfObject  = j + float(OCR.left)              / CELL_WIDTH;
+
+				// Столкнулись ли обьекты
+				// По Y
+				if ((upEdgeOfObject < upEdgeOfPlayer   && upEdgeOfPlayer < downEdgeOfObject) ||
+					(upEdgeOfObject < downEdgeOfPlayer && downEdgeOfPlayer < downEdgeOfObject) ||
+					(upEdgeOfPlayer < upEdgeOfObject   && upEdgeOfObject < downEdgeOfPlayer) ||
+					(upEdgeOfPlayer < downEdgeOfObject && downEdgeOfObject < downEdgeOfPlayer))
+				{
+					// По X
+					if ((leftEdgeOfObject < leftEdgeOfPlayer  && leftEdgeOfPlayer < rightEdgeOfObject) ||
+						(leftEdgeOfObject < rightEdgeOfPlayer && rightEdgeOfPlayer < rightEdgeOfObject) ||
+						(leftEdgeOfPlayer < leftEdgeOfObject  && leftEdgeOfObject < rightEdgeOfPlayer) ||
+						(leftEdgeOfPlayer < rightEdgeOfObject && rightEdgeOfObject < rightEdgeOfPlayer))
+					{
+						individualCollisions(room.getCell(j, i), j, i);
+					}
+				}
 			}
-		}*/
+		}
 	}
 protected:
 	HealthComponent*	healthComp;
