@@ -87,55 +87,87 @@ public:
 		collisionRect = _collisionRect;
 	}
 
+
 	void individualCollisions(int objectID, unsigned int x, unsigned int y)
 	{
 		
 		switch (objectID)
 		{
 		case DOOR:
-
-			int i = 0;
-			for (; i < maxNumberOfRooms; i++)
-			{
-				if (room == &rooms[i])
-				{
-					std::cerr << i << " ";
-					break;
-				}
-			}
-
-			if (i == maxNumberOfRooms)
-			{
-				i = 0;
-			}
-			else
-			{
-				i++;
-			}
-
-			rooms[i] = Room(generateRandomRoom(true, true, true, true));
-			room = &rooms[i];
-
+			unsigned int direction;
+			
 			// Верхнаяя дверь
 			if (y < ROOM_HEIGHT / 2 - 1)
 			{
 				pos.y = ROOM_HEIGHT - 1.f - float(collisionRect.height + distanceFromDoor) / CELL_HEIGHT;
+				direction = UP;
 			}
 			// Нижняя дверь
 			else if (y > ROOM_HEIGHT / 2 + 1)
 			{
 				pos.y = 1.f - float(collisionRect.top - distanceFromDoor) / CELL_HEIGHT;
+				direction = DOWN;
 			}
 			// Левая дверь
 			else if (x < ROOM_WIDTH / 2 - 1)
 			{
 				pos.x = ROOM_WIDTH - 1.f - float(collisionRect.width + distanceFromDoor) / CELL_WIDTH;
+				direction = LEFT;
 			}
 			// Правая дверь
 			else if (x > ROOM_HEIGHT / 2 + 1)
 			{
 				pos.x = 1.f - float(collisionRect.left - distanceFromDoor) / CELL_WIDTH;
+				direction = RIGHT;
 			}
+
+			int i = 0;
+			if (room->getAdjacencyMatrix()[direction] == -1)
+			{
+				bool upDoor = true;
+				bool rightDoor = true;
+				bool downDoor = true;
+				bool leftDoor = true;
+
+				Room newRoom(generateRandomRoom(upDoor, rightDoor, downDoor, leftDoor));
+
+				for (; i < maxNumberOfRooms; i++)
+				{
+					if (room == &rooms[i])
+					{
+						break;
+					}
+				}
+
+				unsigned int invDir;
+				if (direction == UP)    { invDir = DOWN; }
+				if (direction == RIGHT) { invDir = LEFT; }
+				if (direction == DOWN)  { invDir = UP; }
+				if (direction == LEFT)  { invDir = RIGHT; }
+
+				newRoom.getAdjacencyMatrix()[invDir] = i;
+
+				if (i == maxNumberOfRooms)
+				{
+					i = 0;
+				}
+				else
+				{
+					i++;
+				}
+
+				room->getAdjacencyMatrix()[direction] = i;
+
+				rooms[i] = newRoom;
+			}
+			else
+			{
+				i = room->getAdjacencyMatrix()[direction];
+			}
+
+			std::cerr << i << " ";
+
+			room = &rooms[i];
 
 			break;
 		}

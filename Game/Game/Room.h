@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <queue>
 #include <iostream>
 #include "StaticObject.h"
 
@@ -68,18 +69,26 @@ private:
 	std::vector<std::vector<int> > map;
 
 	// Матрица смежности
-	std::vector<std::vector<int> > adjacencyMatrix;
+	std::vector<int> adjacencyMatrix;
 public:
 	Room(std::vector<std::vector<int> > _map) : map(_map)
-	{ }
+	{
+		adjacencyMatrix.resize(numOfDirections, -1);
+		// Двери для всех направлений
+	}
 
-	std::vector<std::vector<int> > getMap()
+	std::vector<std::vector<int> > getMap() const
 	{
 		return map;
 	}
 	void setMap(std::vector<std::vector<int> > _map)
 	{
 		map = _map;
+	}
+
+	std::vector<int>& getAdjacencyMatrix()
+	{
+		return adjacencyMatrix;
 	}
 
 	void setCell(Vector2i pos, int obj)
@@ -91,15 +100,17 @@ public:
 		map[y][x] = obj;
 	}
 
-	int getCell(Vector2i pos)
+	int getCell(Vector2i pos) const
 	{
 		return map[pos.y][pos.x];
 	}
-	int getCell(unsigned int x, unsigned int y)
+	int getCell(unsigned int x, unsigned int y) const
 	{
 		return map[y][x];
 	}
 };
 
 std::vector<Room> rooms(maxNumberOfRooms, Room(generateRandomRoom(true, true, true, true)));
+std::queue<int> roomCreatingQueue;
+
 
