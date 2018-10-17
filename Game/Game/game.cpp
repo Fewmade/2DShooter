@@ -88,7 +88,7 @@ int main()
 	player.setSpeed(0.000003f);
 
 	//Создание тестовых нпс
-	createTestNPC(rooms[STARTING_ROOM]);
+	//createTestNPC(rooms[STARTING_ROOM]);
 
 	// Время
 	Clock clock; // Считает время между кадрами

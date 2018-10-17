@@ -112,8 +112,8 @@ public:
 					// По Y
 					if ((upEdgeOfObject < upEdgeOfPlayer   && upEdgeOfPlayer   < downEdgeOfObject) ||
 						(upEdgeOfObject < downEdgeOfPlayer && downEdgeOfPlayer < downEdgeOfObject) ||
-						(upEdgeOfPlayer < upEdgeOfObject   && upEdgeOfObject   < downEdgeOfObject) ||
-						(upEdgeOfPlayer < downEdgeOfObject && downEdgeOfObject < downEdgeOfObject))
+						(upEdgeOfPlayer < upEdgeOfObject   && upEdgeOfObject   < downEdgeOfPlayer) ||
+						(upEdgeOfPlayer < downEdgeOfObject && downEdgeOfObject < downEdgeOfPlayer))
 					{
 						// По X
 						if ((leftEdgeOfObject < leftEdgeOfPlayer  && leftEdgeOfPlayer  < rightEdgeOfObject) ||
@@ -123,7 +123,6 @@ public:
 						{
 							// Центр обьекта
 							float blockCenter = (leftEdgeOfObject + rightEdgeOfObject) / 2;
-
 							// С какой стороны столкнулись с обьектом
 							if (leftEdgeOfPlayer > blockCenter)
 							{
@@ -159,19 +158,19 @@ public:
 					float downEdgeOfPlayer  = ny + float(collisionRect.top  + collisionRect.height) / CELL_HEIGHT;
 					float rightEdgeOfPlayer = nx + float(collisionRect.left + collisionRect.width)  / CELL_WIDTH;
 					float leftEdgeOfPlayer  = nx + float(collisionRect.left)                        / CELL_WIDTH;
-					
+
 					// Грани обьекта
-					float upEdgeOfObject    = i + float(OCR.top)               / CELL_HEIGHT;
-					float downEdgeOfObject  = i + float(OCR.top  + OCR.height) / CELL_HEIGHT;
+					float upEdgeOfObject =    i + float(OCR.top)               / CELL_HEIGHT;
+					float downEdgeOfObject =  i + float(OCR.top  + OCR.height) / CELL_HEIGHT;
 					float rightEdgeOfObject = j + float(OCR.left + OCR.width)  / CELL_WIDTH;
-					float leftEdgeOfObject  = j + float(OCR.left)              / CELL_WIDTH;
-					
+					float leftEdgeOfObject =  j + float(OCR.left)              / CELL_WIDTH;
+
 					// Столкнулись ли обьекты вообще
 					// По Y
 					if ((upEdgeOfObject < upEdgeOfPlayer   && upEdgeOfPlayer   < downEdgeOfObject) ||
 						(upEdgeOfObject < downEdgeOfPlayer && downEdgeOfPlayer < downEdgeOfObject) ||
-						(upEdgeOfPlayer < upEdgeOfObject   && upEdgeOfObject   < downEdgeOfObject) ||
-						(upEdgeOfPlayer < downEdgeOfObject && downEdgeOfObject < downEdgeOfObject))
+						(upEdgeOfPlayer < upEdgeOfObject   && upEdgeOfObject   < downEdgeOfPlayer) ||
+						(upEdgeOfPlayer < downEdgeOfObject && downEdgeOfObject < downEdgeOfPlayer))
 					{
 						// По X
 						if ((leftEdgeOfObject < leftEdgeOfPlayer  && leftEdgeOfPlayer  < rightEdgeOfObject) ||
