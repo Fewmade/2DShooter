@@ -47,7 +47,7 @@ const int STARTING_ROOM = 0;
 const float PATH_OFFSET = 0.1f;
 
 // ћаксимальное количество загруженных комнат
-const unsigned int maxNumberOfRooms = 10;
+const unsigned int maxNumberOfRooms = 1000;
 
 // ќтступ от двери при переходе в другую комнату(в пиксел€х)
 const int distanceFromDoor = 10;

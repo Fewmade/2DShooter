@@ -57,7 +57,7 @@ public:
 	}
 
 
-	void move(Room & room, int directory, float distance)
+	void move(Room& room, int directory, float distance)
 	{
 		Vector2f newPos; // Новая позиция
 		Vector2f dPos;   // Изменение координат
@@ -90,6 +90,12 @@ public:
 		{
 			for (unsigned int j = unsigned(nx + float(collisionRect.left) / CELL_WIDTH); j < ceil(nx + float(collisionRect.left + collisionRect.width) / CELL_WIDTH); j++)
 			{
+				// Обьект за пределами комнаты
+				if (i < 0 || j < 0 || i >= ROOM_HEIGHT || j >= ROOM_WIDTH)
+				{
+					continue;
+				}
+
 				// Если оба обьекта твёрдые
 				if (solid && room.getCell(j, i) >= 0 && objects[room.getCell(j, i)].getSolid())
 				{

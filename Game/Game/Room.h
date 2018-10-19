@@ -68,12 +68,12 @@ class Room
 private:
 	std::vector<std::vector<int> > map;
 
-	// Матрица смежности
-	std::vector<int> adjacencyMatrix;
+	// Массив соединений дверей к комнатам(я заню что дверей 4, а направлений 8. Мне насрать)
+	std::vector<int> connections;
 public:
 	Room(std::vector<std::vector<int> > _map) : map(_map)
 	{
-		adjacencyMatrix.resize(numOfDirections, -1);
+		connections.resize(numOfDirections, -1);
 		// Двери для всех направлений
 	}
 
@@ -86,9 +86,9 @@ public:
 		map = _map;
 	}
 
-	std::vector<int>& getAdjacencyMatrix()
+	std::vector<int>& getConnections()
 	{
-		return adjacencyMatrix;
+		return connections;
 	}
 
 	void setCell(Vector2i pos, int obj)

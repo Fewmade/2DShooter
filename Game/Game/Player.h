@@ -90,7 +90,6 @@ public:
 
 	void individualCollisions(int objectID, unsigned int x, unsigned int y)
 	{
-		
 		switch (objectID)
 		{
 		case DOOR:
@@ -121,8 +120,11 @@ public:
 				direction = RIGHT;
 			}
 
-			int i = 0;
-			if (room->getAdjacencyMatrix()[direction] == -1)
+			// Номер новой комнаты
+			int newRoomNumber = 0;
+
+			// Если дверь ни к чему не ведёт, создаём новую
+			if (room->getConnections()[direction] == -1)
 			{
 				bool upDoor = true;
 				bool rightDoor = true;
@@ -131,6 +133,8 @@ public:
 
 				Room newRoom(generateRandomRoom(upDoor, rightDoor, downDoor, leftDoor));
 
+				// Ищем комнату, в которой находится персонаж
+				int i = 0;
 				for (; i < maxNumberOfRooms; i++)
 				{
 					if (room == &rooms[i])
@@ -139,35 +143,30 @@ public:
 					}
 				}
 
+				// Направление наоборот
 				unsigned int invDir;
 				if (direction == UP)    { invDir = DOWN; }
 				if (direction == RIGHT) { invDir = LEFT; }
 				if (direction == DOWN)  { invDir = UP; }
 				if (direction == LEFT)  { invDir = RIGHT; }
 
-				newRoom.getAdjacencyMatrix()[invDir] = i;
+				newRoomNumber = roomCreatingQueue.front();
 
-				if (i == maxNumberOfRooms)
-				{
-					i = 0;
-				}
-				else
-				{
-					i++;
-				}
+				roomCreatingQueue.pop();
+				roomCreatingQueue.push(newRoomNumber);
 
-				room->getAdjacencyMatrix()[direction] = i;
+				// Ставим соединения между комнатами
+				newRoom.getConnections()[invDir] = i;
+				room->getConnections()[direction] = newRoomNumber;
 
-				rooms[i] = newRoom;
+				rooms[newRoomNumber] = newRoom;
 			}
 			else
 			{
-				i = room->getAdjacencyMatrix()[direction];
+				newRoomNumber = room->getConnections()[direction];
 			}
 
-			std::cerr << i << " ";
-
-			room = &rooms[i];
+			room = &rooms[newRoomNumber];
 
 			break;
 		}
