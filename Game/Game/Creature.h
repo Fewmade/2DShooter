@@ -1,11 +1,11 @@
 #pragma once
 
 #include <cmath>
-
 #include "DynamicObject.h"
 #include "HealthComponent.h"
 #include "Room.h"
 #include "Consts.h"
+
 
 class Creature : public DynamicObject
 {

@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "Creature.h"
 
+
 class State
 {
 public:
@@ -18,6 +19,12 @@ public:
 	virtual void exit()						//Exit from state
 	{}
 
+	int getStateID() const
+	{
+		return stateID;
+	}
+
 protected:
 	Creature * owner;
+	int stateID;
 };

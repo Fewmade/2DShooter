@@ -1,7 +1,7 @@
 #pragma once
 #include "Creature.h"
-#include "State.h"
 #include "PatrolState.h"
+#include "SeekState.h"
 
 class EnemyNPC : public Creature
 {
@@ -15,7 +15,8 @@ public:
 		room = _room;
 
 		//НПС входит в состояние патруллирования
-		currentState = new PatrolState(std::vector<Vector2f>() ,this, 0);
+		//currentState = new PatrolState(std::vector<Vector2f>() ,this, 0);
+		currentState = new SeekState(this, 0);
 		currentState->enter();
 
 		image = _image;
@@ -32,7 +33,8 @@ public:
 		room = _room;
 
 		//НПС входит в состояние патруллирования
-		currentState = new PatrolState(_patrolPoints, this, 0);
+		//currentState = new PatrolState(_patrolPoints, this, 0);
+		currentState = new SeekState(this, 0);
 		currentState->enter();
 
 		image = _image;
@@ -57,6 +59,11 @@ public:
 
 		solid = _solid;
 		collisionRect = _collisionRect;
+	}
+
+	int getStateID() const
+	{
+		return currentState->getStateID();
 	}
 
 	virtual ~EnemyNPC()

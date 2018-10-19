@@ -4,6 +4,7 @@
 #include "AllyNPC.h"
 #include "Creature.h"
 #include "DynamicObject.h"
+//#include "GameManager.h"
 #include "EnemyNPC.h"
 #include "GameObject.h"
 #include "HealthComponent.h"
@@ -16,13 +17,12 @@
 
 using namespace sf;
 
-//Коллекция нпс в игре
 //Необходимо пробегать по массиву нпс каждый кадр
 //И вызывать функцию ExecuteState()
 //***********************************************
 //Всех нпс подгружать до начала игры
 //***********************************************
-std::vector<EnemyNPC*> enemies;
+
 
 // Задний фон
 std::vector<Texture> backgrounds(NUMBER_OF_BACKGROUNDS);
@@ -56,6 +56,7 @@ void loadImages()
 	playerImage = image;
 }
 
+/*
 void createTestNPC(Room &room)
 {
 	Image npcImage;
@@ -70,8 +71,9 @@ void createTestNPC(Room &room)
 
 	EnemyNPC* npc1 = new EnemyNPC(npcImage, Vector2f(ROOM_WIDTH / 2, ROOM_HEIGHT / 2), &room, patrolPoints, true);
 	npc1->setSpeed(0.000003f);
-	enemies.push_back(npc1);
+	GameManager::Instance().AddNPC(npc1);
 }
+*/
 
 int main()
 {
@@ -86,9 +88,10 @@ int main()
 	//Игрок
 	Player player(playerImage, Vector2f(ROOM_WIDTH / 2, ROOM_HEIGHT / 2), &rooms[STARTING_ROOM], 100, 100, true, IntRect(8, 2, 16, 59));
 	player.setSpeed(0.000003f);
+	//GameManager::Instance().setPlayer(&player);
 
 	//Создание тестовых нпс
-	createTestNPC(rooms[STARTING_ROOM]);
+	//createTestNPC(rooms[STARTING_ROOM]);
 
 	// Время
 	Clock clock; // Считает время между кадрами
@@ -161,16 +164,8 @@ int main()
 		pl.setPosition(float(pos.x * CELL_WIDTH), float(pos.y * CELL_HEIGHT));
 		window.draw(pl);
 
-		//Тест НПС
-		for (unsigned int i = 0; i < enemies.size(); i++)
-		{
-			enemies[i]->executeState(time);
-
-			Sprite sp = enemies[i]->getSprite();
-			Vector2f pos = enemies[i]->getPos();
-			sp.setPosition(float(pos.x * CELL_WIDTH), float(pos.y * CELL_HEIGHT));
-			window.draw(sp);
-		}
+		// Просчет нпс
+		//GameManager::Instance().CalculateNPC(window, time);
 		///////////////////////////////////////
 
 		window.display();

@@ -43,5 +43,8 @@ const int STARTING_ROOM = 0;
 
 //Константы для НПС
 const float PATH_OFFSET = 0.1f;
+const int	PATROL_STATE = 0;
+const int	SEEK_STATE	 = 1;
+
 
 

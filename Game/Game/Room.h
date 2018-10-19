@@ -3,6 +3,7 @@
 #include <vector>
 #include <iostream>
 #include "StaticObject.h"
+#include "Consts.h"
 
 std::vector<StaticObject> objects(NUMBER_OF_OBJECTS);
 

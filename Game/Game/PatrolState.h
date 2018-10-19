@@ -19,22 +19,20 @@ public:
 		owner			= _owner;
 		currentPoint	= currPoint;
 		frameCount		= 0;
+		stateID = PATROL_STATE;
 	}
 	~PatrolState()
 	{}
 
 	void enter() override
 	{
-		std::cerr << "Enter in patrol state" << std::endl;
-		std::cerr << "Patrol points length: " << patrolPoints.size() << std::endl;
-		std::cerr << "Owner: " << owner << " " << owner->getID()  << std::endl;
-	}
 
+	}
 	void execute(float time) override
 	{
 		++frameCount;
 		std::cerr << owner->getPos().x << "/" << owner->getPos().y << " -frame: " << frameCount << std::endl;
-		std::cerr << patrolPoints[currentPoint].x << "/" << patrolPoints[currentPoint].y  << std::endl;
+		std::cerr << patrolPoints[currentPoint].x << "/" << patrolPoints[currentPoint].y << std::endl;
 
 		if (patrolPoints.size() > 0)
 		{
@@ -92,20 +90,16 @@ public:
 					dir = UP;
 				}
 				/////////////////////////////////////////////////////////
-				
+
 				owner->move(owner->getRoom(), dir, time * owner->getSpeed());
 			}
 		}
-		
-		
-
-		
 	}
-
 	void exit() override
 	{
 
 	}
+
 
 private:
 	std::vector<Vector2f>	patrolPoints;

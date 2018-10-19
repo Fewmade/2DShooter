@@ -1,6 +1,7 @@
 #pragma once
 #include "Creature.h"
 
+
 struct PlayerStatus
 {
 	int condition;
