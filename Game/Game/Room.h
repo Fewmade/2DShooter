@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <queue>
 #include <iostream>
 #include "StaticObject.h"
 #include "Consts.h"
@@ -45,7 +46,7 @@ std::vector<std::vector<int> > generateRandomRoom(bool upRoom, bool rightRoom, b
 	// Двери
 	if (upRoom)
 	{
-		map[0][ROOM_WIDTH / 2]           = DOOR;
+		map[0][ROOM_WIDTH / 2]               = DOOR;
 	}
 	if (rightRoom)
 	{
@@ -57,7 +58,7 @@ std::vector<std::vector<int> > generateRandomRoom(bool upRoom, bool rightRoom, b
 	}
 	if (leftRoom)
 	{
-		map[ROOM_HEIGHT / 2][0]          = DOOR;
+		map[ROOM_HEIGHT / 2][0]              = DOOR;
 	}
 
 	return map;
@@ -68,19 +69,27 @@ class Room
 private:
 	std::vector<std::vector<int> > map;
 
-	// Матрица смежности
-	std::vector<std::vector<int> > adjacencyMatrix;
+	// Массив соединений дверей к комнатам(я заню что дверей 4, а направлений 8. Мне насрать)
+	std::vector<int> connections;
 public:
 	Room(std::vector<std::vector<int> > _map) : map(_map)
-	{ }
+	{
+		connections.resize(numOfDirections, -1);
+		// Двери для всех направлений
+	}
 
-	std::vector<std::vector<int> > getMap()
+	std::vector<std::vector<int> > getMap() const
 	{
 		return map;
 	}
 	void setMap(std::vector<std::vector<int> > _map)
 	{
 		map = _map;
+	}
+
+	std::vector<int>& getConnections()
+	{
+		return connections;
 	}
 
 	void setCell(Vector2i pos, int obj)
@@ -92,15 +101,17 @@ public:
 		map[y][x] = obj;
 	}
 
-	int getCell(Vector2i pos)
+	int getCell(Vector2i pos) const
 	{
 		return map[pos.y][pos.x];
 	}
-	int getCell(unsigned int x, unsigned int y)
+	int getCell(unsigned int x, unsigned int y) const
 	{
 		return map[y][x];
 	}
 };
 
-std::vector<Room> rooms;
+std::vector<Room> rooms(maxNumberOfRooms, Room(generateRandomRoom(true, true, true, true)));
+std::queue<int> roomCreatingQueue;
+
 

@@ -38,7 +38,7 @@ void loadImages()
 
 	//StaticObject
 	image.loadFromFile("../images/objects/wall.png");
-	objects[WALL]  = StaticObject(image, true);
+	objects[WALL]  = StaticObject(image, true, IntRect(0, 0, 32, 32));
 
 	image.loadFromFile("../images/objects/stone.png");
 	objects[STONE] = StaticObject(image);
@@ -86,7 +86,7 @@ int main()
 	correntbackground = 0;
 
 	//Игрок
-	Player player(playerImage, Vector2f(ROOM_WIDTH / 2, ROOM_HEIGHT / 2), &rooms[STARTING_ROOM], 100, 100, true, IntRect(8, 2, 16, 59));
+	Player player(playerImage, Vector2f(ROOM_WIDTH / 2, ROOM_HEIGHT / 2), &rooms[STARTING_ROOM], 100, 100, true, IntRect(8, 8, 16, 16));
 	player.setSpeed(0.000003f);
 	//GameManager::Instance().setPlayer(&player);
 

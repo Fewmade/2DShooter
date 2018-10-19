@@ -5,14 +5,16 @@ const unsigned int CELL_WIDTH = 32;
 const unsigned int CELL_HEIGHT = 32;
 
 // Направления
-const int UP         = 1;
-const int UP_RIGHT   = 2;
-const int RIGHT      = 3;
-const int RIGHT_DOWN = 4;
-const int DOWN       = 5;
-const int DOWN_LEFT  = 6;
-const int LEFT       = 7;
-const int LEFT_UP    = 8;
+const unsigned int numOfDirections = 8;
+
+const int UP         = 0;
+const int UP_RIGHT   = 1;
+const int RIGHT      = 2;
+const int RIGHT_DOWN = 3;
+const int DOWN       = 4;
+const int DOWN_LEFT  = 5;
+const int LEFT       = 6;
+const int LEFT_UP    = 7;
 
 // Размер комнаты
 const unsigned int ROOM_WIDTH  = 15;
@@ -41,10 +43,14 @@ const unsigned int ENEMY_BASE_NPC = 1;
 // Стартовая комната
 const int STARTING_ROOM = 0;
 
-//Константы для НПС
+// Константы для НПС
 const float PATH_OFFSET = 0.1f;
 const int	PATROL_STATE = 0;
 const int	SEEK_STATE	 = 1;
 
 
+// Максимальное количество загруженных комнат
+const unsigned int maxNumberOfRooms = 1000;
 
+// Отступ от двери при переходе в другую комнату(в пикселях)
+const int distanceFromDoor = 10;
