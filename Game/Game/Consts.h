@@ -52,5 +52,5 @@ const int	SEEK_STATE	 = 1;
 // ћаксимальное количество загруженных комнат
 const unsigned int maxNumberOfRooms = 1000;
 
-// ќтступ от двери при переходе в другую комнату(в пиксел€х)
-const int distanceFromDoor = 10;
+// ќтступ от двери при переходе в другую комнату
+const float distanceFromDoor = 10.f / 32;

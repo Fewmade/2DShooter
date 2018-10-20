@@ -7,50 +7,62 @@ public:
 	{}
 	HealthComponent(int maxVal)
 	{
-		maxHp = maxVal;
+		maxHP = maxVal;
+		currentHP = maxVal;
 	}
 	HealthComponent(int maxVal, int curVal)
 	{
-		maxHp = maxVal;
-
-		if (curVal > maxHp)					//Если заданное значение некорректно
-		{
-			curVal = maxHp;
-		}
-		else if (curVal < 0)
-		{
-			curVal = 0;
-		}
-
-		currentHp = curVal;
+		maxHP = maxVal;
+		setHP(curVal);
 	}
 
 	~HealthComponent()
 	{}
 
-	void TakeDamage(int val)
+	void changeHP(int HPDif)
 	{
-		currentHp -= val;
-		if (currentHp < 0)
+		currentHP += HPDif;
+
+		//Если заданное значение некорректно
+		if (currentHP < 0)
 		{
-			currentHp = 0;
+			currentHP = 0;
 		}
-	}
-	void Heal(int val)
-	{
-		currentHp += val;
-		if (currentHp > maxHp)
+		if (currentHP > maxHP)
 		{
-			currentHp = maxHp;
+			currentHP = maxHP;
 		}
 	}
 
-	int GetCurrentHp() const
+	void setHP(unsigned int _HP)
 	{
-		return currentHp;
+		currentHP = _HP;
+
+		//Если заданное значение некорректно
+		if (currentHP < 0)
+		{
+			currentHP = 0;
+		}
+		if (currentHP > maxHP)
+		{
+			currentHP = maxHP;
+		}
+	}
+	void setMaxHP(unsigned int _maxHP)
+	{
+		maxHP = _maxHP;
+	}
+
+	int getHP() const
+	{
+		return currentHP;
+	}
+	int getMaxHP() const
+	{
+		return maxHP;
 	}
 
 private:
-	int currentHp;							//Текущее ХП
-	int maxHp;								//Максимально возможное значение
+	int currentHP;							//Текущее ХП
+	int maxHP;								//Максимально возможное значение
 };

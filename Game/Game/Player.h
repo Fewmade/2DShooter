@@ -99,25 +99,25 @@ public:
 			// Верхнаяя дверь
 			if (y < ROOM_HEIGHT / 2 - 1)
 			{
-				pos.y = ROOM_HEIGHT - 1.f - float(collisionRect.height + distanceFromDoor) / CELL_HEIGHT;
+				pos.y = ROOM_HEIGHT - 1.f - float(collisionRect.height) / CELL_HEIGHT - distanceFromDoor;
 				direction = UP;
 			}
 			// Нижняя дверь
 			else if (y > ROOM_HEIGHT / 2 + 1)
 			{
-				pos.y = 1.f - float(collisionRect.top - distanceFromDoor) / CELL_HEIGHT;
+				pos.y = 1.f - float(collisionRect.top) / CELL_HEIGHT + distanceFromDoor;
 				direction = DOWN;
 			}
 			// Левая дверь
 			else if (x < ROOM_WIDTH / 2 - 1)
 			{
-				pos.x = ROOM_WIDTH - 1.f - float(collisionRect.width + distanceFromDoor) / CELL_WIDTH;
+				pos.x = ROOM_WIDTH - 1.f - float(collisionRect.width) / CELL_WIDTH - distanceFromDoor;
 				direction = LEFT;
 			}
 			// Правая дверь
 			else if (x > ROOM_HEIGHT / 2 + 1)
 			{
-				pos.x = 1.f - float(collisionRect.left - distanceFromDoor) / CELL_WIDTH;
+				pos.x = 1.f - float(collisionRect.left) / CELL_WIDTH + distanceFromDoor;
 				direction = RIGHT;
 			}
 

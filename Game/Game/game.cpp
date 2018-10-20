@@ -81,12 +81,18 @@ int main()
 	window.setFramerateLimit(120);
 
 	rooms.push_back(generateRandomRoom(true, true, true, true));
+	for (int i = 1; i < maxNumberOfRooms; i++)
+	{
+		roomCreatingQueue.push(i);
+	}
+	roomCreatingQueue.push(0);
+
 	loadImages();
 	
 	correntbackground = 0;
 
 	//Игрок
-	Player player(playerImage, Vector2f(ROOM_WIDTH / 2, ROOM_HEIGHT / 2), &rooms[STARTING_ROOM], 100, 100, true, IntRect(8, 8, 16, 16));
+	Player player(playerImage, Vector2f(ROOM_WIDTH / 2, ROOM_HEIGHT / 2), &rooms[STARTING_ROOM], 100, 100, true, IntRect(8, 2, 16, 59));
 	player.setSpeed(0.000003f);
 	//GameManager::Instance().setPlayer(&player);
 
@@ -132,25 +138,20 @@ int main()
 		
 		window.clear();
 
-		// Прорисовка заднего фона
+		// Прорисовка заднего фона и карты
+		Sprite background(backgrounds[0]);
 		for (unsigned int i = 0; i < ROOM_HEIGHT; i++)
 		{
 			for (unsigned int j = 0; j < ROOM_WIDTH; j++)
 			{
-				Sprite background(backgrounds[correntbackground]);
+				// Прорисовка заднего фона
 				background.setPosition(float(j * CELL_WIDTH), float(i * CELL_HEIGHT));
 				window.draw(background);
-			}
-		}
 
-		// Прорисовка карты
-		for (unsigned int i = 0; i < ROOM_HEIGHT; i++)
-		{
-			for (unsigned int j = 0; j < ROOM_WIDTH; j++)
-			{
-				if (map[i][j] >= -1)
+				// Прорисовка карты
+				if (map[i][j] >= 0)
 				{
-					Sprite object = objects[map[j][i]].getSprite();
+					Sprite object = objects[map[i][j]].getSprite();
 
 					object.setPosition(float(j * CELL_WIDTH), float(i * CELL_HEIGHT));
 					window.draw(object);
