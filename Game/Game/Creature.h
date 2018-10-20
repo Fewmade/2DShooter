@@ -46,6 +46,11 @@ public:
 		return *room;
 	}
 
+	unsigned int getHP()
+	{
+		return healthComp->getHP();
+	}
+
 	// Индивидуальный обработчик столкновений(у каждого производного класса свой)
 	virtual void individualCollisions(int objectID, unsigned int x, unsigned int y)
 	{ }

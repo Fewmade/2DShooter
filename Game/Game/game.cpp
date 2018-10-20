@@ -1,4 +1,6 @@
 #include <SFML/Graphics.hpp>
+#include <iostream>
+#include <string>
 
 #include "Consts.h"
 #include "AllyNPC.h"
@@ -13,7 +15,6 @@
 #include "StaticObject.h"
 #include "PatrolState.h"
 #include "State.h"
-#include <iostream>
 
 using namespace sf;
 
@@ -29,6 +30,8 @@ std::vector<Texture> backgrounds(NUMBER_OF_BACKGROUNDS);
 unsigned int correntbackground;
 
 Image playerImage;
+
+Font basicFont;
 
 void loadImages()
 {
@@ -54,6 +57,15 @@ void loadImages()
 	//Player
 	image.loadFromFile("../images/characters/player.png");
 	playerImage = image;
+}
+
+void otherLoads()
+{
+	// Загрузка шрифта
+	Font font;
+	font.loadFromFile("../fonts/CyrilicOld.ttf");
+
+	basicFont = font;
 }
 
 /*
@@ -88,6 +100,7 @@ int main()
 	roomCreatingQueue.push(0);
 
 	loadImages();
+	otherLoads();
 	
 	correntbackground = 0;
 
@@ -137,7 +150,7 @@ int main()
 		std::vector<std::vector<int> > map = player.getRoom().getMap();
 		
 		window.clear();
-
+		
 		// Прорисовка заднего фона и карты
 		Sprite background(backgrounds[0]);
 		for (unsigned int i = 0; i < ROOM_HEIGHT; i++)
@@ -164,6 +177,16 @@ int main()
 		Vector2f pos = player.getPos();
 		pl.setPosition(float(pos.x * CELL_WIDTH), float(pos.y * CELL_HEIGHT));
 		window.draw(pl);
+
+		// Прорисовка здоровья
+		String HPString;
+		HPString = "Здоровье: " + String(std::to_string(player.getHP()));
+		Text HPText(HPString, basicFont, 20);
+		HPText.setFillColor(Color::Red);
+		HPText.setStyle(Text::Bold);
+
+		HPText.setPosition(0, 0);
+		window.draw(HPText);
 
 		// Просчет нпс
 		//GameManager::Instance().CalculateNPC(window, time);
