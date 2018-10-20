@@ -93,11 +93,6 @@ int main()
 	window.setFramerateLimit(120);
 
 	rooms.push_back(generateRandomRoom(true, true, true, true));
-	for (int i = 1; i < maxNumberOfRooms; i++)
-	{
-		roomCreatingQueue.push(i);
-	}
-	roomCreatingQueue.push(0);
 
 	loadImages();
 	otherLoads();
@@ -117,10 +112,21 @@ int main()
 
 	while (window.isOpen())
 	{
+		Event event;
+		while (window.pollEvent(event))
+		{
+			if (event.type == Event::Closed)
+				window.close();
+		}
+
 		// Время
 		float time; // Хранит время между кадрами
 		time = float(clock.getElapsedTime().asMicroseconds());
 		clock.restart();
+
+		// Просчет нпс
+		//GameManager::Instance().CalculateNPC(window, time);
+		///////////////////////////////////////
 
 		// Обработка движений
 		PlayerStatus playerStatus = getPlayerStatus();
@@ -137,16 +143,14 @@ int main()
 				player.setSpeed(0.000007f);
 			}
 
-			player.move(player.getRoom(), playerStatus.dir, distance);
+			player.move(playerStatus.dir, distance);
 		}
 
-		Event event;
-		while (window.pollEvent(event))
-		{
-			if (event.type == Event::Closed)
-				window.close();
-		}
+		// Update всех существ
+		player.update();
 
+
+		// Прорисовка
 		std::vector<std::vector<int> > map = player.getRoom().getMap();
 		
 		window.clear();
@@ -184,13 +188,8 @@ int main()
 		Text HPText(HPString, basicFont, 20);
 		HPText.setFillColor(Color::Red);
 		HPText.setStyle(Text::Bold);
-
 		HPText.setPosition(0, 0);
 		window.draw(HPText);
-
-		// Просчет нпс
-		//GameManager::Instance().CalculateNPC(window, time);
-		///////////////////////////////////////
 
 		window.display();
 	}

@@ -62,7 +62,7 @@ public:
 	}
 
 
-	void move(Room& room, int directory, float distance)
+	void move(int directory, float distance)
 	{
 		Vector2f newPos; // Новая позиция
 		Vector2f dPos;   // Изменение координат
@@ -102,10 +102,10 @@ public:
 				}
 
 				// Если оба обьекта твёрдые
-				if (solid && room.getCell(j, i) >= 0 && objects[room.getCell(j, i)].getSolid())
+				if (solid && room->getCell(j, i) >= 0 && objects[room->getCell(j, i)].getSolid())
 				{
 					// ObjectColissionRect
-					IntRect OCR = objects[room.getCell(j, i)].getCollisionRect();
+					IntRect OCR = objects[room->getCell(j, i)].getCollisionRect();
 
 					// Грани игрока
 					float upEdgeOfPlayer    = ny + float(collisionRect.top)                         / CELL_HEIGHT;
@@ -159,10 +159,10 @@ public:
 			for (unsigned int j = unsigned(nx + float(collisionRect.left) / CELL_WIDTH); j < ceil(nx + float(collisionRect.left + collisionRect.width) / CELL_WIDTH); j++)
 			{
 				// Если оба обьекта твёрдые
-				if (solid && room.getCell(j, i) >= 0 && objects[room.getCell(j, i)].getSolid())
+				if (solid && room->getCell(j, i) >= 0 && objects[room->getCell(j, i)].getSolid())
 				{
 					// ObjectColissionRect
-					IntRect OCR = objects[room.getCell(j, i)].getCollisionRect();
+					IntRect OCR = objects[room->getCell(j, i)].getCollisionRect();
 					
 					// Грани игрока
 					float upEdgeOfPlayer    = ny + float(collisionRect.top)                         / CELL_HEIGHT;
@@ -210,25 +210,28 @@ public:
 		newPos.y = ny;
 
 		pos = newPos;
+	}
 
+	void update()
+	{
 		// Грани игрока
-		float upEdgeOfPlayer    = ny + float(collisionRect.top)                         / CELL_HEIGHT;
-		float downEdgeOfPlayer  = ny + float(collisionRect.top  + collisionRect.height) / CELL_HEIGHT;
-		float rightEdgeOfPlayer = nx + float(collisionRect.left + collisionRect.width)  / CELL_WIDTH;
-		float leftEdgeOfPlayer  = nx + float(collisionRect.left)                        / CELL_WIDTH;
-		
-		for (unsigned int i = unsigned(ny + float(collisionRect.top) / CELL_HEIGHT); i < ceil(ny + float(collisionRect.top + collisionRect.height) / CELL_HEIGHT); i++)
+		float upEdgeOfPlayer    = pos.y + float(collisionRect.top) / CELL_HEIGHT;
+		float downEdgeOfPlayer  = pos.y + float(collisionRect.top + collisionRect.height) / CELL_HEIGHT;
+		float rightEdgeOfPlayer = pos.x + float(collisionRect.left + collisionRect.width) / CELL_WIDTH;
+		float leftEdgeOfPlayer  = pos.x + float(collisionRect.left) / CELL_WIDTH;
+
+		for (unsigned int i = unsigned(pos.y + float(collisionRect.top) / CELL_HEIGHT); i < ceil(pos.y + float(collisionRect.top + collisionRect.height) / CELL_HEIGHT); i++)
 		{
-			for (unsigned int j = unsigned(nx + float(collisionRect.left) / CELL_WIDTH); j < ceil(nx + float(collisionRect.left + collisionRect.width) / CELL_WIDTH); j++)
+			for (unsigned int j = unsigned(pos.x + float(collisionRect.left) / CELL_WIDTH); j < ceil(pos.x + float(collisionRect.left + collisionRect.width) / CELL_WIDTH); j++)
 			{
 				// ObjectColissionRect
-				IntRect OCR = objects[room.getCell(j, i)].getCollisionRect();
+				IntRect OCR = objects[room->getCell(j, i)].getCollisionRect();
 
 				// Грани обьекта
-				float upEdgeOfObject    = i + float(OCR.top)               / CELL_HEIGHT;
-				float downEdgeOfObject  = i + float(OCR.top  + OCR.height) / CELL_HEIGHT;
-				float rightEdgeOfObject = j + float(OCR.left + OCR.width)  / CELL_WIDTH;
-				float leftEdgeOfObject  = j + float(OCR.left)              / CELL_WIDTH;
+				float upEdgeOfObject = i + float(OCR.top) / CELL_HEIGHT;
+				float downEdgeOfObject = i + float(OCR.top + OCR.height) / CELL_HEIGHT;
+				float rightEdgeOfObject = j + float(OCR.left + OCR.width) / CELL_WIDTH;
+				float leftEdgeOfObject = j + float(OCR.left) / CELL_WIDTH;
 
 				// Столкнулись ли обьекты
 				// По Y
@@ -243,7 +246,7 @@ public:
 						(leftEdgeOfPlayer < leftEdgeOfObject  && leftEdgeOfObject < rightEdgeOfPlayer) ||
 						(leftEdgeOfPlayer < rightEdgeOfObject && rightEdgeOfObject < rightEdgeOfPlayer))
 					{
-						individualCollisions(room.getCell(j, i), j, i);
+						individualCollisions(room->getCell(j, i), j, i);
 					}
 				}
 			}

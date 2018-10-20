@@ -111,7 +111,6 @@ public:
 	}
 };
 
-std::vector<Room> rooms(maxNumberOfRooms, Room(generateRandomRoom(true, true, true, true)));
-std::queue<int> roomCreatingQueue;
+std::vector<Room> rooms(1, Room(generateRandomRoom(true, true, true, true)));
 
 

@@ -91,7 +91,7 @@ public:
 				}
 				/////////////////////////////////////////////////////////
 
-				owner->move(owner->getRoom(), dir, time * owner->getSpeed());
+				owner->move(dir, time * owner->getSpeed());
 			}
 		}
 	}

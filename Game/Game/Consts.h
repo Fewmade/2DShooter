@@ -48,9 +48,5 @@ const float PATH_OFFSET = 0.1f;
 const int	PATROL_STATE = 0;
 const int	SEEK_STATE	 = 1;
 
-
-// ћаксимальное количество загруженных комнат
-const unsigned int maxNumberOfRooms = 1000;
-
 // ќтступ от двери при переходе в другую комнату
 const float distanceFromDoor = 10.f / 32;

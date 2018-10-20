@@ -131,8 +131,8 @@ public:
 			Room newRoom(generateRandomRoom(upDoor, rightDoor, downDoor, leftDoor));
 
 			// »щем комнату, в которой находитс€ персонаж
-			int i = 0;
-			for (; i < maxNumberOfRooms; i++)
+			unsigned int i = 0;
+			for (; i < rooms.size(); i++)
 			{
 				if (room == &rooms[i])
 				{
@@ -147,16 +147,13 @@ public:
 			if (direction == DOWN) { invDir = UP; }
 			if (direction == LEFT) { invDir = RIGHT; }
 
-			newRoomNumber = roomCreatingQueue.front();
-
-			roomCreatingQueue.pop();
-			roomCreatingQueue.push(newRoomNumber);
+			newRoomNumber = rooms.size();
 
 			// —тавим соединени€ между комнатами
 			newRoom.getConnections()[invDir] = i;
 			room->getConnections()[direction] = newRoomNumber;
 
-			rooms[newRoomNumber] = newRoom;
+			rooms.push_back(newRoom);
 		}
 		else
 		{
