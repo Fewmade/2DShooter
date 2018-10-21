@@ -11,7 +11,7 @@ public:
 	~AttackState()
 	{}
 
-	AttackState(Creature *_owner, int id = 0)
+	AttackState(Creature *_owner, int id = 2)
 	{
 		owner = _owner;
 		stateID = id;
@@ -23,7 +23,13 @@ public:
 	}
 	void execute(float time, Creature* player) override
 	{
-
+		if (player != nullptr)
+		{
+			if (player->getHP() > 0)
+			{
+				player->dealDamage(owner->getDamage());
+			}
+		}
 	}
 	void exit() override
 	{

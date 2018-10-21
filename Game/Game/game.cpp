@@ -81,7 +81,7 @@ void createTestNPC(Room *room)
 	patrolPoints.push_back(Vector2f(7,5));
 	patrolPoints.push_back(Vector2f(6,2));
 
-	EnemyNPC* npc1 = new EnemyNPC(npcImage, Vector2f(ROOM_WIDTH / 2, ROOM_HEIGHT / 2), room, patrolPoints, true);
+	EnemyNPC* npc1 = new EnemyNPC(npcImage, Vector2f(ROOM_WIDTH / 2 + 4, ROOM_HEIGHT / 2 + 4), room,  patrolPoints, 2, 4, true);
 	npc1->setGoSpeed(0.000003f);
 	gameManager.AddNPC(npc1);
 }

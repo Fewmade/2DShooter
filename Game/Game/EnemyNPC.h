@@ -2,21 +2,24 @@
 #include "Creature.h"
 #include "PatrolState.h"
 #include "SeekState.h"
+#include "AttackState.h"
 
 class EnemyNPC : public Creature
 {
 public:
 	EnemyNPC()
 	{}
-	EnemyNPC(Image _image, Vector2f _pos, Room *_room, bool _solid = false, Vector2u _spriteSize = Vector2u(32, 32), IntRect _collisionRect = IntRect(0, 0, 32, 32))
+	EnemyNPC(Image _image, Vector2f _pos, Room *_room, bool _solid = false, Vector2u _spriteSize = Vector2u(32, 32), IntRect _collisionRect = IntRect(0, 0, 32, 32), int _damage = 30)
 	{
 		pos = _pos;
 		id = ENEMY_BASE_NPC;
 		room = _room;
+		patrolPoints = std::vector<Vector2f>();
+		attackRadius = 2;
+		seekRadius = 4;
 
 		//НПС входит в состояние патруллирования
-		//currentState = new PatrolState(std::vector<Vector2f>() ,this, 0);
-		currentState = new SeekState(this, 0);
+		currentState = new PatrolState(patrolPoints ,this, 0);
 		currentState->enter();
 
 		image = _image;
@@ -27,15 +30,17 @@ public:
 		collisionRect = _collisionRect;
 		spriteSize = _spriteSize;
 	}
-	EnemyNPC(Image _image, Vector2f _pos, Room *_room, std::vector<Vector2f> _patrolPoints, bool _solid = false, Vector2u _spriteSize = Vector2u(32, 32), IntRect _collisionRect = IntRect(0, 0, 32, 32))
+	EnemyNPC(Image _image, Vector2f _pos, Room *_room, std::vector<Vector2f> _patrolPoints, float _attackRadius, float _seekRadius, bool _solid = false, Vector2u _spriteSize = Vector2u(32, 32), IntRect _collisionRect = IntRect(0, 0, 32, 32), int damage = 30)
 	{
 		pos = _pos;
 		id = ENEMY_BASE_NPC;
 		room = _room;
+		patrolPoints = _patrolPoints;
+		attackRadius = _attackRadius;
+		seekRadius = _seekRadius;
 
 		//НПС входит в состояние патруллирования
-		//currentState = new PatrolState(_patrolPoints, this, 0);
-		currentState = new SeekState(this, 0);
+		currentState = new PatrolState(patrolPoints, this, 0);
 		currentState->enter();
 
 		image = _image;
@@ -68,23 +73,41 @@ public:
 	{
 		return currentState->getStateID();
 	}
+	
 
 	virtual ~EnemyNPC()
 	{}
 
 
-	void executeState(float time, Creature* npc)
+	void executeState(float time, Creature* player)
 	{
-		//If player in seek radius and player not in seek state
-			//Change to seek state
-		//If player in attack radius and player not in attack state
-			//Change to attack state
-		//Else if player too far and player not in patrol state
-			//Change to patrol state
+		Vector2f vDist = player->getPos() - pos;
+		float dist = sqrt(vDist.x * vDist.x + vDist.y * vDist.y);
 
-		currentState->execute(time, npc);
+		if (dist <= attackRadius && currentState->getStateID() != ATTACK_STATE)
+		{
+			delete currentState;
+			currentState = new AttackState(this);
+		}
+		else if (dist <= seekRadius && currentState->getStateID() != SEEK_STATE)
+		{
+			delete currentState;
+			currentState = new SeekState(this);
+		}
+		else if (dist > seekRadius && currentState->getStateID() != PATROL_STATE)
+		{
+			delete currentState;
+			currentState = new PatrolState(patrolPoints, this, 0);
+		}
+
+		currentState->execute(time, player);
 	}
+	
 
 protected:
 	State * currentState;								//Текущее состояние НПС
+	std::vector<Vector2f> patrolPoints;
+
+	float	seekRadius;
+	float	attackRadius;
 };

@@ -7,20 +7,21 @@
 #include "Consts.h"
 #include "AnimationComponent.h"
 
-
+/*
 struct CreatureStatus
 {
 	int condition; // go, run, stay
 	int dir;       // up, down, right, left etc.
 	bool atack;
 };
+*/
 
 class Creature : public DynamicObject
 {
 public:
 	Creature()
 	{ }
-	Creature(Image _image, Vector2f _pos, Room *_room, int maxHp, int currHp, bool _solid = false, Vector2u _spriteSize = Vector2u(32, 32), IntRect _collisionRect = IntRect(0, 0, 32, 32))
+	Creature(Image _image, Vector2f _pos, Room *_room, int maxHp, int currHp, int _damage, bool _solid = false, Vector2u _spriteSize = Vector2u(32, 32), IntRect _collisionRect = IntRect(0, 0, 32, 32))
 	{
 		image = _image;
 
@@ -31,6 +32,7 @@ public:
 
 		pos = _pos;
 		room = _room;
+		damage = _damage;
 
 		id = DEFAULT_ID;
 
@@ -74,11 +76,26 @@ public:
 		return *room;
 	}
 
-	unsigned int getHP()
+	unsigned int getHP() 
 	{
 		return healthComp->getHP();
 	}
+	unsigned int getDamage() const
+	{
+		return damage;
+	}
 
+	void changeDamage(int val)
+	{
+		damage += val;
+
+		if (damage < 0)
+			damage = 0;
+	}
+	void dealDamage(int val)
+	{
+		healthComp->changeHP(-val);
+	}
 	void move(CreatureStatus status, float time)
 	{
 		int directory = status.dir;
@@ -311,4 +328,5 @@ protected:
 	float               runSpeed;
 
 	unsigned int		id;
+	unsigned int		damage;
 };
