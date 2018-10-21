@@ -70,7 +70,7 @@ public:
 	{}
 
 
-	virtual void executeState(float time) const
+	void executeState(float time, Creature* npc)
 	{
 		//If player in seek radius and player not in seek state
 			//Change to seek state
@@ -79,7 +79,7 @@ public:
 		//Else if player too far and player not in patrol state
 			//Change to patrol state
 
-		currentState->execute(time);
+		currentState->execute(time, npc);
 	}
 
 protected:

@@ -28,7 +28,7 @@ public:
 	{
 
 	}
-	void execute(float time) override
+	void execute(float time, Creature* player) override
 	{
 		++frameCount;
 		std::cerr << owner->getPos().x << "/" << owner->getPos().y << " -frame: " << frameCount << std::endl;

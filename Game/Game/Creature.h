@@ -8,6 +8,7 @@
 #include "AnimationComponent.h"
 
 
+
 struct CreatureStatus
 {
 	int condition; // go, run, stay

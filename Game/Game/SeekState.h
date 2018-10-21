@@ -1,4 +1,5 @@
 #pragma once
+#include "State.h"
 
 
 class SeekState : public State
@@ -20,9 +21,10 @@ public:
 
 	}
 
-	void execute(float time, Vector2f playerPos) 
+	void execute(float time, Creature* player) override 
 	{
 		int dir = 0;
+		Vector2f playerPos = player->getPos();
 
 		//Находим направление
 		if (playerPos.x - owner->getPos().x >= PATH_OFFSET &&

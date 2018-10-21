@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "Creature.h"
+#include "GameManager.h"
 
 
 class State
@@ -14,7 +15,7 @@ public:
 
 	virtual void enter()					//Enter state
 	{}
-	virtual void execute(float time)					//Execute state
+	virtual void execute(float time, Creature* player)					//Execute state
 	{}
 	virtual void exit()						//Exit from state
 	{}
