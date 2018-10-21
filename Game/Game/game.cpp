@@ -82,7 +82,11 @@ void createTestNPC(Room *room)
 	patrolPoints.push_back(Vector2f(6,2));
 
 	EnemyNPC* npc1 = new EnemyNPC(npcImage, Vector2f(ROOM_WIDTH / 2 + 4, ROOM_HEIGHT / 2 + 4), room,  patrolPoints, 2, 4, true);
-	npc1->setGoSpeed(0.000003f);
+	npc1->setNumOfFrames(std::vector<unsigned int>(numOfAnimationLines, 1));
+	// Скорость изменения кадров для кажлого состояния
+	npc1->setFrameSpeed(std::vector<float>(numOfAnimationLines, 0.0015f));
+	npc1->setGoSpeed(0.003f);
+	npc1->setRunSpeed(0.01f);
 	gameManager.AddNPC(npc1);
 }
 
@@ -92,7 +96,7 @@ int main()
 	RenderWindow window(VideoMode(ROOM_WIDTH * CELL_WIDTH, ROOM_HEIGHT * CELL_HEIGHT), "2D Shooter");
 	window.setFramerateLimit(120);
 
-	rooms.push_back(generateRandomRoom(true, true, true, true));
+	rooms.push_back(new Room(generateRandomRoom(true, true, true, true)));
 
 	loadImages();
 	otherLoads();
@@ -100,7 +104,7 @@ int main()
 	correntbackground = 0;
 
 	//Игрок
-	Player player(playerImage, Vector2f(ROOM_WIDTH / 2, ROOM_HEIGHT / 2), &rooms[STARTING_ROOM], 100, 100, true, Vector2u(32, 32), IntRect(5, 5, 22, 22));
+	Player player(playerImage, Vector2f(ROOM_WIDTH / 2, ROOM_HEIGHT / 2), rooms[STARTING_ROOM], 100, 100, true, Vector2u(32, 32), IntRect(5, 5, 22, 22));
 	player.setGoSpeed(0.003f);
 	player.setRunSpeed(0.007f);
 
@@ -110,7 +114,7 @@ int main()
 	player.setFrameSpeed(std::vector<float>(numOfAnimationLines, 0.0015f));
 
 	// Создание тестовых нпс
-	createTestNPC(&rooms[STARTING_ROOM]);
+	createTestNPC(rooms[STARTING_ROOM]);
 
 	// Время
 	Clock clock; // Считает время между кадрами
@@ -128,7 +132,6 @@ int main()
 		float time; // Хранит время между кадрами
 		time = float(clock.getElapsedTime().asMicroseconds());
 		clock.restart();
-
 
 		time /= 800;
 

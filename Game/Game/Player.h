@@ -128,7 +128,7 @@ public:
 			unsigned int i = 0;
 			for (; i < rooms.size(); i++)
 			{
-				if (room == &rooms[i])
+				if (room == rooms[i])
 				{
 					break;
 				}
@@ -141,20 +141,20 @@ public:
 			if (direction == DOWN) { invDir = UP; }
 			if (direction == LEFT) { invDir = RIGHT; }
 
-			newRoomNumber = rooms.size();
+			rooms.push_back(new Room(generateRandomRoom(true, true, true, true)));
+
+			newRoomNumber = rooms.size() - 1;
 
 			// Ставим соединения между комнатами
-			newRoom.getConnections()[invDir] = i;
+			rooms[newRoomNumber]->getConnections()[invDir] = i;
 			room->getConnections()[direction] = newRoomNumber;
-
-			rooms.push_back(newRoom);
 		}
 		else
 		{
 			newRoomNumber = room->getConnections()[direction];
 		}
 
-		room = &rooms[newRoomNumber];
+		room = rooms[newRoomNumber];
 	}
 
 	void individualCollisions(int objectID, unsigned int x, unsigned int y)

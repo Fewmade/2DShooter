@@ -111,6 +111,5 @@ public:
 	}
 };
 
-std::vector<Room> rooms(1, Room(generateRandomRoom(true, true, true, true)));
-
+std::vector<Room*> rooms;
 
