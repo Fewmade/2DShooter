@@ -6,7 +6,6 @@
 #include "AllyNPC.h"
 #include "Creature.h"
 #include "DynamicObject.h"
-//#include "GameManager.h"
 #include "EnemyNPC.h"
 #include "GameObject.h"
 #include "HealthComponent.h"
@@ -83,7 +82,6 @@ void createTestNPC(Room &room)
 
 	EnemyNPC* npc1 = new EnemyNPC(npcImage, Vector2f(ROOM_WIDTH / 2, ROOM_HEIGHT / 2), &room, patrolPoints, true);
 	npc1->setSpeed(0.000003f);
-	GameManager::Instance().AddNPC(npc1);
 }
 */
 
@@ -103,7 +101,6 @@ int main()
 	Player player(playerImage, Vector2f(ROOM_WIDTH / 2, ROOM_HEIGHT / 2), &rooms[STARTING_ROOM], 100, 100, true, IntRect(8, 2, 16, 59));
 	player.setGoSpeed(0.000003f);
 	player.setRunSpeed(0.000007f);
-	//GameManager::Instance().setPlayer(&player);
 
 	//Создание тестовых нпс
 	//createTestNPC(rooms[STARTING_ROOM]);

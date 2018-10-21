@@ -1,33 +1,27 @@
 #pragma once
 
-#include "Consts.h"
-#include "State.h"
-#include "Player.h"
-#include <iostream>
 
 class SeekState : public State
 {
 public:
-
 	SeekState()
 	{}
-	SeekState(Creature *_owner, float _predictMult = 1.3f)
-	{
-		owner = _owner;
-		predictMult = _predictMult;
-		stateID = SEEK_STATE;
-	}
 	~SeekState()
 	{}
+
+	SeekState(Creature *_owner, int id = 0)
+	{
+		owner = _owner;
+		stateID = id;
+	}
 
 	void enter() override
 	{
 
 	}
-	void execute(float time)
-	{
-		Vector2f playerPos = Vector2f(0, 0);
 
+	void execute(float time, Vector2f playerPos) 
+	{
 		int dir = 0;
 
 		//Находим направление
@@ -67,6 +61,7 @@ public:
 		{
 			dir = UP;
 		}
+		/////////////////////////////////////////////////////////
 
 		CreatureStatus status;
 		status.dir = dir;
@@ -74,12 +69,13 @@ public:
 
 		owner->move(status, time);
 	}
+
 	void exit() override
 	{
 
 	}
 
-
 private:
-	float predictMult;
+
+
 };
