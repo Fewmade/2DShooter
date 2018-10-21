@@ -122,8 +122,6 @@ public:
 			bool downDoor = true;
 			bool leftDoor = true;
 
-			Room newRoom(generateRandomRoom(upDoor, rightDoor, downDoor, leftDoor));
-
 			// Ищем комнату, в которой находится персонаж
 			unsigned int i = 0;
 			for (; i < rooms.size(); i++)
@@ -136,18 +134,35 @@ public:
 
 			// Направление наоборот
 			unsigned int invDir;
-			if (direction == UP) { invDir = DOWN; }
+			if (direction == UP)    { invDir = DOWN; }
 			if (direction == RIGHT) { invDir = LEFT; }
-			if (direction == DOWN) { invDir = UP; }
-			if (direction == LEFT) { invDir = RIGHT; }
+			if (direction == DOWN)  { invDir = UP; }
+			if (direction == LEFT)  { invDir = RIGHT; }
 
-			rooms.push_back(new Room(generateRandomRoom(true, true, true, true)));
+			rooms.push_back(new Room(generateRandomRoom(upDoor, rightDoor, downDoor, leftDoor)));
 
 			newRoomNumber = rooms.size() - 1;
 
 			// Ставим соединения между комнатами
 			rooms[newRoomNumber]->getConnections()[invDir] = i;
 			room->getConnections()[direction] = newRoomNumber;
+
+			if (room->getConnections()[UP] == -1)
+			{
+				room->setCell(ROOM_WIDTH / 2, 0, WALL);
+			}
+			if (room->getConnections()[RIGHT] == -1)
+			{
+				room->setCell(ROOM_WIDTH - 1, ROOM_HEIGHT / 2, WALL);
+			}
+			if (room->getConnections()[DOWN] == -1)
+			{
+				room->setCell(ROOM_WIDTH / 2, ROOM_HEIGHT - 1, WALL);
+			}
+			if (room->getConnections()[LEFT] == -1)
+			{
+				room->setCell(0, ROOM_HEIGHT / 2, WALL);
+			}
 		}
 		else
 		{
