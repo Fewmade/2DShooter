@@ -64,7 +64,7 @@ class Player : public Creature
 public:
 	Player()
 	{ }
-	Player(Image _image, Vector2f _pos, Room *_room, int maxHp, int currHp, bool _solid = false, IntRect _collisionRect = IntRect(0, 0, 32, 32))
+	Player(Image _image, Vector2f _pos, Room *_room, int maxHp, int currHp, bool _solid = false, Vector2u _spriteSize = Vector2u(32, 32), IntRect _collisionRect = IntRect(0, 0, 32, 32))
 	{
 		image = _image;
 
@@ -79,6 +79,7 @@ public:
 
 		solid = _solid;
 		collisionRect = _collisionRect;
+		spriteSize = _spriteSize;
 	}
 
 	void changeRoom(int objectID, unsigned int x, unsigned int y)

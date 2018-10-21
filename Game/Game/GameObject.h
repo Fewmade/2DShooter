@@ -9,7 +9,8 @@ class GameObject
 public:
 	GameObject()
 	{}
-	GameObject(Image _image, bool _solid = false, IntRect _collisionRect = IntRect(0, 0, 32, 32)) : image(_image), collisionRect(_collisionRect), solid(_solid)
+	GameObject(Image _image, bool _solid = false, Vector2u _spriteSize = Vector2u(32, 32), IntRect _collisionRect = IntRect(0, 0, 32, 32)) : 
+		image(_image), spriteSize(_spriteSize), collisionRect(_collisionRect), solid(_solid)
 	{
 		//image.createMaskFromColor();
 		texture.loadFromImage(image);
@@ -50,4 +51,5 @@ protected:
 	bool solid;  // Твёрдый ли обьект
 
 	IntRect collisionRect; // Физическая модель
+	Vector2u spriteSize;
 };

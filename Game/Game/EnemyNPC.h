@@ -8,7 +8,7 @@ class EnemyNPC : public Creature
 public:
 	EnemyNPC()
 	{}
-	EnemyNPC(Image _image, Vector2f _pos, Room *_room, bool _solid = false, IntRect _collisionRect = IntRect(0, 0, 32, 32))
+	EnemyNPC(Image _image, Vector2f _pos, Room *_room, bool _solid = false, Vector2u _spriteSize = Vector2u(32, 32), IntRect _collisionRect = IntRect(0, 0, 32, 32))
 	{
 		pos = _pos;
 		id = ENEMY_BASE_NPC;
@@ -25,8 +25,9 @@ public:
 
 		solid = _solid;
 		collisionRect = _collisionRect;
+		spriteSize = _spriteSize;
 	}
-	EnemyNPC(Image _image, Vector2f _pos, Room *_room, std::vector<Vector2f> _patrolPoints, bool _solid = false, IntRect _collisionRect = IntRect(0, 0, 32, 32))
+	EnemyNPC(Image _image, Vector2f _pos, Room *_room, std::vector<Vector2f> _patrolPoints, bool _solid = false, Vector2u _spriteSize = Vector2u(32, 32), IntRect _collisionRect = IntRect(0, 0, 32, 32))
 	{
 		pos = _pos;
 		id = ENEMY_BASE_NPC;
@@ -43,8 +44,9 @@ public:
 
 		solid = _solid;
 		collisionRect = _collisionRect;
+		spriteSize = _spriteSize;
 	}
-	EnemyNPC(Image _image, Vector2f _pos, State *state, Room *_room, bool _solid = false, IntRect _collisionRect = IntRect(0, 0, 32, 32))
+	EnemyNPC(Image _image, Vector2f _pos, State *state, Room *_room, bool _solid = false, Vector2u _spriteSize = Vector2u(32, 32), IntRect _collisionRect = IntRect(0, 0, 32, 32))
 	{
 		pos = _pos;
 		id = ENEMY_BASE_NPC;
@@ -59,6 +61,7 @@ public:
 
 		solid = _solid;
 		collisionRect = _collisionRect;
+		spriteSize = _spriteSize;
 	}
 
 	int getStateID() const
