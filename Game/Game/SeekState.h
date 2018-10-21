@@ -68,7 +68,11 @@ public:
 			dir = UP;
 		}
 
-		owner->move(owner->getRoom(), dir, time * owner->getSpeed());
+		CreatureStatus status;
+		status.dir = dir;
+		status.condition = GO;
+
+		owner->move(status, time);
 	}
 	void exit() override
 	{

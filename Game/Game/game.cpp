@@ -101,7 +101,8 @@ int main()
 
 	//Игрок
 	Player player(playerImage, Vector2f(ROOM_WIDTH / 2, ROOM_HEIGHT / 2), &rooms[STARTING_ROOM], 100, 100, true, IntRect(8, 2, 16, 59));
-	player.setSpeed(0.000003f);
+	player.setGoSpeed(0.000003f);
+	player.setRunSpeed(0.000007f);
 	//GameManager::Instance().setPlayer(&player);
 
 	//Создание тестовых нпс
@@ -128,27 +129,12 @@ int main()
 		//GameManager::Instance().CalculateNPC(window, time);
 		///////////////////////////////////////
 
-		// Обработка движений
-		PlayerStatus playerStatus = getPlayerStatus();
-		float distance = time * player.getSpeed();
-
-		if (playerStatus.condition != STAY)
-		{
-			if (playerStatus.condition == GO)
-			{
-				player.setSpeed(0.000003f);
-			}
-			else if (playerStatus.condition == RUN)
-			{
-				player.setSpeed(0.000007f);
-			}
-
-			player.move(playerStatus.dir, distance);
-		}
+		// Обработка движений и анимации
+		CreatureStatus playerStatus = getPlayerStatus();
+		player.move(playerStatus, time);
 
 		// Update всех существ
 		player.update();
-
 
 		// Прорисовка
 		std::vector<std::vector<int> > map = player.getRoom().getMap();

@@ -1,16 +1,9 @@
 #pragma once
 #include "Creature.h"
 
-
-struct PlayerStatus
+CreatureStatus getPlayerStatus()
 {
-	int condition;
-	int dir;
-};
-
-PlayerStatus getPlayerStatus()
-{
-	PlayerStatus status;
+	CreatureStatus status;
 	status.condition = STAY;
 
 	// Движение по диагоналям

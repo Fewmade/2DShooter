@@ -5,7 +5,15 @@
 #include "HealthComponent.h"
 #include "Room.h"
 #include "Consts.h"
+#include "AnimationComponent.h"
 
+
+struct CreatureStatus
+{
+	int condition; // go, run, stay
+	int dir;       // up, down, right, left etc.
+	bool atack;
+};
 
 class Creature : public DynamicObject
 {
@@ -19,7 +27,9 @@ public:
 		//image.createMaskFromColor();
 		texture.loadFromImage(image);
 
-		healthComp = new HealthComponent(maxHp, currHp);
+		healthComp    = new HealthComponent(maxHp, currHp);
+		animationComp = new AnimationComponent;
+
 		pos = _pos;
 		room = _room;
 
@@ -29,13 +39,22 @@ public:
 		collisionRect = _collisionRect;
 	}
 
-	void setSpeed(float _speed)
+	void setNumOfFrames(std::vector<unsigned int> _numOfFrames)
 	{
-		speed = _speed;
+		animationComp->setNumOfFrames(_numOfFrames);
 	}
-	float getSpeed() const
+	void setFrameSpeed(std::vector<float> _frameSpeed)
 	{
-		return speed;
+		animationComp->setFrameSpeed(_frameSpeed);
+	}
+
+	void setGoSpeed(float _speed)
+	{
+		goSpeed = _speed;
+	}
+	void setRunSpeed(float _speed)
+	{
+		runSpeed = _speed;
 	}
 	int getID() const
 	{
@@ -51,19 +70,28 @@ public:
 		return healthComp->getHP();
 	}
 
-	// Индивидуальный обработчик столкновений(у каждого производного класса свой)
-	virtual void individualCollisions(int objectID, unsigned int x, unsigned int y)
-	{ }
-
-	virtual ~Creature()
+	void move(CreatureStatus status, float time)
 	{
-		delete healthComp;
-		healthComp = nullptr;
-	}
+		int directory = status.dir;
+		int cond = status.condition;
 
+		float speed;
 
-	void move(int directory, float distance)
-	{
+		if (cond == STAY)
+		{
+			speed = 0.f;
+		}
+		else if (cond == GO)
+		{
+			speed = 0.000003f;
+		}
+		else if (cond == RUN)
+		{
+			speed = 0.000007f;
+		}
+
+		float distance = time * speed;
+
 		Vector2f newPos; // Новая позиция
 		Vector2f dPos;   // Изменение координат
 
@@ -108,16 +136,16 @@ public:
 					IntRect OCR = objects[room->getCell(j, i)].getCollisionRect();
 
 					// Грани игрока
-					float upEdgeOfPlayer    = ny + float(collisionRect.top)                         / CELL_HEIGHT;
-					float downEdgeOfPlayer  = ny + float(collisionRect.top  + collisionRect.height) / CELL_HEIGHT;
-					float rightEdgeOfPlayer = nx + float(collisionRect.left + collisionRect.width)  / CELL_WIDTH;
-					float leftEdgeOfPlayer  = nx + float(collisionRect.left)                        / CELL_WIDTH;
+					float upEdgeOfPlayer = ny + float(collisionRect.top) / CELL_HEIGHT;
+					float downEdgeOfPlayer = ny + float(collisionRect.top + collisionRect.height) / CELL_HEIGHT;
+					float rightEdgeOfPlayer = nx + float(collisionRect.left + collisionRect.width) / CELL_WIDTH;
+					float leftEdgeOfPlayer = nx + float(collisionRect.left) / CELL_WIDTH;
 
 					// Грани обьекта
-					float upEdgeOfObject =    i + float(OCR.top)               / CELL_HEIGHT;
-					float downEdgeOfObject =  i + float(OCR.top  + OCR.height) / CELL_HEIGHT;
-					float rightEdgeOfObject = j + float(OCR.left + OCR.width)  / CELL_WIDTH;
-					float leftEdgeOfObject =  j + float(OCR.left)              / CELL_WIDTH;
+					float upEdgeOfObject = i + float(OCR.top) / CELL_HEIGHT;
+					float downEdgeOfObject = i + float(OCR.top + OCR.height) / CELL_HEIGHT;
+					float rightEdgeOfObject = j + float(OCR.left + OCR.width) / CELL_WIDTH;
+					float leftEdgeOfObject = j + float(OCR.left) / CELL_WIDTH;
 
 					// Столкнулись ли обьекты
 					// По Y
@@ -150,7 +178,7 @@ public:
 		}
 		newPos.x = nx;
 
-		
+
 		// Обработка столкновний при движении по y
 		nx = pos.x;
 		ny = pos.y + dPos.y;
@@ -163,18 +191,18 @@ public:
 				{
 					// ObjectColissionRect
 					IntRect OCR = objects[room->getCell(j, i)].getCollisionRect();
-					
+
 					// Грани игрока
-					float upEdgeOfPlayer    = ny + float(collisionRect.top)                         / CELL_HEIGHT;
-					float downEdgeOfPlayer  = ny + float(collisionRect.top  + collisionRect.height) / CELL_HEIGHT;
-					float rightEdgeOfPlayer = nx + float(collisionRect.left + collisionRect.width)  / CELL_WIDTH;
-					float leftEdgeOfPlayer  = nx + float(collisionRect.left)                        / CELL_WIDTH;
+					float upEdgeOfPlayer = ny + float(collisionRect.top) / CELL_HEIGHT;
+					float downEdgeOfPlayer = ny + float(collisionRect.top + collisionRect.height) / CELL_HEIGHT;
+					float rightEdgeOfPlayer = nx + float(collisionRect.left + collisionRect.width) / CELL_WIDTH;
+					float leftEdgeOfPlayer = nx + float(collisionRect.left) / CELL_WIDTH;
 
 					// Грани обьекта
-					float upEdgeOfObject =    i + float(OCR.top)               / CELL_HEIGHT;
-					float downEdgeOfObject =  i + float(OCR.top  + OCR.height) / CELL_HEIGHT;
-					float rightEdgeOfObject = j + float(OCR.left + OCR.width)  / CELL_WIDTH;
-					float leftEdgeOfObject =  j + float(OCR.left)              / CELL_WIDTH;
+					float upEdgeOfObject = i + float(OCR.top) / CELL_HEIGHT;
+					float downEdgeOfObject = i + float(OCR.top + OCR.height) / CELL_HEIGHT;
+					float rightEdgeOfObject = j + float(OCR.left + OCR.width) / CELL_WIDTH;
+					float leftEdgeOfObject = j + float(OCR.left) / CELL_WIDTH;
 
 					// Столкнулись ли обьекты
 					// По Y
@@ -202,7 +230,7 @@ public:
 								ny = upEdgeOfObject - float(collisionRect.height + collisionRect.top) / CELL_HEIGHT;
 							}
 						}
-						
+
 					}
 				}
 			}
@@ -215,10 +243,10 @@ public:
 	void update()
 	{
 		// Грани игрока
-		float upEdgeOfPlayer    = pos.y + float(collisionRect.top) / CELL_HEIGHT;
-		float downEdgeOfPlayer  = pos.y + float(collisionRect.top + collisionRect.height) / CELL_HEIGHT;
+		float upEdgeOfPlayer = pos.y + float(collisionRect.top) / CELL_HEIGHT;
+		float downEdgeOfPlayer = pos.y + float(collisionRect.top + collisionRect.height) / CELL_HEIGHT;
 		float rightEdgeOfPlayer = pos.x + float(collisionRect.left + collisionRect.width) / CELL_WIDTH;
-		float leftEdgeOfPlayer  = pos.x + float(collisionRect.left) / CELL_WIDTH;
+		float leftEdgeOfPlayer = pos.x + float(collisionRect.left) / CELL_WIDTH;
 
 		for (unsigned int i = unsigned(pos.y + float(collisionRect.top) / CELL_HEIGHT); i < ceil(pos.y + float(collisionRect.top + collisionRect.height) / CELL_HEIGHT); i++)
 		{
@@ -252,10 +280,27 @@ public:
 			}
 		}
 	}
+
+	// Индивидуальный обработчик столкновений(у каждого производного класса свой)
+	virtual void individualCollisions(int objectID, unsigned int x, unsigned int y)
+	{ }
+
+	virtual ~Creature()
+	{
+		delete healthComp;
+		healthComp = nullptr;
+
+		delete animationComp;
+		animationComp = nullptr;
+	}
+
 protected:
 	HealthComponent*	healthComp;
+	AnimationComponent* animationComp;
 	Room*				room;
 
-	float				speed;
+	float               goSpeed;
+	float               runSpeed;
+
 	unsigned int		id;
 };

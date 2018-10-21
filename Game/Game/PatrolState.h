@@ -91,7 +91,11 @@ public:
 				}
 				/////////////////////////////////////////////////////////
 
-				owner->move(dir, time * owner->getSpeed());
+				CreatureStatus status;
+				status.dir = dir;
+				status.condition = GO;
+
+				owner->move(status, time);
 			}
 		}
 	}

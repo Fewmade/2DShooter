@@ -1,7 +1,7 @@
 ﻿  game.cpp
   Создание кода
-  3 of 412 functions ( 0.7%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+  53 of 471 functions (11.3%) were compiled, the rest were copied from previous compilation.
+    40 functions were new in current compilation
+    13 functions had inline decision re-evaluated but remain unchanged
   Создание кода завершено
   Game.vcxproj -> C:\Users\user\GitHub\2DShooter\Game\Release\Game.exe

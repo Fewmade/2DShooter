@@ -20,7 +20,7 @@ const int LEFT_UP    = 7;
 const unsigned int ROOM_WIDTH  = 15;
 const unsigned int ROOM_HEIGHT = 15;
 
-// Состояния Player
+// Состояния Creature
 const int STAY = 0;
 const int GO   = 1;
 const int RUN  = 2;
@@ -50,3 +50,18 @@ const int	SEEK_STATE	 = 1;
 
 // Отступ от двери при переходе в другую комнату
 const float distanceFromDoor = 10.f / 32;
+
+// Количесвто линий анимации
+const unsigned int numOfAnimationLines = 10;
+
+// Линии анимации(на stayLine анимация стояния)
+const unsigned int stayLine     = 0;
+const unsigned int goUpLine     = 1;
+const unsigned int goDownLine   = 2;
+const unsigned int goRightLine  = 3;
+const unsigned int goLeftLine   = 4;
+const unsigned int runUpLine    = 5;
+const unsigned int runDownLine  = 6;
+const unsigned int runRightLine = 7;
+const unsigned int runLeftLine  = 8;
+const unsigned int atackLine    = 9;
