@@ -34,12 +34,16 @@ public:
 	{
 		for (unsigned int i = 0; i < enemies.size(); i++)
 		{
-			enemies[i]->executeState(time, player);
+			// Аргргр не трож
+			if (&enemies[i]->getRoom() == &player->getRoom())
+			{
+				enemies[i]->executeState(time, player);
 
-			Sprite sp = enemies[i]->getSprite();
-			Vector2f pos = enemies[i]->getPos();
-			sp.setPosition(float(pos.x * CELL_WIDTH), float(pos.y * CELL_HEIGHT));
-			window.draw(sp);
+				Sprite sp = enemies[i]->getSprite();
+				Vector2f pos = enemies[i]->getPos();
+				sp.setPosition(float(pos.x * CELL_WIDTH), float(pos.y * CELL_HEIGHT));
+				window.draw(sp);
+			}
 		}
 	}
 	
