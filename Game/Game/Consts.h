@@ -55,13 +55,16 @@ const float distanceFromDoor = 10.f / 32;
 const unsigned int numOfAnimationLines = 10;
 
 // Линии анимации(на stayLine анимация стояния)
-const unsigned int stayLine     = 0;
-const unsigned int goUpLine     = 1;
-const unsigned int goDownLine   = 2;
-const unsigned int goRightLine  = 3;
-const unsigned int goLeftLine   = 4;
-const unsigned int runUpLine    = 5;
-const unsigned int runDownLine  = 6;
-const unsigned int runRightLine = 7;
-const unsigned int runLeftLine  = 8;
-const unsigned int atackLine    = 9;
+const unsigned int STAY_LINE      = 0;
+
+const unsigned int GO_UP_LINE     = 1;
+const unsigned int GO_DOWN_LINE   = 2;
+const unsigned int GO_RIGHT_LINE  = 3;
+const unsigned int GO_LEFT_LINE   = 4;
+
+const unsigned int RUN_UP_LINE    = 5;
+const unsigned int RUN_DOWN_LINE  = 6;
+const unsigned int RUN_RIGHT_LINE = 7;
+const unsigned int RUN_LEFT_LINE  = 8;
+
+const unsigned int ATACK_LINE     = 9;

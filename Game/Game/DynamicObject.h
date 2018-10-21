@@ -8,7 +8,7 @@ public:
 
 	DynamicObject()
 	{}
-	DynamicObject(Image _image, Vector2f _pos, bool _solid = false, IntRect _collisionRect = IntRect(0, 0, 32, 32)) : pos(_pos)
+	DynamicObject(Image _image, Vector2f _pos, bool _solid = false, Vector2u _spriteSize = Vector2u(32, 32), IntRect _collisionRect = IntRect(0, 0, 32, 32)) : pos(_pos)
 	{
 		image = _image;
 
@@ -17,6 +17,7 @@ public:
 
 		solid = _solid;
 		collisionRect = _collisionRect;
+		spriteSize = _spriteSize;
 	}
 	
 

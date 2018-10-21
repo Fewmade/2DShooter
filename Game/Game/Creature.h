@@ -8,7 +8,6 @@
 #include "AnimationComponent.h"
 
 
-
 struct CreatureStatus
 {
 	int condition; // go, run, stay
@@ -21,7 +20,7 @@ class Creature : public DynamicObject
 public:
 	Creature()
 	{ }
-	Creature(Image _image, Vector2f _pos, Room *_room, int maxHp, int currHp, bool _solid = false, IntRect _collisionRect = IntRect(0, 0, 32, 32))
+	Creature(Image _image, Vector2f _pos, Room *_room, int maxHp, int currHp, bool _solid = false, Vector2u _spriteSize = Vector2u(32, 32), IntRect _collisionRect = IntRect(0, 0, 32, 32))
 	{
 		image = _image;
 
@@ -29,7 +28,6 @@ public:
 		texture.loadFromImage(image);
 
 		healthComp    = new HealthComponent(maxHp, currHp);
-		animationComp = new AnimationComponent;
 
 		pos = _pos;
 		room = _room;
@@ -38,15 +36,25 @@ public:
 
 		solid = _solid;
 		collisionRect = _collisionRect;
+		spriteSize = _spriteSize;
 	}
 
 	void setNumOfFrames(std::vector<unsigned int> _numOfFrames)
 	{
-		animationComp->setNumOfFrames(_numOfFrames);
+		animationComp.setNumOfFrames(_numOfFrames);
 	}
 	void setFrameSpeed(std::vector<float> _frameSpeed)
 	{
-		animationComp->setFrameSpeed(_frameSpeed);
+		animationComp.setFrameSpeed(_frameSpeed);
+	}
+
+	Sprite getSprite()
+	{
+		Sprite sprite;
+		sprite.setTexture(texture);
+		Vector2u currFrame = animationComp.getFrame();
+		sprite.setTextureRect(IntRect(spriteSize.x * currFrame.x, spriteSize.y * currFrame.y, spriteSize.x, spriteSize.y));
+		return sprite;
 	}
 
 	void setGoSpeed(float _speed)
@@ -76,6 +84,8 @@ public:
 		int directory = status.dir;
 		int cond = status.condition;
 
+		animationComp.updateFrame(status, time);
+
 		float speed;
 
 		if (cond == STAY)
@@ -84,11 +94,11 @@ public:
 		}
 		else if (cond == GO)
 		{
-			speed = 0.000003f;
+			speed = goSpeed;
 		}
 		else if (cond == RUN)
 		{
-			speed = 0.000007f;
+			speed = runSpeed;
 		}
 
 		float distance = time * speed;
@@ -290,14 +300,11 @@ public:
 	{
 		delete healthComp;
 		healthComp = nullptr;
-
-		delete animationComp;
-		animationComp = nullptr;
 	}
 
 protected:
 	HealthComponent*	healthComp;
-	AnimationComponent* animationComp;
+	AnimationComponent  animationComp;
 	Room*				room;
 
 	float               goSpeed;

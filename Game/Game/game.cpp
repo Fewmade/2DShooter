@@ -41,7 +41,7 @@ void loadImages()
 
 	//StaticObject
 	image.loadFromFile("../images/objects/wall.png");
-	objects[WALL]  = StaticObject(image, true, IntRect(0, 0, 32, 32));
+	objects[WALL]  = StaticObject(image, true, Vector2u(32, 32), IntRect(0, 0, 32, 32));
 
 	image.loadFromFile("../images/objects/stone.png");
 	objects[STONE] = StaticObject(image);
@@ -100,12 +100,16 @@ int main()
 	correntbackground = 0;
 
 	//Игрок
-	Player player(playerImage, Vector2f(ROOM_WIDTH / 2, ROOM_HEIGHT / 2), &rooms[STARTING_ROOM], 100, 100, true, IntRect(8, 2, 16, 59));
-	player.setGoSpeed(0.000003f);
-	player.setRunSpeed(0.000007f);
-	gameManager.setPlayer(&player);
+	Player player(playerImage, Vector2f(ROOM_WIDTH / 2, ROOM_HEIGHT / 2), &rooms[STARTING_ROOM], 100, 100, true, Vector2u(32, 32), IntRect(5, 5, 22, 22));
+	player.setGoSpeed(0.003f);
+	player.setRunSpeed(0.007f);
 
-	//Создание тестовых нпс
+	// Количство кадров для каждого состояния
+	player.setNumOfFrames(std::vector<unsigned int>(numOfAnimationLines, 4));
+	// Скорость изменения кадров для кажлого состояния
+	player.setFrameSpeed(std::vector<float>(numOfAnimationLines, 0.0015f));
+
+	// Создание тестовых нпс
 	createTestNPC(&rooms[STARTING_ROOM]);
 
 	// Время
@@ -125,7 +129,10 @@ int main()
 		time = float(clock.getElapsedTime().asMicroseconds());
 		clock.restart();
 
-		
+
+		time /= 800;
+
+		//std::cerr << time << "\n";
 
 		// Обработка движений и анимации
 		CreatureStatus playerStatus = getPlayerStatus();
