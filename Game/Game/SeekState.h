@@ -10,7 +10,7 @@ public:
 	~SeekState()
 	{}
 
-	SeekState(Creature *_owner, int id = 1)
+	SeekState(Creature *_owner, int id = SEEK_STATE)
 	{
 		owner = _owner;
 		stateID = id;

@@ -88,16 +88,19 @@ public:
 		{
 			delete currentState;
 			currentState = new AttackState(this);
+			std::cerr << "atack" << "\n";
 		}
-		else if (dist <= seekRadius && currentState->getStateID() != SEEK_STATE)
+		else if (dist <= seekRadius && dist > attackRadius && currentState->getStateID() != SEEK_STATE)
 		{
 			delete currentState;
 			currentState = new SeekState(this);
+			std::cerr << "seek" << "\n";
 		}
 		else if (dist > seekRadius && currentState->getStateID() != PATROL_STATE)
 		{
 			delete currentState;
 			currentState = new PatrolState(patrolPoints, this, 0);
+			std::cerr << "patrol" << "\n";
 		}
 
 		currentState->execute(time, player);

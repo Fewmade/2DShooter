@@ -11,7 +11,7 @@ public:
 	~AttackState()
 	{}
 
-	AttackState(Creature *_owner, int id = 2)
+	AttackState(Creature *_owner, int id = ATTACK_STATE)
 	{
 		owner = _owner;
 		stateID = id;
