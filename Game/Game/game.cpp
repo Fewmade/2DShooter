@@ -81,7 +81,7 @@ void createTestNPC(Room *room)
 	patrolPoints.push_back(Vector2f(7,5));
 	patrolPoints.push_back(Vector2f(6,2));
 
-	EnemyNPC* npc1 = new EnemyNPC(npcImage, Vector2f(ROOM_WIDTH / 2 + 4, ROOM_HEIGHT / 2 + 4), room,  patrolPoints, 1, 4, true);
+	EnemyNPC* npc1 = new EnemyNPC(npcImage, Vector2f(ROOM_WIDTH / 2 - 4, ROOM_HEIGHT / 2 - 4), room,  patrolPoints,1,2, true);
 	npc1->setNumOfFrames(std::vector<unsigned int>(numOfAnimationLines, 1));
 	// Скорость изменения кадров для кажлого состояния
 	npc1->setFrameSpeed(std::vector<float>(numOfAnimationLines, 0.0015f));

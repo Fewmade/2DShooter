@@ -30,7 +30,7 @@ public:
 		collisionRect = _collisionRect;
 		spriteSize = _spriteSize;
 	}
-	EnemyNPC(Image _image, Vector2f _pos, Room *_room, std::vector<Vector2f> _patrolPoints, float _attackRadius, float _seekRadius, bool _solid = false, Vector2u _spriteSize = Vector2u(32, 32), IntRect _collisionRect = IntRect(0, 0, 32, 32), int damage = 30)
+	EnemyNPC(Image _image, Vector2f _pos, Room *_room, std::vector<Vector2f> _patrolPoints, float _attackRadius, float _seekRadius, bool _solid = false, Vector2u _spriteSize = Vector2u(32, 32), IntRect _collisionRect = IntRect(0, 0, 32, 32), int _damage = 30)
 	{
 		pos = _pos;
 		id = ENEMY_BASE_NPC;
@@ -38,6 +38,7 @@ public:
 		patrolPoints = _patrolPoints;
 		attackRadius = _attackRadius;
 		seekRadius = _seekRadius;
+		damage = _damage;
 
 		//НПС входит в состояние патруллирования
 		currentState = new PatrolState(patrolPoints, this, 0);
@@ -88,7 +89,7 @@ public:
 		{
 			delete currentState;
 			currentState = new AttackState(this);
-			std::cerr << "atack" << "\n";
+			std::cerr << "attack" << "\n";
 		}
 		else if (dist <= seekRadius && dist > attackRadius && currentState->getStateID() != SEEK_STATE)
 		{
