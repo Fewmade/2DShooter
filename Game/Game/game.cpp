@@ -119,6 +119,10 @@ int main()
 	// Время
 	Clock clock; // Считает время между кадрами
 
+	//Для обработки атаки
+	unsigned int frame = 0;
+	unsigned int lastAttackFrame = -ATTACK_DELAY;
+
 	while (window.isOpen())
 	{
 		Event event;
@@ -140,6 +144,13 @@ int main()
 		// Обработка движений и анимации
 		CreatureStatus playerStatus = getPlayerStatus();
 		player.move(playerStatus, time);
+
+		//Обработка атаки
+		if (playerStatus.attack && frame - lastAttackFrame >= ATTACK_DELAY)
+		{
+			player.attack(gameManager.getEnemies());
+			lastAttackFrame = frame;
+		}
 
 		// Update всех существ
 		player.update();
@@ -190,6 +201,8 @@ int main()
 		window.draw(HPText);
 
 		window.display();
+
+		++frame;
 	}
 
 	return 0;

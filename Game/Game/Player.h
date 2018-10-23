@@ -1,10 +1,12 @@
 #pragma once
 #include "Creature.h"
+#include "EnemyNPC.h"
 
 CreatureStatus getPlayerStatus()
 {
 	CreatureStatus status;
 	status.condition = STAY;
+	status.attack = false;
 
 	// Движение по диагоналям
 	if (Keyboard::isKeyPressed(Keyboard::W) && Keyboard::isKeyPressed(Keyboard::D))
@@ -50,6 +52,12 @@ CreatureStatus getPlayerStatus()
 		status.dir = LEFT;
 	}
 
+	//Атака
+	if (Mouse::isButtonPressed(Mouse::Left))
+	{
+		status.attack = true;
+	}
+
 	// Бег
 	if (Keyboard::isKeyPressed(Keyboard::LShift) && status.condition != STAY)
 	{
@@ -64,7 +72,7 @@ class Player : public Creature
 public:
 	Player()
 	{ }
-	Player(Image _image, Vector2f _pos, Room *_room, int maxHp, int currHp, bool _solid = false, Vector2u _spriteSize = Vector2u(32, 32), IntRect _collisionRect = IntRect(0, 0, 32, 32))
+	Player(Image _image, Vector2f _pos, Room *_room, int maxHp, int currHp, bool _solid = false, Vector2u _spriteSize = Vector2u(32, 32), IntRect _collisionRect = IntRect(0, 0, 32, 32), int _damage = 30)
 	{
 		image = _image;
 
@@ -74,6 +82,7 @@ public:
 		healthComp = new HealthComponent(maxHp, currHp);
 		pos = _pos;
 		room = _room;
+		damage = _damage;
 
 		id = DEFAULT_ID;
 
@@ -184,6 +193,22 @@ public:
 			healthComp->changeHP(-10);
 			room->setCell(x, y, -1);
 			break;
+		}
+	}
+
+	void attack(std::vector<EnemyNPC*>& _objects)
+	{
+		std::cerr << "Player Attack!" << std::endl;
+
+		for (int i = 0; i < _objects.size(); i++)
+		{
+			Vector2f dif =  pos - _objects[i]->getPos() ;
+			std::cerr << dif.x << " " << dif.y << std::endl;
+			if ((abs(dif.x) <= 1) || (abs(dif.y) <= 1))
+			{
+				std::cerr << "Deal damage" << std::endl;
+				_objects[i]->dealDamage(damage);
+			}
 		}
 	}
 

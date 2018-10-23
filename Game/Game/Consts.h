@@ -49,6 +49,9 @@ const int	PATROL_STATE		= 0;
 const int	SEEK_STATE			= 1;
 const int	ATTACK_STATE		= 2;
 
+//Константы для атаки
+const int	ATTACK_DELAY		= 80;
+
 // Отступ от двери при переходе в другую комнату
 const float distanceFromDoor = 10.f / 32;
 

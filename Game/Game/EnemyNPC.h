@@ -22,6 +22,8 @@ public:
 		currentState = new PatrolState(patrolPoints ,this, 0);
 		currentState->enter();
 
+		healthComp = new HealthComponent(100, 100);
+
 		image = _image;
 		//image.createMaskFromColor();
 		texture.loadFromImage(image);
@@ -44,6 +46,8 @@ public:
 		currentState = new PatrolState(patrolPoints, this, 0);
 		currentState->enter();
 
+		healthComp = new HealthComponent(100, 100);
+
 		image = _image;
 		//image.createMaskFromColor();
 		texture.loadFromImage(image);
@@ -60,6 +64,8 @@ public:
 
 		currentState = state;
 		currentState->enter();
+
+		healthComp = new HealthComponent(100, 100);
 
 		image = _image;
 		//image.createMaskFromColor();
@@ -82,29 +88,37 @@ public:
 
 	void executeState(float time, Creature* player)
 	{
-		Vector2f vDist = player->getPos() - pos;
-		float dist = sqrt(vDist.x * vDist.x + vDist.y * vDist.y);
+		if (healthComp->getHP() > 0)
+		{
+			Vector2f vDist = player->getPos() - pos;
+			float dist = sqrt(vDist.x * vDist.x + vDist.y * vDist.y);
 
-		if (dist <= attackRadius && currentState->getStateID() != ATTACK_STATE)
-		{
-			delete currentState;
-			currentState = new AttackState(this);
-			std::cerr << "attack" << "\n";
-		}
-		else if (dist <= seekRadius && dist > attackRadius && currentState->getStateID() != SEEK_STATE)
-		{
-			delete currentState;
-			currentState = new SeekState(this);
-			std::cerr << "seek" << "\n";
-		}
-		else if (dist > seekRadius && currentState->getStateID() != PATROL_STATE)
-		{
-			delete currentState;
-			currentState = new PatrolState(patrolPoints, this, 0);
-			std::cerr << "patrol" << "\n";
-		}
+			if (dist <= attackRadius && currentState->getStateID() != ATTACK_STATE)
+			{
+				delete currentState;
+				currentState = new AttackState(this);
+				std::cerr << "attack" << "\n";
+			}
+			else if (dist <= seekRadius && dist > attackRadius && currentState->getStateID() != SEEK_STATE)
+			{
+				delete currentState;
+				currentState = new SeekState(this);
+				std::cerr << "seek" << "\n";
+			}
+			else if (dist > seekRadius && currentState->getStateID() != PATROL_STATE)
+			{
+				delete currentState;
+				currentState = new PatrolState(patrolPoints, this, 0);
+				std::cerr << "patrol" << "\n";
+			}
 
-		currentState->execute(time, player);
+			currentState->execute(time, player);
+		}
+		else
+		{
+			//Destroy NPC
+		}
+		
 	}
 	
 

@@ -46,6 +46,11 @@ public:
 			}
 		}
 	}
+
+	std::vector<EnemyNPC*>& getEnemies()
+	{
+		return enemies;
+	}
 	
 
 private:

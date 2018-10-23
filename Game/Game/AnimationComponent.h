@@ -5,8 +5,9 @@
 
 struct CreatureStatus
 {
-	int condition; // go, run, stay
-	int dir;       // up, down, right, left etc.
+	int		condition; // go, run, stay
+	int		dir;       // up, down, right, left etc.
+	bool	attack;
 };
 
 bool operator== (CreatureStatus a, CreatureStatus b)
