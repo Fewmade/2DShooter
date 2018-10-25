@@ -49,6 +49,10 @@ const int	PATROL_STATE		= 0;
 const int	SEEK_STATE			= 1;
 const int	ATTACK_STATE		= 2;
 
+const int SUCCESS	= 0;
+const int DESTROYED			= -1;
+const int ERROR_BADALLOC	= -2;
+
 //Константы для атаки
 const int	ATTACK_DELAY		= 80;
 

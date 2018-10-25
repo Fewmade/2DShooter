@@ -86,7 +86,7 @@ public:
 	{}
 
 
-	void executeState(float time, Creature* player)
+	int executeState(float time, Creature* player)
 	{
 		if (healthComp->getHP() > 0)
 		{
@@ -113,10 +113,12 @@ public:
 			}
 
 			currentState->execute(time, player);
+			return SUCCESS;
 		}
 		else
 		{
-			//Destroy NPC
+			return DESTROYED;
+
 		}
 		
 	}

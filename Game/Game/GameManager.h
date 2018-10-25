@@ -30,6 +30,21 @@ public:
 		enemies.push_back(npc);
 	}
 
+	int deleteNPC(int index)
+	{
+		if (index >= enemies.size())
+		{
+			return ERROR_BADALLOC;
+		}
+
+		EnemyNPC* tmp = enemies.back();
+		enemies[enemies.size() - 1] = enemies[index];
+		enemies[index] = tmp;
+
+		enemies.pop_back();
+		return SUCCESS;
+	}
+
 	void CalculateNPC(RenderWindow& window, float time, Creature* player)
 	{
 		for (unsigned int i = 0; i < enemies.size(); i++)
@@ -37,12 +52,17 @@ public:
 			// Аргргр не трож
 			if (&enemies[i]->getRoom() == &player->getRoom())
 			{
-				enemies[i]->executeState(time, player);
-
-				Sprite sp = enemies[i]->getSprite();
-				Vector2f pos = enemies[i]->getPos();
-				sp.setPosition(float(pos.x * CELL_WIDTH), float(pos.y * CELL_HEIGHT));
-				window.draw(sp);
+				if (enemies[i]->executeState(time, player) == SUCCESS)
+				{
+					Sprite sp = enemies[i]->getSprite();
+					Vector2f pos = enemies[i]->getPos();
+					sp.setPosition(float(pos.x * CELL_WIDTH), float(pos.y * CELL_HEIGHT));
+					window.draw(sp);
+				}
+				else
+				{
+					deleteNPC(i);
+				}
 			}
 		}
 	}
