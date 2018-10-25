@@ -107,6 +107,7 @@ int main()
 	Player player(playerImage, Vector2f(ROOM_WIDTH / 2, ROOM_HEIGHT / 2), rooms[STARTING_ROOM], 100, 100, true, Vector2u(32, 32), IntRect(5, 5, 22, 22));
 	player.setGoSpeed(0.003f);
 	player.setRunSpeed(0.007f);
+	player.setAtackSize(Vector2f(1.f, 1.f));
 
 	// Количство кадров для каждого состояния
 	player.setNumOfFrames(std::vector<unsigned int>(numOfAnimationLines, 4));
@@ -148,7 +149,7 @@ int main()
 		//Обработка атаки
 		if (playerStatus.attack && frame - lastAttackFrame >= ATTACK_DELAY)
 		{
-			player.attack(gameManager.getEnemies());
+			player.attack(gameManager.getEnemies(), playerStatus);
 			lastAttackFrame = frame;
 		}
 

@@ -196,18 +196,82 @@ public:
 		}
 	}
 
-	void attack(std::vector<EnemyNPC*>& _objects)
+	void attack(std::vector<EnemyNPC*>& _objects, CreatureStatus status)
 	{
 		std::cerr << "Player Attack!" << std::endl;
 
-		for (int i = 0; i < _objects.size(); i++)
+		Vector2f playerCenter(pos.x + spriteSize.x / (CELL_WIDTH * 2.f), pos.y + spriteSize.y / (CELL_HEIGHT * 2.f));
+
+		float upEdgeOfAtack;
+		float downEdgeOfAtack;
+		float rightEdgeOfAtack;
+		float leftEdgeOfAtack;
+
+		// Грани атаки игрока
+		if (status.dir == UP)
 		{
-			Vector2f dif =  pos - _objects[i]->getPos() ;
-			std::cerr << dif.x << " " << dif.y << std::endl;
-			if ((abs(dif.x) <= 1) || (abs(dif.y) <= 1))
+			upEdgeOfAtack    = playerCenter.y - atackSize.y;
+			downEdgeOfAtack  = playerCenter.y;
+			rightEdgeOfAtack = playerCenter.x + atackSize.x / 2.f;
+			leftEdgeOfAtack  = playerCenter.x - atackSize.x / 2.f;
+		}
+		else if (status.dir == RIGHT)
+		{
+			upEdgeOfAtack    = playerCenter.y - atackSize.y / 2.f;
+			downEdgeOfAtack  = playerCenter.y + atackSize.y / 2.f;
+			rightEdgeOfAtack = playerCenter.x + atackSize.x;
+			leftEdgeOfAtack  = playerCenter.x;
+		}
+		else if (status.dir == DOWN)
+		{
+			upEdgeOfAtack    = playerCenter.y;
+			downEdgeOfAtack  = playerCenter.y + atackSize.y;
+			rightEdgeOfAtack = playerCenter.x + atackSize.x / 2.f;
+			leftEdgeOfAtack  = playerCenter.x - atackSize.x / 2.f;
+		}
+		else if (status.dir == LEFT)
+		{
+			upEdgeOfAtack    = playerCenter.y - atackSize.y / 2.f;
+			downEdgeOfAtack  = playerCenter.y + atackSize.y / 2.f;
+			rightEdgeOfAtack = playerCenter.x;
+			leftEdgeOfAtack  = playerCenter.x - atackSize.x;
+		}
+
+		std::cerr << upEdgeOfAtack << " " << downEdgeOfAtack << " " << rightEdgeOfAtack << " " << leftEdgeOfAtack << " " << std::endl;
+
+		for (unsigned int i = 0; i < _objects.size(); i++)
+		{
+			// Object Collision Rect
+			IntRect OCR = _objects[i]->getCollisionRect();
+			// Object Position
+			Vector2f OP = _objects[i]->getPos();
+
+			// Грани обьекта
+			float upEdgeOfObject    = OP.y + float(OCR.top)               / CELL_HEIGHT;
+			float downEdgeOfObject  = OP.y + float(OCR.top  + OCR.height) / CELL_HEIGHT;
+			float rightEdgeOfObject = OP.x + float(OCR.left + OCR.width)  / CELL_WIDTH;
+			float leftEdgeOfObject  = OP.x + float(OCR.left)              / CELL_WIDTH;
+
+			std::cerr << upEdgeOfObject << " " << downEdgeOfObject << " " << rightEdgeOfObject << " " << leftEdgeOfObject << " " << std::endl;
+			std::cerr << status.dir << std::endl;
+
+			// Попал ли игрок
+			// По Y
+			if ((upEdgeOfObject < upEdgeOfAtack    && upEdgeOfAtack    < downEdgeOfObject) ||
+				(upEdgeOfObject < downEdgeOfAtack  && downEdgeOfAtack  < downEdgeOfObject) ||
+				(upEdgeOfAtack  < upEdgeOfObject   && upEdgeOfObject   < downEdgeOfAtack)  ||
+				(upEdgeOfAtack  < downEdgeOfObject && downEdgeOfObject < downEdgeOfAtack))
 			{
-				std::cerr << "Deal damage" << std::endl;
-				_objects[i]->dealDamage(damage);
+				// По X
+				if ((leftEdgeOfObject < leftEdgeOfAtack   && leftEdgeOfAtack   < rightEdgeOfObject) ||
+					(leftEdgeOfObject < rightEdgeOfAtack  && rightEdgeOfAtack  < rightEdgeOfObject) ||
+					(leftEdgeOfAtack  < leftEdgeOfObject  && leftEdgeOfObject  < rightEdgeOfAtack)  ||
+					(leftEdgeOfAtack  < rightEdgeOfObject && rightEdgeOfObject < rightEdgeOfAtack))
+				{
+					std::cerr << "Deal damage" << std::endl;
+					_objects[i]->dealDamage(damage);
+					std::cerr << _objects[i]->getHP() << std::endl;
+				}
 			}
 		}
 	}

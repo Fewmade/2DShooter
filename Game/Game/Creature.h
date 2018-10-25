@@ -76,6 +76,11 @@ public:
 		return *room;
 	}
 
+	void setAtackSize(Vector2f _atackSize)
+	{
+		atackSize = _atackSize;
+	}
+
 	unsigned int getHP() 
 	{
 		return healthComp->getHP();
@@ -326,6 +331,8 @@ protected:
 	HealthComponent*	healthComp;
 	AnimationComponent  animationComp;
 	Room*				room;
+
+	Vector2f atackSize;
 
 	float               goSpeed;
 	float               runSpeed;
