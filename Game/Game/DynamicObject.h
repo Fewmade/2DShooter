@@ -12,7 +12,7 @@ public:
 	{
 		image = _image;
 
-		//image.createMaskFromColor();
+		
 		texture.loadFromImage(image);
 
 		solid = _solid;

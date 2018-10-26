@@ -30,7 +30,7 @@ public:
 		enemies.push_back(npc);
 	}
 
-	int deleteNPC(int index)
+	int deleteNPC(unsigned int index)
 	{
 		if (index >= enemies.size())
 		{

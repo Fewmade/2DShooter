@@ -29,6 +29,10 @@ std::vector<Texture> backgrounds(NUMBER_OF_BACKGROUNDS);
 unsigned int correntbackground;
 
 Image playerImage;
+
+Image npcImage;
+std::vector<Vector2f> patrolPoints;
+
 GameManager gameManager;
 
 Font basicFont;
@@ -39,7 +43,7 @@ void loadImages()
 	Texture texture;
 	Sprite sprite;
 
-	//StaticObject
+	// StaticObject
 	image.loadFromFile("../images/objects/wall.png");
 	objects[WALL]  = StaticObject(image, true, Vector2u(32, 32), IntRect(0, 0, 32, 32));
 
@@ -49,14 +53,19 @@ void loadImages()
 	image.loadFromFile("../images/objects/door.png");
 	objects[DOOR]  = StaticObject(image);
 
-	//Backgrounds
+	// Backgrounds
 	image.loadFromFile("../images/backgrounds/background1.png");
 	texture.loadFromImage(image);
 	backgrounds[0] = texture;
 
-	//Player
+	// Player
 	image.loadFromFile("../images/characters/player.png");
 	playerImage = image;
+
+	// NPC
+	image.loadFromFile("../images/characters/soldier.png");
+	npcImage = image;
+
 }
 
 void otherLoads()
@@ -68,25 +77,17 @@ void otherLoads()
 	basicFont = font;
 }
 
-
 void createTestNPC(Room *room)
 {
-	Image npcImage;
-	npcImage.loadFromFile("../images/characters/soldier.png");
-
-	std::vector<Vector2f> patrolPoints;
-	patrolPoints.push_back(Vector2f(8,3));
-	patrolPoints.push_back(Vector2f(8,4));
-	patrolPoints.push_back(Vector2f(8,5));
-	patrolPoints.push_back(Vector2f(7,5));
-	patrolPoints.push_back(Vector2f(6,2));
-
-	EnemyNPC* npc1 = new EnemyNPC(npcImage, Vector2f(ROOM_WIDTH / 2 - 4, ROOM_HEIGHT / 2 - 4), room,  patrolPoints,1,2, true);
+	EnemyNPC* npc1 = new EnemyNPC(npcImage, Vector2f(ROOM_WIDTH / 2 - 4, ROOM_HEIGHT / 2 - 4), room, patrolPoints, 1, 2, true);
 	npc1->setNumOfFrames(std::vector<unsigned int>(numOfAnimationLines, 1));
+
 	// Скорость изменения кадров для кажлого состояния
 	npc1->setFrameSpeed(std::vector<float>(numOfAnimationLines, 0.0015f));
+
 	npc1->setGoSpeed(0.003f);
 	npc1->setRunSpeed(0.01f);
+
 	gameManager.AddNPC(npc1);
 }
 
@@ -100,6 +101,13 @@ int main()
 
 	loadImages();
 	otherLoads();
+
+	// NPC
+	patrolPoints.push_back(Vector2f(8, 3));
+	patrolPoints.push_back(Vector2f(8, 4));
+	patrolPoints.push_back(Vector2f(8, 5));
+	patrolPoints.push_back(Vector2f(7, 5));
+	patrolPoints.push_back(Vector2f(6, 2));
 	
 	correntbackground = 0;
 
@@ -140,8 +148,6 @@ int main()
 
 		time /= 800;
 
-		//std::cerr << time << "\n";
-
 		// Обработка движений и анимации
 		CreatureStatus playerStatus = getPlayerStatus();
 		player.move(playerStatus, time);
@@ -153,8 +159,50 @@ int main()
 			lastAttackFrame = frame;
 		}
 
+		unsigned int pr_roomsSize = rooms.size();
+
 		// Update всех существ
 		player.update();
+		
+		// Генерация существ в новой комнате
+		if (pr_roomsSize != rooms.size())
+		{
+			srand(unsigned(std::time(NULL)) + rand());
+			unsigned int numOfEnemies;
+
+			if (MAX_NUMBER_OF_ENEMIES == MIN_NUMBER_OF_ENEMIES)
+			{
+				numOfEnemies = MAX_NUMBER_OF_ENEMIES;
+			}
+			else
+			{
+				numOfEnemies = rand() % (MAX_NUMBER_OF_ENEMIES - MIN_NUMBER_OF_ENEMIES) + MIN_NUMBER_OF_ENEMIES;
+			}
+
+			for (unsigned int en = 0; en < numOfEnemies; en++)
+			{
+				int x = -1;
+				int y = -1;
+
+				while (x < 0 || y < 0 || (player.getRoom().getCell(x, y) >= 0 && objects[player.getRoom().getCell(x, y)].getSolid()))
+				{
+					srand(unsigned(std::time(NULL)) + rand());
+					x = rand() % (ROOM_WIDTH - 1);
+					y = rand() % (ROOM_HEIGHT - 1);
+				}
+
+				EnemyNPC* npc = new EnemyNPC(npcImage, Vector2f(float(x), float(y)), &player.getRoom(), patrolPoints, 1, 2, true);
+				npc->setNumOfFrames(std::vector<unsigned int>(numOfAnimationLines, 1));
+
+				// Скорость изменения кадров для кажлого состояния
+				npc->setFrameSpeed(std::vector<float>(numOfAnimationLines, 0.0015f));
+
+				npc->setGoSpeed(0.003f);
+				npc->setRunSpeed(0.01f);
+
+				gameManager.AddNPC(npc);
+			}
+		}
 
 		// Прорисовка
 		std::vector<std::vector<int> > map = player.getRoom().getMap();

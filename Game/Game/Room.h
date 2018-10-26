@@ -69,13 +69,13 @@ class Room
 private:
 	std::vector<std::vector<int> > map;
 
-	// ћассив соединений дверей к комнатам(€ заню что дверей 4, а направлений 8. ћне насрать)
+	// ћассив соединений дверей к комнатам(€ заню что дверей 4, а направлений 8)
 	std::vector<int> connections;
 public:
 	Room(std::vector<std::vector<int> > _map) : map(_map)
 	{
-		connections.resize(numOfDirections, -1);
 		// ƒвери дл€ всех направлений
+		connections.resize(numOfDirections, -1);
 	}
 
 	std::vector<std::vector<int> > getMap() const

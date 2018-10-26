@@ -36,6 +36,10 @@ const unsigned int DOOR  = 2;
 // Количество задних фонов
 const unsigned int NUMBER_OF_BACKGROUNDS = 1;
 
+// Количество противников в комнате
+const unsigned int MIN_NUMBER_OF_ENEMIES = 1;
+const unsigned int MAX_NUMBER_OF_ENEMIES = 5;
+
 // ID существ
 const unsigned int DEFAULT_ID     = 0;
 const unsigned int ENEMY_BASE_NPC = 1;

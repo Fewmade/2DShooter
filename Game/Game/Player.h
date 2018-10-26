@@ -76,7 +76,7 @@ public:
 	{
 		image = _image;
 
-		//image.createMaskFromColor();
+		
 		texture.loadFromImage(image);
 
 		healthComp = new HealthComponent(maxHp, currHp);
@@ -198,8 +198,6 @@ public:
 
 	void attack(std::vector<EnemyNPC*>& _objects, CreatureStatus status)
 	{
-		std::cerr << "Player Attack!" << std::endl;
-
 		Vector2f playerCenter(pos.x + spriteSize.x / (CELL_WIDTH * 2.f), pos.y + spriteSize.y / (CELL_HEIGHT * 2.f));
 
 		float upEdgeOfAtack;
@@ -237,8 +235,6 @@ public:
 			leftEdgeOfAtack  = playerCenter.x - atackSize.x;
 		}
 
-		std::cerr << upEdgeOfAtack << " " << downEdgeOfAtack << " " << rightEdgeOfAtack << " " << leftEdgeOfAtack << " " << std::endl;
-
 		for (unsigned int i = 0; i < _objects.size(); i++)
 		{
 			// Object Collision Rect
@@ -251,9 +247,6 @@ public:
 			float downEdgeOfObject  = OP.y + float(OCR.top  + OCR.height) / CELL_HEIGHT;
 			float rightEdgeOfObject = OP.x + float(OCR.left + OCR.width)  / CELL_WIDTH;
 			float leftEdgeOfObject  = OP.x + float(OCR.left)              / CELL_WIDTH;
-
-			std::cerr << upEdgeOfObject << " " << downEdgeOfObject << " " << rightEdgeOfObject << " " << leftEdgeOfObject << " " << std::endl;
-			std::cerr << status.dir << std::endl;
 
 			// Попал ли игрок
 			// По Y
@@ -268,9 +261,7 @@ public:
 					(leftEdgeOfAtack  < leftEdgeOfObject  && leftEdgeOfObject  < rightEdgeOfAtack)  ||
 					(leftEdgeOfAtack  < rightEdgeOfObject && rightEdgeOfObject < rightEdgeOfAtack))
 				{
-					std::cerr << "Deal damage" << std::endl;
 					_objects[i]->dealDamage(damage);
-					std::cerr << _objects[i]->getHP() << std::endl;
 				}
 			}
 		}

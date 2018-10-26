@@ -25,7 +25,7 @@ public:
 	{
 		image = _image;
 
-		//image.createMaskFromColor();
+		
 		texture.loadFromImage(image);
 
 		healthComp    = new HealthComponent(maxHp, currHp);

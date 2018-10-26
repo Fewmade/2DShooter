@@ -25,7 +25,6 @@ public:
 		healthComp = new HealthComponent(100, 100);
 
 		image = _image;
-		//image.createMaskFromColor();
 		texture.loadFromImage(image);
 
 		solid = _solid;
@@ -49,7 +48,6 @@ public:
 		healthComp = new HealthComponent(100, 100);
 
 		image = _image;
-		//image.createMaskFromColor();
 		texture.loadFromImage(image);
 
 		solid = _solid;
@@ -68,7 +66,7 @@ public:
 		healthComp = new HealthComponent(100, 100);
 
 		image = _image;
-		//image.createMaskFromColor();
+		
 		texture.loadFromImage(image);
 
 		solid = _solid;
@@ -97,19 +95,16 @@ public:
 			{
 				delete currentState;
 				currentState = new AttackState(this);
-				std::cerr << "attack" << "\n";
 			}
 			else if (dist <= seekRadius && dist > attackRadius && currentState->getStateID() != SEEK_STATE)
 			{
 				delete currentState;
 				currentState = new SeekState(this);
-				std::cerr << "seek" << "\n";
 			}
 			else if (dist > seekRadius && currentState->getStateID() != PATROL_STATE)
 			{
 				delete currentState;
 				currentState = new PatrolState(patrolPoints, this, 0);
-				std::cerr << "patrol" << "\n";
 			}
 
 			currentState->execute(time, player);
